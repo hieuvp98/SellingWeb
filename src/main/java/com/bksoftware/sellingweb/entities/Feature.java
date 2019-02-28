@@ -7,6 +7,9 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "feature")
+@SecondaryTables({
+        @SecondaryTable(name = "product_details")
+})
 public class Feature {
 
     @Id

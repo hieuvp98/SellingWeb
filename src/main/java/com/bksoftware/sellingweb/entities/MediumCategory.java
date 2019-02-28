@@ -10,6 +10,9 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "medium_category")
+@SecondaryTables({
+        @SecondaryTable(name = "big_category")
+})
 public class MediumCategory {
 
     @Id
