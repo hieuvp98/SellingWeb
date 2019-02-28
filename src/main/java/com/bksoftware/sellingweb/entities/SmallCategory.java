@@ -9,6 +9,9 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "small_category")
+@SecondaryTables({
+        @SecondaryTable(name = "medium_category")
+})
 public class SmallCategory {
 
     @Id

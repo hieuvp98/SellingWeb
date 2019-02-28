@@ -5,6 +5,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,6 +30,9 @@ public class BuyForm {
     private String note;
 
     private LocalDate date;
+
+    @OneToMany(mappedBy = "buyForm")
+    Set<Product> products = new HashSet<>();
 
     private boolean status;
 }

@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "feedback")
+@SecondaryTables({
+        @SecondaryTable(name = "product_details")
+})
 public class Feedback {
 
     @Id

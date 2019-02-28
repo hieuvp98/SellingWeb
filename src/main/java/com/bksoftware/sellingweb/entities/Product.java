@@ -7,6 +7,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "product")
 @Data
+@SecondaryTables({
+        @SecondaryTable(name = "buy_form"),
+        @SecondaryTable(name = "partner"),
+        @SecondaryTable(name = "product_details"),
+        @SecondaryTable(name = "small_category")
+})
 public class Product {
 
     @Id
@@ -33,7 +39,7 @@ public class Product {
     private ProductDetails productDetails;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(table = "buy_form")
+    @JoinColumn(table = "buy_form" )
     private BuyForm buyForm;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
