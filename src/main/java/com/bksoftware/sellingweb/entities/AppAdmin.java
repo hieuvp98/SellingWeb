@@ -20,7 +20,7 @@ public class AppAdmin {
 
     private String username;
 
-    private String password;
+    private String encryptedPassword;
 
     private String email;
 

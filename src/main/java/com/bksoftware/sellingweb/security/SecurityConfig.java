@@ -25,15 +25,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/**").permitAll()
+                .antMatchers("/api/viewer/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter( new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler())
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 

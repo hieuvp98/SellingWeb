@@ -23,6 +23,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         AppAdmin appAdmin = appAdminRepository.findByUsername(s);
         if (appAdmin == null) throw  new UsernameNotFoundException(s);
-        else return new User(appAdmin.getUsername(),appAdmin.getPassword(), Collections.emptyList());
+        else return new User(appAdmin.getUsername(),appAdmin.getEncryptedPassword(), Collections.emptyList());
     }
 }
