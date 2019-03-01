@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.service_impl;
 
 import com.bksoftware.sellingweb.repository.ProductRepository;
+import com.bksoftware.sellingweb.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class ProductService_Impl {
+public class ProductService_Impl implements ProductService {
 
     private static final Logger LOGGER = Logger.getLogger(ProductService_Impl.class.getName());
 
