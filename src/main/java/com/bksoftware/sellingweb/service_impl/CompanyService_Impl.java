@@ -19,9 +19,9 @@ public class CompanyService_Impl implements CompanyService {
     CompanyRepository companyRepository;
 
     @Override
-    public List<Company> findAllcompanys() {
+    public List<Company> findAllcompanies() {
         try {
-            companyRepository.findAll();
+            return  companyRepository.findAll();
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-company-error : {0}", ex.getMessage());
         }

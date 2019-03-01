@@ -12,19 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/company")
+@RequestMapping("/api/v1/public/company")
 public class CompanyController {
 
     @Autowired
     CompanyService_Impl companyService;
 
+
     @GetMapping
     public ResponseEntity<List<Company>> findAllCompanies() {
 
-        List<Company> companys = companyService.findAllcompanys();
-        if (companys == null) {
+        List<Company> companies = companyService.findAllcompanies();
+
+        if (companies == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         }
-        return new ResponseEntity<>(companys, HttpStatus.OK);
+        return new ResponseEntity<>(companies, HttpStatus.OK);
+
     }
+
+
 }

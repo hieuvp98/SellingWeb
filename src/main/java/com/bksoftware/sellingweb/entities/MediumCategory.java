@@ -4,6 +4,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +14,9 @@ import java.util.Set;
 @SecondaryTables({
         @SecondaryTable(name = "big_category")
 })
-public class MediumCategory {
+public class MediumCategory  implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +25,8 @@ public class MediumCategory {
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(table = "big_category")
+    @JoinColumn(name = "big_category_id",nullable = false)
     private BigCategory bigCategory;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mediumCategory")
-    private Set<SmallCategory> smallCategories = new HashSet<>();
     private boolean status;
 }

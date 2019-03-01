@@ -4,6 +4,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +13,10 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "buy_form")
-public class BuyForm {
+public class BuyForm implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +34,6 @@ public class BuyForm {
     private String note;
 
     private LocalDate date;
-
-    @OneToMany(mappedBy = "buyForm")
-    Set<Product> products = new HashSet<>();
 
     private boolean status;
 }

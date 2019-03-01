@@ -3,6 +3,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
@@ -10,7 +11,10 @@ import javax.persistence.*;
 @SecondaryTables({
         @SecondaryTable(name = "product_details")
 })
-public class Feature {
+public class Feature implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

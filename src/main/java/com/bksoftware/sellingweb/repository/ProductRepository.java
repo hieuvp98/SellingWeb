@@ -11,11 +11,17 @@ import java.time.LocalDate;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query("select p.productDetails.guarantee  from Product p where p.buyForm.phoneNumber = :phone_number")
+    @Query(
+            "select pd.guarantee  from Product p join p.productDetails pd where p.buyForm.phoneNumber = :phone_number"
+    )
     int findGuaranteeToPhone(@Param("phone_number") int phone_number);
 
-    @Query("select p.productDetails.soldDate  from Product p where p.buyForm.phoneNumber = :phone_number")
-    LocalDate findSoldBuyToPhone(@Param("phone_number") int phone_number);
+
+    @Query(
+            "select pd.soldDate from Product p " +
+                    "join p.productDetails pd join p.buyForm bf where bf.phoneNumber = :phone_number"
+    )
+    LocalDate findSoldDateToPhone(@Param("phone_number") int phone_number);
 
 
 }

@@ -11,8 +11,9 @@ public class SellingwebApplication {
     public static void main(String[] args) {
         SpringApplication.run(SellingwebApplication.class, args);
     }
+
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

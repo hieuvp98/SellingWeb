@@ -1,6 +1,10 @@
 package com.bksoftware.sellingweb.service;
 
+import com.bksoftware.sellingweb.entities.BuyForm;
+
+import java.util.List;
+
 public interface ProductService {
 
-    int findGuaranteeToPhone(int phone_number);
+    List<BuyForm> findGuaranteeToPhone(int phone_number);
 }
