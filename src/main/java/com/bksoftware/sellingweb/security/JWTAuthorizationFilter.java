@@ -24,12 +24,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     // dua user vao he thong
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        boolean flag = false;
         var header = request.getHeader(SecurityConstants.HEADER_STRING);
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+            flag = true;
             chain.doFilter(request, response);
         }
         UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        if (!flag)
         chain.doFilter(request,response);
     }
     // read token
