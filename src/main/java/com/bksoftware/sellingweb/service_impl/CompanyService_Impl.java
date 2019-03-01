@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 @Service
 public class CompanyService_Impl implements CompanyService {
 
+
+    //hoho
+
     private static final Logger LOGGER = Logger.getLogger(CompanyService_Impl.class.getName());
 
     @Autowired
