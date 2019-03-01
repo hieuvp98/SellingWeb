@@ -21,25 +21,26 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
+
     // dua user vao he thong
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         boolean flag = false;
-        var header = request.getHeader(SecurityConstants.HEADER_STRING);
-        if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-            flag = true;
+        String header = request.getHeader(SecurityConstants.HEADER_STRING);
+        if (header!=null && header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+            UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);
         }
-        UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        if (!flag)
+        else
         chain.doFilter(request,response);
     }
+
     // read token
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        var token = request.getHeader(SecurityConstants.HEADER_STRING);
+        String token = request.getHeader(SecurityConstants.HEADER_STRING);
         if (token != null) {
-            var username = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
+            String username = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
                     .build().verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getSubject();
             if (username != null) {

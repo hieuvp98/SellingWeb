@@ -20,10 +20,9 @@ public class AppAdmin {
 
     private String username;
 
-    private String encryptedPassword;
+    private String password;
 
     private String email;
 
     private int phone;
-
 }
