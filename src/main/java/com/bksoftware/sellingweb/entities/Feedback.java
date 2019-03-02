@@ -20,11 +20,18 @@ public class Feedback implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String username;
+
     private String email;
+
     private String text;
+
     private int evaluate;
+
     private LocalDateTime time;
+
+    private int star;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(table = "product_details")

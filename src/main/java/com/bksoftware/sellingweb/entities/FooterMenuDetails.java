@@ -16,6 +16,7 @@ public class FooterMenuDetails implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int id;
+
     private String name;
 
     private boolean status;

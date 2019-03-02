@@ -28,7 +28,7 @@ public class Feature implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(table = "product_details")
     @NotNull
-    private Feature feature;
+    private ProductDetails productDetails;
 
     private boolean status;
 }
