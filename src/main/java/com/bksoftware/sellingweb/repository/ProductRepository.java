@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.repository;
 
 import com.bksoftware.sellingweb.entities.Product;
+import com.bksoftware.sellingweb.entities.SmallCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,5 +30,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //Pageable sẽ chứa các thông tin phân trang như số phần tử được lấy, vị trí trang được lấy
     //Page sẽ chứa kết quả trả về (gồm số phần tử, danh sách các phần tử)
 
-
+    List<Product> findAllBySmallCategory(SmallCategory smallCategory);
 }

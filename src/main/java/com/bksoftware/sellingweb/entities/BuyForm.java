@@ -38,5 +38,7 @@ public class BuyForm implements Serializable {
 
     private LocalDate date;
 
+    private boolean checked;
+
     private boolean status;
 }

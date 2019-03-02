@@ -51,7 +51,6 @@ public class Product implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "buy_form_id", nullable = false)
-    @NotNull
     private BuyForm buyForm;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
