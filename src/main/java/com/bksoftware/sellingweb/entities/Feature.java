@@ -3,6 +3,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -26,6 +27,7 @@ public class Feature implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(table = "product_details")
+    @NotNull
     private Feature feature;
 
     private boolean status;

@@ -21,12 +21,11 @@ public class AdminController {
     }
 
     @GetMapping(value = "/info")
-    public ResponseEntity<AppAdmin> getInfo(){
+    public ResponseEntity<AppAdmin> getInfo() {
         AppAdmin appAdmin = appAdminRepository.findAll().get(0);
-        if (appAdmin == null){
+        if (appAdmin == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-        else return new ResponseEntity<>(appAdmin,HttpStatus.OK);
+        } else return new ResponseEntity<>(appAdmin, HttpStatus.OK);
     }
 
     @PostMapping(value = "/change-password",params = {"old","new"})

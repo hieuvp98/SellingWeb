@@ -25,7 +25,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     // dua user vao he thong
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        boolean flag = false;
         String header = request.getHeader(SecurityConstants.HEADER_STRING);
         if (header!=null && header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);

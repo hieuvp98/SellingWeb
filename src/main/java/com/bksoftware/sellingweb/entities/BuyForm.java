@@ -2,8 +2,10 @@ package com.bksoftware.sellingweb.entities;
 
 
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -25,6 +27,7 @@ public class BuyForm implements Serializable {
     private String name;
 
     @Column(name = "phone_number")
+    @NotNull
     private int phoneNumber;
 
     private String email;

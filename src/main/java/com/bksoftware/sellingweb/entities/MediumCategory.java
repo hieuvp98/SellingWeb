@@ -4,6 +4,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,7 @@ public class MediumCategory  implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "big_category_id",nullable = false)
+    @NotNull
     private BigCategory bigCategory;
 
     private boolean status;

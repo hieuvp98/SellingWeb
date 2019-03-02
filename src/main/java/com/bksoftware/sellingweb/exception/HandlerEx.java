@@ -29,6 +29,7 @@ public class HandlerEx extends ResponseEntityExceptionHandler {
     }
 
 
+
     public ResponseEntity<Object> getResponse(String message, HttpStatus httpStatus, Object... data) {
         Map<String, Object> map = new HashMap<>();
         if (data == null || (data.getClass().isArray() && data.length == 0)) {

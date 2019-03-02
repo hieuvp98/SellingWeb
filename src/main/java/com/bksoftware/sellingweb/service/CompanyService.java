@@ -10,6 +10,6 @@ import java.util.List;
 public interface CompanyService {
     //aaaa
 
-    List<Company> findAllcompanies();
+    List<Company> findAllCompanies();
 
 }
