@@ -26,6 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public RestAuthenticationEntryPoint restAuthenticationEntryPoint(){
+        return new RestAuthenticationEntryPoint();
+    }
+
+    @Bean
     public CustomAccessDeniedHandler customAccessDeniedHandler(){
         return new CustomAccessDeniedHandler();
     }
@@ -35,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/api/**/public/**").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
                 .addFilter( new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))

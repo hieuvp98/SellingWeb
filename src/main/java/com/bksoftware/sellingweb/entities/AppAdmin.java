@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.entities;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -25,4 +26,10 @@ public class AppAdmin {
     private String email;
 
     private int phone;
+
+    public Set<GrantedAuthority> getGrantedAuthority() {
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        grantedAuthorities.add((GrantedAuthority) () -> "ADMIN");
+        return grantedAuthorities;
+    }
 }

@@ -2,7 +2,7 @@ package com.bksoftware.sellingweb.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import lombok.var;
+import com.bksoftware.sellingweb.entities.AppAdmin;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,15 +25,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     // dua user vao he thong
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        boolean flag = false;
         String header = request.getHeader(SecurityConstants.HEADER_STRING);
-        if (header!=null && header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+        if (header != null && header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);
-        }
-        else
-        chain.doFilter(request,response);
+        } else
+            chain.doFilter(request, response);
     }
 
     // read token
@@ -44,7 +42,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .build().verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getSubject();
             if (username != null) {
-                return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(username, null, new AppAdmin().getGrantedAuthority());
             }
             return null;
         }
