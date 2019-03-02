@@ -1,4 +1,4 @@
 package com.bksoftware.sellingweb.config;
 
-public class tes1 {
+public class test1 {
 }

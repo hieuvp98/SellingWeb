@@ -2,8 +2,10 @@ package com.bksoftware.sellingweb.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -24,6 +26,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     private String name;
 
     @Column(name = "origin_cost")
@@ -36,21 +39,28 @@ public class Product implements Serializable {
     private String imgUrl;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "small_category_id",nullable = false)
+    @JoinColumn(name = "small_category_id", nullable = false)
     @JsonIgnore
+    @NonNull
     private SmallCategory smallCategory;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_details_id",nullable = false )
+    @JoinColumn(name = "product_details_id", nullable = false)
+    @NotNull
     private ProductDetails productDetails;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "buy_form_id",nullable = false )
+    @JoinColumn(name = "buy_form_id", nullable = false)
+    @NotNull
     private BuyForm buyForm;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "partner_id",nullable = false )
+    @JoinColumn(name = "partner_id", nullable = false)
+    @NotNull
     private Partner partner;
 
     private boolean status;
+
+    public Product() {
+    }
 }

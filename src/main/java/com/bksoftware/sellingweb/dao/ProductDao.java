@@ -1,20 +1,18 @@
 package com.bksoftware.sellingweb.dao;
 
-
-import com.bksoftware.sellingweb.entities.ProductDetails;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
-@Repository
-@Transactional
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ProductDao {
+
+    public  List<String> nGrams(int n, String str) {
+        List<String> n_Gram = new ArrayList<>();
+        for (int i = 0; i < str.length() - n + 1;i++) {
+            n_Gram.add(str.substring(i,i+n));
+        }
+        return n_Gram;
+    }
+
 
 
 }

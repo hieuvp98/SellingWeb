@@ -22,7 +22,7 @@ public class CompanyService_Impl implements CompanyService {
     CompanyRepository companyRepository;
 
     @Override
-    public List<Company> findAllcompanies() {
+    public List<Company> findAllCompanies() {
         try {
             return  companyRepository.findAll();
         } catch (Exception ex) {
