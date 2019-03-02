@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +30,12 @@ public class HandlerEx extends ResponseEntityExceptionHandler {
         return getResponse(ex.getMessage(), HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(GlobalExceptionHandler.class)
+    public ResponseEntity<Object> globalExceptionHandler(MultipartException ex) {
+        return getResponse(ex.getMessage(), HttpStatus.MULTI_STATUS);
+
+
+    }
 
 
     public ResponseEntity<Object> getResponse(String message, HttpStatus httpStatus, Object... data) {
