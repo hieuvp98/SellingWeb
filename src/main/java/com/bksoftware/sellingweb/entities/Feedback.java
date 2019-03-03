@@ -34,7 +34,7 @@ public class Feedback implements Serializable {
     private int star;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(table = "product_details")
+    @JoinColumn(name = "product_details_id" ,nullable = false)
     @NotNull
     private ProductDetails productDetails;
 

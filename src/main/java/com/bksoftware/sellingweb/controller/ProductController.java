@@ -1,6 +1,5 @@
 package com.bksoftware.sellingweb.controller;
 
-
 import com.bksoftware.sellingweb.entities.Product;
 import com.bksoftware.sellingweb.service_impl.ProductService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
 
 @Controller
 @RequestMapping("api/v1/public/products")
@@ -40,3 +40,5 @@ public class ProductController {
     }
 
 }
+
+
