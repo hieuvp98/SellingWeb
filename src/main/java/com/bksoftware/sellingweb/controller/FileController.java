@@ -20,6 +20,11 @@ public class FileController {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
 
+        multiPartFile(file);
+        return new ResponseEntity<>("file Uploaded successfully", HttpStatus.OK);
+    }
+
+    private void multiPartFile(@RequestParam("file") MultipartFile file) {
         File uploadedFile = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
         OutputStream stream;
         try {
@@ -32,7 +37,6 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ResponseEntity<>("file Uploaded successfully", HttpStatus.OK);
     }
 
 
@@ -42,18 +46,7 @@ public class FileController {
 
         for (MultipartFile multipartFile : files) {
 
-            File uploadedFile = new File(UPLOAD_DIRECTORY, multipartFile.getOriginalFilename());
-            OutputStream stream;
-            try {
-
-                uploadedFile.createNewFile();
-                stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(multipartFile.getBytes());
-                stream.flush();
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            multiPartFile(multipartFile);
 
         }
 

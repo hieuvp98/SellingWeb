@@ -20,7 +20,7 @@ public class AppAdmin {
     private int id;
 
     private String username;
-
+    // dat password duoi database cung la password
     private String password;
 
     private String email;
