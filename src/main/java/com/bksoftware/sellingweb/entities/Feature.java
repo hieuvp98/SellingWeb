@@ -16,19 +16,21 @@ public class Feature implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String detail;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(table = "product_details")
     @NotNull
     private ProductDetails productDetails;
 
+    @NotNull
     private boolean status;
 }

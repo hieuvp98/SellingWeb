@@ -3,6 +3,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -12,7 +13,11 @@ public class HomeImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String name;
+
+    @NotNull
     private String url;
 
+    @NotNull
     private boolean status;
 }

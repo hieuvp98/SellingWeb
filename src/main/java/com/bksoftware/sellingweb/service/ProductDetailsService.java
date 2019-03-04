@@ -6,13 +6,11 @@ import com.bksoftware.sellingweb.entities.ProductDetails;
 
 public interface ProductDetailsService {
 
-    void saveProductDetails(ProductDetails productDetails);
+    boolean saveProductDetails(ProductDetails productDetails);
 
-    void saveFeature(Feature feature);
+    boolean saveFeature(Feature feature);
 
-    void deleteFeature(Feature feature);
+    boolean deleteFeature(Feature feature);
 
-    void saveFeedback(Feedback feedback);
 
-    void checkFeedback(Feedback feedback);
 }

@@ -19,8 +19,12 @@ public class FeedbackService_Impl implements FeedbackService {
 
     private final static Logger LOGGER = Logger.getLogger(FeedbackService_Impl.class.getName());
 
-    @Autowired
+    private final
     FeedbackRepository feedbackRepository;
+
+    public FeedbackService_Impl(FeedbackRepository feedbackRepository) {
+        this.feedbackRepository = feedbackRepository;
+    }
 
     @Override
     public List<Feedback> findAllFeedback() {

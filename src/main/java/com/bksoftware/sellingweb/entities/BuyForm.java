@@ -27,18 +27,24 @@ public class BuyForm implements Serializable {
     private String name;
 
     @Column(name = "phone_number")
+
     @NotNull
     private int phoneNumber;
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String address;
 
     private String note;
 
+    @NotNull
     private LocalDate date;
 
+    @NotNull
     private boolean checked;
 
+    @NotNull
     private boolean status;
 }

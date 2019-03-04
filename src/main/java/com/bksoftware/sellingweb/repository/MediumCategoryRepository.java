@@ -9,4 +9,5 @@ import java.util.List;
 public interface MediumCategoryRepository extends JpaRepository<MediumCategory,Integer> {
 
     List<MediumCategory> findAllByBigCategory(BigCategory bigCategory);
+    MediumCategory findById(int id);
 }

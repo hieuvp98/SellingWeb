@@ -17,6 +17,7 @@ public class FooterMenu implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -24,5 +25,6 @@ public class FooterMenu implements Serializable {
     @NotNull
     private FooterMenuDetails footerMenuDetails;
 
+    @NotNull
     private boolean status;
 }

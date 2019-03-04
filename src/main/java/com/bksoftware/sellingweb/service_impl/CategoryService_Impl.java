@@ -12,9 +12,13 @@ import com.bksoftware.sellingweb.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class CategoryService_Impl implements CategoryService {
+
+    private final static Logger LOGGER = Logger.getLogger(PartnerService_Impl.class.getName());
 
     private final BigCategoryRepository bigCategoryRepository;
     private final MediumCategoryRepository mediumCategoryRepository;
@@ -22,7 +26,7 @@ public class CategoryService_Impl implements CategoryService {
     private final ProductRepository productRepository;
 
     public CategoryService_Impl(BigCategoryRepository bigCategoryRepository, MediumCategoryRepository mediumCategoryRepository,
-                                SmallCategoryRepository smallCategoryRepository,ProductRepository productRepository) {
+                                SmallCategoryRepository smallCategoryRepository, ProductRepository productRepository) {
         this.bigCategoryRepository = bigCategoryRepository;
         this.mediumCategoryRepository = mediumCategoryRepository;
         this.smallCategoryRepository = smallCategoryRepository;
@@ -50,18 +54,51 @@ public class CategoryService_Impl implements CategoryService {
     }
 
     @Override
-    public void saveBigCategory(BigCategory bigCategory) {
-        bigCategoryRepository.save(bigCategory);
+    public BigCategory findBigCategoryById(int id) {
+        return bigCategoryRepository.findById(id);
     }
 
     @Override
-    public void saveMediumCategory(MediumCategory mediumCategory) {
-        mediumCategoryRepository.save(mediumCategory);
+    public MediumCategory findMediumCategoryById(int id) {
+        return mediumCategoryRepository.findById(id);
     }
 
     @Override
-    public void saveSmallCategory(SmallCategory smallCategory) {
-        smallCategoryRepository.save(smallCategory);
+    public SmallCategory findSmallCategoryById(int id) {
+        return smallCategoryRepository.findById(id);
+    }
+
+    @Override
+    public boolean saveBigCategory(BigCategory bigCategory) {
+        try {
+            bigCategoryRepository.save(bigCategory);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-error", ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean saveMediumCategory(MediumCategory mediumCategory) {
+        try {
+            mediumCategoryRepository.save(mediumCategory);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-error", ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean saveSmallCategory(SmallCategory smallCategory) {
+        try {
+            smallCategoryRepository.save(smallCategory);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-error", ex.getMessage());
+            return false;
+        }
     }
 
 

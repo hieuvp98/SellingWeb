@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -18,15 +19,20 @@ public class Company  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String address;
 
+    @NotNull
     private int hotline;
 
+    @NotNull
     private String email;
 
     private String coordinates;
 
+    @NotNull
     private boolean status;
 }

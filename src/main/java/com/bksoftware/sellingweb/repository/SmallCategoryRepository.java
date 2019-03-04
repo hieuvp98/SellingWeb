@@ -10,4 +10,5 @@ public interface SmallCategoryRepository extends JpaRepository<SmallCategory, In
 
     List<SmallCategory> findAllByMediumCategory(MediumCategory mediumCategory);
 
+    SmallCategory findById(int id);
 }

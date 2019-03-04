@@ -12,6 +12,6 @@ public final class RestAuthenticationEntryPoint implements AuthenticationEntryPo
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        httpServletResponse.getWriter().write("Unauthorized");
+        httpServletResponse.getWriter().write("Wrong username or password");
     }
 }

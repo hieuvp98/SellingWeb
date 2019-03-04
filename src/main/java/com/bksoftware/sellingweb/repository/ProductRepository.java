@@ -31,4 +31,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //Page sẽ chứa kết quả trả về (gồm số phần tử, danh sách các phần tử)
 
     List<Product> findAllBySmallCategory(SmallCategory smallCategory);
+    Product findById(int id);
 }

@@ -30,6 +30,7 @@ public class Product implements Serializable {
     private String name;
 
     @Column(name = "origin_cost")
+    @NotNull
     private int originCost;
 
     @Column(name = "sale_cost")
@@ -44,13 +45,11 @@ public class Product implements Serializable {
     @NonNull
     private SmallCategory smallCategory;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_details_id", nullable = false)
-    @NotNull
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "product")
     private ProductDetails productDetails;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "buy_form_id", nullable = false)
+    @JoinColumn(name = "buy_form_id")
     private BuyForm buyForm;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

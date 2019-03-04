@@ -17,11 +17,17 @@ public interface CategoryService {
 
     List<Product> findAllProductBySmallCategory(SmallCategory smallCategory);
 
-    void saveBigCategory(BigCategory bigCategory);
+    BigCategory findBigCategoryById(int id);
 
-    void saveMediumCategory(MediumCategory mediumCategory);
+    MediumCategory findMediumCategoryById(int id);
 
-    void saveSmallCategory(SmallCategory smallCategory);
+    SmallCategory findSmallCategoryById(int id);
+
+    boolean saveBigCategory(BigCategory bigCategory);
+
+    boolean saveMediumCategory(MediumCategory mediumCategory);
+
+    boolean saveSmallCategory(SmallCategory smallCategory);
 
     void deleteBigCategory(BigCategory bigCategory);
 

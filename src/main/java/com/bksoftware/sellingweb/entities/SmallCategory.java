@@ -23,6 +23,7 @@ public class SmallCategory implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -30,5 +31,6 @@ public class SmallCategory implements Serializable {
     @NotNull
     private MediumCategory mediumCategory;
 
+    @NotNull
     private boolean status;
 }

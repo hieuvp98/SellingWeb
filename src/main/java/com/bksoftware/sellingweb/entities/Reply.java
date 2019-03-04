@@ -7,13 +7,11 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
 @Data
-@Table(name = "feedback")
-@SecondaryTables({
-        @SecondaryTable(name = "product_details")
-})
-public class Feedback implements Serializable {
+@Entity
+@Table(name = "reply")
+@SecondaryTable(name = "feedback")
+public class Reply implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,19 +25,16 @@ public class Feedback implements Serializable {
     private String email;
 
     @NotNull
-    private String text;
-
-    @NotNull
     private LocalDateTime time;
 
     @NotNull
-    private int star;
+    private String content;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_details_id" ,nullable = false)
     @NotNull
-    private ProductDetails productDetails;
-
     private boolean status;
 
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "feedback_id",nullable = false)
+    @NotNull
+    private Feedback feedback;
 }

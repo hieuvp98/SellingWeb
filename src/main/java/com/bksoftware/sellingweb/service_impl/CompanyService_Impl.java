@@ -14,12 +14,14 @@ import java.util.logging.Logger;
 public class CompanyService_Impl implements CompanyService {
 
 
-    //hoho
-
     private static final Logger LOGGER = Logger.getLogger(CompanyService_Impl.class.getName());
 
-    @Autowired
+    private final
     CompanyRepository companyRepository;
+
+    public CompanyService_Impl(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @Override
     public List<Company> findAllCompanies() {

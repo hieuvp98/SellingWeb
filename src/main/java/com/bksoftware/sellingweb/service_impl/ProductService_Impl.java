@@ -24,8 +24,11 @@ public class ProductService_Impl implements ProductService {
 
     private static final Logger LOGGER = Logger.getLogger(ProductService_Impl.class.getName());
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductService_Impl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
 
     public Map<String, Long> findGuaranteeToPhone(int phone_number) {
@@ -70,6 +73,34 @@ public class ProductService_Impl implements ProductService {
             sort = Sort.by("id").descending();
         }
         return sort;
+    }
+
+    @Override
+    public Product findById(int id) {
+        return productRepository.findById(id);
+    }
+
+    @Override
+    public boolean saveProduct(Product product) {
+        try {
+            productRepository.save(product);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-product-error", ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteProduct(Product product) {
+        try {
+            product.setStatus(false);
+            productRepository.save(product);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-product-error : {0}", ex.getMessage());
+            return false;
+        }
     }
 
 

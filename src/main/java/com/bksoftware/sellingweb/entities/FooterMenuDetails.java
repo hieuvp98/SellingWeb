@@ -3,6 +3,7 @@ package com.bksoftware.sellingweb.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -14,10 +15,11 @@ public class FooterMenuDetails implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private boolean status;
 }

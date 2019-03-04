@@ -19,8 +19,12 @@ import java.util.Map;
 @RequestMapping("api/v1/public/feedback")
 public class FeedbackController {
 
-    @Autowired
+    private final
     FeedbackService_Impl feedbackService;
+
+    public FeedbackController(FeedbackService_Impl feedbackService) {
+        this.feedbackService = feedbackService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Feedback>> findAllFeedback() {
@@ -36,15 +40,15 @@ public class FeedbackController {
     @GetMapping(value = "/cookie")
     public ResponseEntity<Object> findAllFeedbackCookie(HttpServletRequest request) {
 
-        Map<String, String> feebackMap = new HashMap<>();
+        Map<String, String> feedbackMap = new HashMap<>();
         Cookie cookie = null;
         Cookie[] cookies = null;
         // Get an array of Cookies associated with this domain
         cookies = request.getCookies();
         if (cookies != null) {
-            for (int i = 0; i < cookies.length; i++) {
-                cookie = cookies[i];
-                feebackMap.put(cookie.getName(), cookie.getValue());
+            for (Cookie value : cookies) {
+                cookie = value;
+                feedbackMap.put(cookie.getName(), cookie.getValue());
             }
         } else {
             System.out.println("No Cookie here");
