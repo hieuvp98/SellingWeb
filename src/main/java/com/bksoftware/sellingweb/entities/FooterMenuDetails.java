@@ -21,5 +21,8 @@ public class FooterMenuDetails implements Serializable {
     private String name;
 
     @NotNull
+    private String url;
+
+    @NotNull
     private boolean status;
 }

@@ -30,6 +30,8 @@ public class ProductDetails implements Serializable {
 
     private int guarantee;
 
+    private String present;
+
     private boolean status;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)

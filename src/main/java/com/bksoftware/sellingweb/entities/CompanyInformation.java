@@ -1,17 +1,22 @@
 package com.bksoftware.sellingweb.entities;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Data
 @Entity
-@Table(name = "header_menu")
-public class HeaderMenu implements Serializable {
+@Data
+@Table(name = "company_information")
+@SecondaryTables({
+        @SecondaryTable(name = "company")
+})
+public class CompanyInformation implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +26,12 @@ public class HeaderMenu implements Serializable {
     private String name;
 
     @NotNull
-    private String url;
+    private String content;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id", nullable = false)
+    @NotNull
+    private Company company;
 
     @NotNull
     private boolean status;

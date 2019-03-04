@@ -38,10 +38,11 @@ public class ReplyController {
     @PostMapping
     public ResponseEntity<Object> saveReply(@RequestBody Reply reply, HttpServletRequest request) {
         if (reply != null) {
-            if (request.getUserPrincipal() != null && !request.getUserPrincipal().equals("")) {
+            if (request.getUserPrincipal() != null && !request.getUserPrincipal().getName().equals("")) {
                 reply.setRole("ADMIN");
                 return new ResponseEntity<>(repLyService.saveReply(reply), HttpStatus.OK);
             } else {
+                reply.setRole("VIEWER");
                 return new ResponseEntity<>(repLyService.saveReply(reply), HttpStatus.OK);
             }
         }
