@@ -37,4 +37,7 @@ public class Reply implements Serializable {
     @JoinColumn(name = "feedback_id",nullable = false)
     @NotNull
     private Feedback feedback;
+
+    @NotNull
+    private String role;
 }

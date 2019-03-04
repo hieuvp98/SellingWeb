@@ -36,5 +36,16 @@ public class FeedbackService_Impl implements FeedbackService {
         return null;
     }
 
+    @Override
+    public Integer countFeedbackAndReplies() {
+        try {
+            return feedbackRepository.findAll().size() + feedbackRepository.findAll().size();
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
+        }
+        return null;
+
+    }
+
 
 }
