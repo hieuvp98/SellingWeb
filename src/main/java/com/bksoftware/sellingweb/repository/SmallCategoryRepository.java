@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.repository;
 
-import com.bksoftware.sellingweb.entities.MediumCategory;
-import com.bksoftware.sellingweb.entities.SmallCategory;
+import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

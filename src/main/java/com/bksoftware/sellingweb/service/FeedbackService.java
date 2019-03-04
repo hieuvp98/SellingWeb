@@ -1,6 +1,6 @@
 package com.bksoftware.sellingweb.service;
 
-import com.bksoftware.sellingweb.entities.Feedback;
+import com.bksoftware.sellingweb.entities.product.Feedback;
 
 import java.util.List;
 

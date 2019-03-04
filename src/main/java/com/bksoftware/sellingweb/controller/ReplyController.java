@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.controller;
 
 
-import com.bksoftware.sellingweb.entities.Reply;
+import com.bksoftware.sellingweb.entities.product.Reply;
 import com.bksoftware.sellingweb.service_impl.RepLyService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

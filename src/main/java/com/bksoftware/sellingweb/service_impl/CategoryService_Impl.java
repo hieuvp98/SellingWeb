@@ -1,9 +1,9 @@
 package com.bksoftware.sellingweb.service_impl;
 
-import com.bksoftware.sellingweb.entities.BigCategory;
-import com.bksoftware.sellingweb.entities.MediumCategory;
-import com.bksoftware.sellingweb.entities.Product;
-import com.bksoftware.sellingweb.entities.SmallCategory;
+import com.bksoftware.sellingweb.entities.category.BigCategory;
+import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.bksoftware.sellingweb.repository.BigCategoryRepository;
 import com.bksoftware.sellingweb.repository.MediumCategoryRepository;
 import com.bksoftware.sellingweb.repository.ProductRepository;

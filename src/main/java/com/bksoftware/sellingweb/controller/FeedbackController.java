@@ -1,18 +1,13 @@
 package com.bksoftware.sellingweb.controller;
 
-import com.bksoftware.sellingweb.entities.Feedback;
-import com.bksoftware.sellingweb.service.FeedbackService;
+import com.bksoftware.sellingweb.entities.product.Feedback;
 import com.bksoftware.sellingweb.service_impl.FeedbackService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/public/feedback")

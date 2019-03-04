@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.product;
 
 
 import lombok.Data;
@@ -11,13 +11,11 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "medium_category")
-@SecondaryTables({
-        @SecondaryTable(name = "big_category")
-})
-public class MediumCategory  implements Serializable {
+@Table(name = "partner")
+public class Partner implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +24,9 @@ public class MediumCategory  implements Serializable {
     @NotNull
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "big_category_id",nullable = false)
-    @NotNull
-    private BigCategory bigCategory;
+    @Column(name = "img_url")
+    private String imgUrl;
 
+    @NotNull
     private boolean status;
 }

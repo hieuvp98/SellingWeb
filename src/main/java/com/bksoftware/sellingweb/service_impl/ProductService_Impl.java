@@ -1,10 +1,9 @@
 package com.bksoftware.sellingweb.service_impl;
 
 
-import com.bksoftware.sellingweb.entities.Product;
+import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.ProductRepository;
 import com.bksoftware.sellingweb.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

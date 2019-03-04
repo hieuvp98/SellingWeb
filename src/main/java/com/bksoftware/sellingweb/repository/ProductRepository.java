@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.repository;
 
-import com.bksoftware.sellingweb.entities.Product;
-import com.bksoftware.sellingweb.entities.SmallCategory;
+import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

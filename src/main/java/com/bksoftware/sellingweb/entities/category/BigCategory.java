@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.category;
 
 
 import lombok.Data;

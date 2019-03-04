@@ -1,9 +1,9 @@
 package com.bksoftware.sellingweb.service;
 
-import com.bksoftware.sellingweb.entities.BigCategory;
-import com.bksoftware.sellingweb.entities.MediumCategory;
-import com.bksoftware.sellingweb.entities.Product;
-import com.bksoftware.sellingweb.entities.SmallCategory;
+import com.bksoftware.sellingweb.entities.category.BigCategory;
+import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
 
 import java.util.List;
 

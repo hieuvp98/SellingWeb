@@ -1,13 +1,9 @@
 package com.bksoftware.sellingweb.service_impl;
 
 
-import com.bksoftware.sellingweb.entities.Feedback;
+import com.bksoftware.sellingweb.entities.product.Feedback;
 import com.bksoftware.sellingweb.repository.FeedbackRepository;
 import com.bksoftware.sellingweb.service.FeedbackService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

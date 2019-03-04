@@ -1,5 +1,7 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.category;
 
+
+import com.bksoftware.sellingweb.entities.category.BigCategory;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,11 +10,11 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "feature")
+@Table(name = "medium_category")
 @SecondaryTables({
-        @SecondaryTable(name = "product_details")
+        @SecondaryTable(name = "big_category")
 })
-public class Feature implements Serializable {
+public class MediumCategory  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,14 +25,10 @@ public class Feature implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private String detail;
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(table = "product_details")
+    @JoinColumn(name = "big_category_id",nullable = false)
     @NotNull
-    private ProductDetails productDetails;
+    private BigCategory bigCategory;
 
-    @NotNull
     private boolean status;
 }

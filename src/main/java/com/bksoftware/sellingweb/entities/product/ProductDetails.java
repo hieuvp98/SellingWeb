@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.product;
 
 import lombok.Data;
 
@@ -6,8 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data

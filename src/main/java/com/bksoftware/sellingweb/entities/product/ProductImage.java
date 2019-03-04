@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.product;
 
 
 import lombok.Data;
@@ -6,15 +6,14 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
-@Table(name = "small_category")
+@Table(name = "product_image")
 @SecondaryTables({
-        @SecondaryTable(name = "medium_category")
+        @SecondaryTable(name = "product_details")
 })
-public class SmallCategory implements Serializable {
+public class ProductImage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,13 +23,15 @@ public class SmallCategory implements Serializable {
     private int id;
 
     @NotNull
-    private String name;
+    private String url;
+
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "medium_category_id",nullable = false)
+    @JoinColumn(name = "product_details_id", nullable = false)
     @NotNull
-    private MediumCategory mediumCategory;
+    private ProductDetails productDetails;
 
     @NotNull
     private boolean status;
+
 }

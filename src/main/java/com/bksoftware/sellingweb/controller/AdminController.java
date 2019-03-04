@@ -1,15 +1,14 @@
 package com.bksoftware.sellingweb.controller;
 
 import com.bksoftware.sellingweb.entities.*;
+import com.bksoftware.sellingweb.entities.category.BigCategory;
+import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
+import com.bksoftware.sellingweb.entities.product.Partner;
+import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.repository.AppAdminRepository;
-import com.bksoftware.sellingweb.service_impl.CategoryService_Impl;
-import com.bksoftware.sellingweb.service_impl.PartnerService_Impl;
-import com.bksoftware.sellingweb.service_impl.ProductDetailsService_Impl;
-import com.bksoftware.sellingweb.service_impl.ProductService_Impl;
-import org.apache.logging.log4j.util.PropertySource;
-import org.hibernate.annotations.Parameter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import com.bksoftware.sellingweb.service_impl.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.util.Random;
 
 @RestController
 public class AdminController {
@@ -29,18 +26,29 @@ public class AdminController {
     private final ProductDetailsService_Impl productDetailsService;
     private final CategoryService_Impl categoryService;
     private final PartnerService_Impl partnerService;
+    private final SendMailService_Impl sendMailService;
+    private final UserMail userMail;
 
-
-    public AdminController(AppAdminRepository appAdminRepository, BCryptPasswordEncoder bCryptPasswordEncoder, ProductService_Impl productService, ProductDetailsService_Impl productDetailsService, CategoryService_Impl categoryService, PartnerService_Impl partnerService) {
+    public AdminController(AppAdminRepository appAdminRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           ProductService_Impl productService,
+                           ProductDetailsService_Impl productDetailsService,
+                           CategoryService_Impl categoryService,
+                           PartnerService_Impl partnerService,
+                           SendMailService_Impl sendMailService,
+                           UserMail user) {
         this.appAdminRepository = appAdminRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.productService = productService;
         this.productDetailsService = productDetailsService;
         this.categoryService = categoryService;
         this.partnerService = partnerService;
+        this.sendMailService = sendMailService;
+        this.userMail = user;
     }
 
     // -------------------------------------ADMIN info------------------------------------
+    //get info
     @RolesAllowed("ADMIN")
     @GetMapping(value = "/api/v1/admin/info")
     public ResponseEntity<AppAdmin> getInfo(HttpServletRequest request) {
@@ -51,6 +59,7 @@ public class AdminController {
         } else return new ResponseEntity<>(appAdmin, HttpStatus.OK);
     }
 
+    //change password
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/api/v1/admin/change-password", params = {"old", "new"})
     public ResponseEntity<String> changePassword(@RequestParam(value = "old") String oldPassword,
@@ -63,6 +72,34 @@ public class AdminController {
             return new ResponseEntity<>("change success", HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>("password is not correct", HttpStatus.BAD_REQUEST);
+    }
+
+    // change info
+    @RolesAllowed("ADMIN")
+    @PutMapping(value = "/api/v1/admin/change-info")
+    public ResponseEntity<String> changeInfo(@RequestBody AppAdmin appAdmin) {
+        try {
+            appAdminRepository.save(appAdmin);
+            return new ResponseEntity<>("changed", HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("change error: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //forget password
+    @GetMapping(value = "/api/v1/public/forget-password", params = "email")
+    public ResponseEntity<String> forgetPassword(@RequestParam(value = "email") String email) {
+        AppAdmin appAdmin = appAdminRepository.findAll().get(0);
+        if (email.equals(appAdmin.getEmail())) {
+            userMail.setEmailAddress(email);
+            int random = new Random(10000).nextInt();
+            String content = " your new password is <b>"+random+"</b>.";
+            appAdmin.setPassword(bCryptPasswordEncoder.encode(String.valueOf(random)));
+            appAdminRepository.save(appAdmin);
+            sendMailService.sendMail(userMail,"New password",content);
+            return new ResponseEntity<>("ok",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("email wrong",HttpStatus.BAD_REQUEST);
     }
     // -----------------------------------Category-----------------------------------------
 
@@ -144,12 +181,13 @@ public class AdminController {
             return new ResponseEntity<>("delete product success", HttpStatus.OK);
         else return new ResponseEntity<>("delete product fail", HttpStatus.BAD_REQUEST);
     }
+
     //---------------------PRODUCT DETAILS----------------------------------------
     //add
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/productDetails",params = "product_id")
+    @PostMapping(value = "/api/v1/admin/productDetails", params = "product_id")
     public ResponseEntity<String> addProductDetails(@RequestBody ProductDetails productDetails,
-                                                    @RequestParam(value = "product_id")int id) {
+                                                    @RequestParam(value = "product_id") int id) {
         productDetails.setProduct(productService.findById(id));
         if (productDetailsService.saveProductDetails(productDetails))
             return new ResponseEntity<>("add productDetails success", HttpStatus.OK);

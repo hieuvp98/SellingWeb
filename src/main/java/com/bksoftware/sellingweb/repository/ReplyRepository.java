@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.repository;
 
 
-import com.bksoftware.sellingweb.entities.Reply;
+import com.bksoftware.sellingweb.entities.product.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

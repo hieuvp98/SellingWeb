@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.service_impl;
 
 
-import com.bksoftware.sellingweb.entities.Reply;
+import com.bksoftware.sellingweb.entities.product.Reply;
 import com.bksoftware.sellingweb.repository.ReplyRepository;
 import com.bksoftware.sellingweb.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,7 @@
 package com.bksoftware.sellingweb.service_impl;
 
-import com.bksoftware.sellingweb.entities.Feature;
-import com.bksoftware.sellingweb.entities.Feedback;
-import com.bksoftware.sellingweb.entities.ProductDetails;
+import com.bksoftware.sellingweb.entities.product.Feature;
+import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.repository.FeatureRepository;
 import com.bksoftware.sellingweb.repository.FeedbackRepository;
 import com.bksoftware.sellingweb.repository.ProductDetailsRepository;

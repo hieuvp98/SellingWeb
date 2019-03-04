@@ -1,6 +1,6 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.product;
 
-
+import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,29 +9,29 @@ import java.io.Serializable;
 
 @Entity
 @Data
-@Table(name = "product_image")
+@Table(name = "feature")
 @SecondaryTables({
         @SecondaryTable(name = "product_details")
 })
-public class ProductImage implements Serializable {
+public class Feature implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
-    private String url;
+    private String name;
 
+    @NotNull
+    private String detail;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_details_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(table = "product_details")
     @NotNull
     private ProductDetails productDetails;
 
     @NotNull
     private boolean status;
-
 }

@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SendMailController {
 
     @Autowired
-    SendMailService_Impl sendMailService;
-
+    private SendMailService_Impl sendMailService;
 
     @Autowired
     private UserMail user;
@@ -29,7 +28,7 @@ public class SendMailController {
     ) {
         user.setEmailAddress(email);
         boolean result = sendMailService.sendMail(user, header, content);
-        if (result == true)
+        if (result)
             return new ResponseEntity<>("Congratulations! Your mail has been send to the user.", HttpStatus.OK);
         return new ResponseEntity<>("send email fail", HttpStatus.FAILED_DEPENDENCY);
     }
