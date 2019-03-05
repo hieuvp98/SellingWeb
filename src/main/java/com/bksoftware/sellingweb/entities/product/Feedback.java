@@ -28,7 +28,7 @@ public class Feedback implements Serializable {
     private String email;
 
     @NotNull
-    private String text;
+    private String content;
 
     @NotNull
     private LocalDateTime time;
