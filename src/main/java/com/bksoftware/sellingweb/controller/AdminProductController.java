@@ -17,90 +17,26 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 @RestController
-public class AdminController {
-    private final AppAdminRepository appAdminRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+public class AdminProductController {
     private final ProductService_Impl productService;
     private final ProductDetailsService_Impl productDetailsService;
     private final CategoryService_Impl categoryService;
     private final PartnerService_Impl partnerService;
-    private final SendMailService_Impl sendMailService;
-    private final UserMail userMail;
 
-    public AdminController(AppAdminRepository appAdminRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                           ProductService_Impl productService,
-                           ProductDetailsService_Impl productDetailsService,
-                           CategoryService_Impl categoryService,
-                           PartnerService_Impl partnerService,
-                           SendMailService_Impl sendMailService,
-                           UserMail user) {
-        this.appAdminRepository = appAdminRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public AdminProductController(
+            ProductService_Impl productService,
+            ProductDetailsService_Impl productDetailsService,
+            CategoryService_Impl categoryService,
+            PartnerService_Impl partnerService) {
         this.productService = productService;
         this.productDetailsService = productDetailsService;
         this.categoryService = categoryService;
         this.partnerService = partnerService;
-        this.sendMailService = sendMailService;
-        this.userMail = user;
     }
 
-    // -------------------------------------ADMIN info------------------------------------
-    //get info
-    @RolesAllowed("ADMIN")
-    @GetMapping(value = "/api/v1/admin/info")
-    public ResponseEntity<AppAdmin> getInfo(HttpServletRequest request) {
-        String username = request.getUserPrincipal().getName();
-        AppAdmin appAdmin = appAdminRepository.findByUsername(username);
-        if (appAdmin == null) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        } else return new ResponseEntity<>(appAdmin, HttpStatus.OK);
-    }
 
-    //change password
-    @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/change-password", params = {"old", "new"})
-    public ResponseEntity<String> changePassword(@RequestParam(value = "old") String oldPassword,
-                                                 @RequestParam(value = "new") String newPassword, HttpServletRequest request) {
-        String username = request.getUserPrincipal().getName();
-        AppAdmin appAdmin = appAdminRepository.findByUsername(username);
-        if (bCryptPasswordEncoder.matches(oldPassword, appAdmin.getPassword())) {
-            appAdmin.setPassword(bCryptPasswordEncoder.encode(newPassword));
-            appAdminRepository.save(appAdmin);
-            return new ResponseEntity<>("change success", HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>("password is not correct", HttpStatus.BAD_REQUEST);
-    }
-
-    // change info
-    @RolesAllowed("ADMIN")
-    @PutMapping(value = "/api/v1/admin/change-info")
-    public ResponseEntity<String> changeInfo(@RequestBody AppAdmin appAdmin) {
-        try {
-            appAdminRepository.save(appAdmin);
-            return new ResponseEntity<>("changed", HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>("change error: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    //forget password
-    @GetMapping(value = "/api/v1/public/forget-password", params = "email")
-    public ResponseEntity<String> forgetPassword(@RequestParam(value = "email") String email) {
-        AppAdmin appAdmin = appAdminRepository.findAll().get(0);
-        if (email.equals(appAdmin.getEmail())) {
-            userMail.setEmailAddress(email);
-            int random = new Random(10000).nextInt();
-            String content = " your new password is <b>"+random+"</b>.";
-            appAdmin.setPassword(bCryptPasswordEncoder.encode(String.valueOf(random)));
-            appAdminRepository.save(appAdmin);
-            sendMailService.sendMail(userMail,"New password",content);
-            return new ResponseEntity<>("ok",HttpStatus.OK);
-        }
-        return new ResponseEntity<>("email wrong",HttpStatus.BAD_REQUEST);
-    }
     // -----------------------------------Category-----------------------------------------
-
+    //add
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/api/v1/admin/big-category")
     public ResponseEntity<String> addBigCategory(@RequestBody BigCategory bigCategory) {
@@ -112,9 +48,9 @@ public class AdminController {
     }
 
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/medium-category", params = "bigCategory_id")
+    @PostMapping(value = "/api/v1/admin/medium-category", params = "big-category-id")
     public ResponseEntity<String> addMediumCategory(@RequestBody MediumCategory mediumCategory,
-                                                    @RequestParam(value = "bigCategory_id") int id) {
+                                                    @RequestParam(value = "big-category-id") int id) {
         BigCategory bigCategory = categoryService.findBigCategoryById(id);
         mediumCategory.setBigCategory(bigCategory);
         mediumCategory.setStatus(true);
@@ -126,9 +62,9 @@ public class AdminController {
     }
 
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/small-category", params = "mediumCategory_id")
+    @PostMapping(value = "/api/v1/admin/small-category", params = "medium-category-id")
     public ResponseEntity<String> addMediumCategory(@RequestBody SmallCategory smallCategory,
-                                                    @RequestParam(value = "mediumCategory_id") int id) {
+                                                    @RequestParam(value = "medium-category-id") int id) {
         MediumCategory mediumCategory = categoryService.findMediumCategoryById(id);
         smallCategory.setMediumCategory(mediumCategory);
         smallCategory.setStatus(true);
@@ -137,8 +73,11 @@ public class AdminController {
         else
             return new ResponseEntity<>("add fail", HttpStatus.BAD_REQUEST);
     }
+    //delete
+
 
     // ---------------------- PARTNER---------------------------------------------------
+    //add
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/api/v1/admin/partner")
     public ResponseEntity<String> addPartner(@RequestBody Partner partner) {
@@ -154,9 +93,13 @@ public class AdminController {
     // -------------------------PRODUCT------------------------------------------------
     //add
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/product")
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+    @PostMapping(value = "/api/v1/admin/product", params = {"small-category-id", "partner-id"})
+    public ResponseEntity<String> addProduct(@RequestBody Product product,
+                                             @RequestParam(name = "small-category-id") int smallCategoryId,
+                                             @RequestParam(name = "partner-id") int partnerId) {
         product.setStatus(true);
+        product.setSmallCategory(categoryService.findSmallCategoryById(smallCategoryId));
+        product.setPartner(partnerService.findById(partnerId));
         if (productService.saveProduct(product))
             return new ResponseEntity<>("add product success", HttpStatus.OK);
         else return new ResponseEntity<>("add product fail", HttpStatus.BAD_REQUEST);
@@ -183,52 +126,60 @@ public class AdminController {
     //---------------------PRODUCT DETAILS----------------------------------------
     //add
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/product-details", params = "product_id")
+    @PostMapping(value = "/api/v1/admin/product-details", params = "product-id")
     public ResponseEntity<String> addProductDetails(@RequestBody ProductDetails productDetails,
-                                                    @RequestParam(value = "product_id") int id) {
+                                                    @RequestParam(value = "product-id") int id) {
+        productDetails.setProductStatus(true);
+        productDetails.setStatus(true);
         productDetails.setProduct(productService.findById(id));
         if (productDetailsService.saveProductDetails(productDetails))
             return new ResponseEntity<>("add productDetails success", HttpStatus.OK);
         else return new ResponseEntity<>("add productDetails fail", HttpStatus.BAD_REQUEST);
     }
+
     //---------------------FEATURE-------------------------------------------------
     //add
     @RolesAllowed("ADMIN")
-    @PostMapping(value ="/api/v1/admin/feature",params = "productDetails_id")
+    @PostMapping(value = "/api/v1/admin/feature", params = "product-details-id")
     public ResponseEntity<String> addFeature(@RequestBody Feature feature,
-                                             @RequestParam(value = "productDetails_id")int id){
+                                             @RequestParam(value = "product-details-id") int id) {
         ProductDetails productDetails = productDetailsService.findById(id);
         feature.setProductDetails(productDetails);
+        feature.setStatus(true);
         if (productDetailsService.saveFeature(feature))
-            return new ResponseEntity<>("add feature success",HttpStatus.OK);
-        return new ResponseEntity<>("add feature fail",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("add feature success", HttpStatus.OK);
+        return new ResponseEntity<>("add feature fail", HttpStatus.BAD_REQUEST);
     }
+
     //update
     @RolesAllowed("ADMIN")
-    @PutMapping(value ="/api/v1/admin/feature")
-    public ResponseEntity<String> updateFeature(@RequestBody Feature feature){
+    @PutMapping(value = "/api/v1/admin/feature")
+    public ResponseEntity<String> updateFeature(@RequestBody Feature feature) {
         if (productDetailsService.saveFeature(feature))
-            return new ResponseEntity<>("update feature success",HttpStatus.OK);
-        return new ResponseEntity<>("update feature fail",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("update feature success", HttpStatus.OK);
+        return new ResponseEntity<>("update feature fail", HttpStatus.BAD_REQUEST);
     }
+
     //delete
     @RolesAllowed("ADMIN")
-    @PutMapping(value ="/api/v1/admin/delete-feature")
-    public ResponseEntity<String> deleteFeature(@RequestBody Feature feature){
+    @PutMapping(value = "/api/v1/admin/delete-feature")
+    public ResponseEntity<String> deleteFeature(@RequestBody Feature feature) {
         feature.setStatus(false);
         if (productDetailsService.saveFeature(feature))
-            return new ResponseEntity<>("delete feature success",HttpStatus.OK);
-        return new ResponseEntity<>("delete feature fail",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("delete feature success", HttpStatus.OK);
+        return new ResponseEntity<>("delete feature fail", HttpStatus.BAD_REQUEST);
     }
+
     //---------------------------productImage--------------------------
     @RolesAllowed("ADMIN")
-    @PostMapping(value ="/api/v1/admin/product-image",params = "productDetails_id")
+    @PostMapping(value = "/api/v1/admin/product-image", params = "product-details-id")
     public ResponseEntity<String> addFeature(@RequestBody ProductImage productImage,
-                                             @RequestParam(value = "productDetails_id")int id){
+                                             @RequestParam(value = "product-details-id") int id) {
         ProductDetails productDetails = productDetailsService.findById(id);
         productImage.setProductDetails(productDetails);
+        productImage.setStatus(true);
         if (productDetailsService.saveProductImage(productImage))
-            return new ResponseEntity<>("add product image success",HttpStatus.OK);
-        return new ResponseEntity<>("add product image fail",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("add product image success", HttpStatus.OK);
+        return new ResponseEntity<>("add product image fail", HttpStatus.BAD_REQUEST);
     }
 }
