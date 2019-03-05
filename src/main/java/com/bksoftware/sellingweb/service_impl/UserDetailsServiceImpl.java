@@ -1,14 +1,12 @@
 package com.bksoftware.sellingweb.service_impl;
 
 import com.bksoftware.sellingweb.entities.AppAdmin;
-import com.bksoftware.sellingweb.repository.AppAdminRepository;
+import com.bksoftware.sellingweb.repository.company.AppAdminRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

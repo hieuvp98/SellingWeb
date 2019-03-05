@@ -1,23 +1,18 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.homepage;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "header_menu")
-public class HeaderMenu implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+@Table(name = "home_image")
+public class HomeImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
     private String name;
 
     @NotNull
@@ -25,5 +20,4 @@ public class HeaderMenu implements Serializable {
 
     @NotNull
     private boolean status;
-
 }

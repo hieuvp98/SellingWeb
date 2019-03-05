@@ -4,10 +4,10 @@ import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
-import com.bksoftware.sellingweb.repository.BigCategoryRepository;
-import com.bksoftware.sellingweb.repository.MediumCategoryRepository;
-import com.bksoftware.sellingweb.repository.ProductRepository;
-import com.bksoftware.sellingweb.repository.SmallCategoryRepository;
+import com.bksoftware.sellingweb.repository.category.BigCategoryRepository;
+import com.bksoftware.sellingweb.repository.category.MediumCategoryRepository;
+import com.bksoftware.sellingweb.repository.product.ProductRepository;
+import com.bksoftware.sellingweb.repository.category.SmallCategoryRepository;
 import com.bksoftware.sellingweb.service.CategoryService;
 import org.springframework.stereotype.Service;
 

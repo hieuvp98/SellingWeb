@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.repository;
+package com.bksoftware.sellingweb.repository.category;
 
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;

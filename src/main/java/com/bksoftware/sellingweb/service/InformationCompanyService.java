@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.service;
 
 
-import com.bksoftware.sellingweb.entities.InformationCompany;
+import com.bksoftware.sellingweb.entities.company.InformationCompany;
 
 import java.util.List;
 

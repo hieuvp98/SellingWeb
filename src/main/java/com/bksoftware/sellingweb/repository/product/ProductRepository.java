@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.repository;
+package com.bksoftware.sellingweb.repository.product;
 
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;

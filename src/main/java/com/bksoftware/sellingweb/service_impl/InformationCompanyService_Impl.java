@@ -1,6 +1,6 @@
 package com.bksoftware.sellingweb.service_impl;
 
-import com.bksoftware.sellingweb.entities.InformationCompany;
+import com.bksoftware.sellingweb.entities.company.InformationCompany;
 import com.bksoftware.sellingweb.repository.InformationCompanyRepository;
 import com.bksoftware.sellingweb.service.InformationCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;

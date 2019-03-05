@@ -3,10 +3,10 @@ package com.bksoftware.sellingweb.service_impl;
 import com.bksoftware.sellingweb.entities.product.Feature;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.entities.product.ProductImage;
-import com.bksoftware.sellingweb.repository.FeatureRepository;
-import com.bksoftware.sellingweb.repository.FeedbackRepository;
-import com.bksoftware.sellingweb.repository.ProductDetailsRepository;
-import com.bksoftware.sellingweb.repository.ProductImageRepository;
+import com.bksoftware.sellingweb.repository.product.FeatureRepository;
+import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
+import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
+import com.bksoftware.sellingweb.repository.product.ProductImageRepository;
 import com.bksoftware.sellingweb.service.ProductDetailsService;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.homepage;
 
 import lombok.Data;
 
@@ -8,8 +8,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "footer_menu_details")
-public class FooterMenuDetails implements Serializable {
+@Table(name = "footer_menu")
+public class FooterMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,8 +20,10 @@ public class FooterMenuDetails implements Serializable {
     @NotNull
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "footer_menu_details_id", nullable = false)
     @NotNull
-    private String url;
+    private FooterMenuDetails footerMenuDetails;
 
     @NotNull
     private boolean status;

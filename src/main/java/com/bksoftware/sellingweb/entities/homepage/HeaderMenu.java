@@ -1,6 +1,5 @@
-package com.bksoftware.sellingweb.entities;
+package com.bksoftware.sellingweb.entities.homepage;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,9 +8,8 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "company")
-
-public class Company  implements Serializable {
+@Table(name = "header_menu")
+public class HeaderMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,16 +21,9 @@ public class Company  implements Serializable {
     private String name;
 
     @NotNull
-    private String address;
-
-    @NotNull
-    private int hotline;
-
-    @NotNull
-    private String email;
-
-    private String coordinates;
+    private String url;
 
     @NotNull
     private boolean status;
+
 }
