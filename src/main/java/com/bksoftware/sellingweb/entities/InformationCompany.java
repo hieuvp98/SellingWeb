@@ -13,7 +13,7 @@ import java.io.Serializable;
 @SecondaryTables({
         @SecondaryTable(name = "company")
 })
-public class CompanyInformation implements Serializable {
+public class InformationCompany implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
