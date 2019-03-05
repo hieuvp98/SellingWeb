@@ -16,4 +16,6 @@ public interface PartnerService {
 
     boolean deletePartner(Partner partner);
 
+    Partner findById(int id);
+
 }

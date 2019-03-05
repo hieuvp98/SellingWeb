@@ -41,6 +41,8 @@ public class Product implements Serializable {
     @Column(name = "img_url")
     private String imgUrl;
 
+    private int view;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "small_category_id", nullable = false)
     @JsonIgnore

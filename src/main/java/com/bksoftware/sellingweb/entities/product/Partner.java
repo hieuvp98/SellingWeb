@@ -6,8 +6,6 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -26,6 +24,8 @@ public class Partner implements Serializable {
 
     @Column(name = "img_url")
     private String imgUrl;
+
+    private String present;
 
     @NotNull
     private boolean status;

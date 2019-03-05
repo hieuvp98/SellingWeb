@@ -57,4 +57,11 @@ public class PartnerService_Impl implements PartnerService {
             return false;
         }
     }
+
+    @Override
+    public Partner findById(int id) {
+        if (partnerRepository.findById(id).isPresent())
+            return partnerRepository.findById(id).get();
+        return null;
+    }
 }

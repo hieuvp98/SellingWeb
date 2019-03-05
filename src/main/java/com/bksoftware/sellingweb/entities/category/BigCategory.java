@@ -23,6 +23,10 @@ public class BigCategory implements Serializable {
     private String name;
 
     @NotNull
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    @NotNull
     private boolean status;
 
 }

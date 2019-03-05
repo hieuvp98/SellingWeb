@@ -28,7 +28,7 @@ public class Feature implements Serializable {
     private String detail;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(table = "product_details")
+    @JoinColumn(name = "product_details_id")
     @NotNull
     private ProductDetails productDetails;
 
