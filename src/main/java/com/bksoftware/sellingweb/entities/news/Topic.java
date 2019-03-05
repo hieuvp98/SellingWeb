@@ -5,11 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
 @Entity
 @Table(name = "topic")
-public class Topic {
+public class Topic implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

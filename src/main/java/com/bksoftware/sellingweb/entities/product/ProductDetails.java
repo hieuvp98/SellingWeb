@@ -1,5 +1,6 @@
 package com.bksoftware.sellingweb.entities.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class ProductDetails implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id",nullable = false)
+    @JsonIgnore
     @NotNull
     private Product product;
 

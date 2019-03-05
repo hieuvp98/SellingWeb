@@ -28,14 +28,13 @@ public class ProductController {
             @RequestParam("name") String name,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "20") int size,
-            @RequestParam(name = "sort", required = false, defaultValue = "ASC") String sort
+            @RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort
     ) {
         Sort sortable = productService.sortData(sort);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
         //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
         Pageable pageable = PageRequest.of(page - 1, size, sortable);
-
         return new ResponseEntity<>(productService.findProductByName(name, pageable).getContent(), HttpStatus.OK);
     }
 

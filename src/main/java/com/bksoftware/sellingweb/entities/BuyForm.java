@@ -19,7 +19,6 @@ public class BuyForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,7 +26,6 @@ public class BuyForm implements Serializable {
     private String name;
 
     @Column(name = "phone_number")
-
     @NotNull
     private int phoneNumber;
 
@@ -37,10 +35,14 @@ public class BuyForm implements Serializable {
     @NotNull
     private String address;
 
+
     private String note;
 
     @NotNull
     private LocalDate date;
+
+
+    private boolean checked;
 
     @NotNull
     private boolean status;
