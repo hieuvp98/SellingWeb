@@ -27,6 +27,8 @@ public class Partner implements Serializable {
     @Column(name = "img_url")
     private String imgUrl;
 
+    private String present;
+
     @NotNull
     private boolean status;
 }

@@ -4,9 +4,7 @@ import com.bksoftware.sellingweb.entities.*;
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
-import com.bksoftware.sellingweb.entities.product.Partner;
-import com.bksoftware.sellingweb.entities.product.Product;
-import com.bksoftware.sellingweb.entities.product.ProductDetails;
+import com.bksoftware.sellingweb.entities.product.*;
 import com.bksoftware.sellingweb.repository.AppAdminRepository;
 import com.bksoftware.sellingweb.service_impl.*;
 import org.springframework.http.HttpStatus;
@@ -114,7 +112,7 @@ public class AdminController {
     }
 
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/mediumCategory", params = "bigCategory_id")
+    @PostMapping(value = "/api/v1/admin/medium-category", params = "bigCategory_id")
     public ResponseEntity<String> addMediumCategory(@RequestBody MediumCategory mediumCategory,
                                                     @RequestParam(value = "bigCategory_id") int id) {
         BigCategory bigCategory = categoryService.findBigCategoryById(id);
@@ -128,7 +126,7 @@ public class AdminController {
     }
 
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/smallCategory", params = "mediumCategory_id")
+    @PostMapping(value = "/api/v1/admin/small-category", params = "mediumCategory_id")
     public ResponseEntity<String> addMediumCategory(@RequestBody SmallCategory smallCategory,
                                                     @RequestParam(value = "mediumCategory_id") int id) {
         MediumCategory mediumCategory = categoryService.findMediumCategoryById(id);
@@ -185,12 +183,52 @@ public class AdminController {
     //---------------------PRODUCT DETAILS----------------------------------------
     //add
     @RolesAllowed("ADMIN")
-    @PostMapping(value = "/api/v1/admin/productDetails", params = "product_id")
+    @PostMapping(value = "/api/v1/admin/product-details", params = "product_id")
     public ResponseEntity<String> addProductDetails(@RequestBody ProductDetails productDetails,
                                                     @RequestParam(value = "product_id") int id) {
         productDetails.setProduct(productService.findById(id));
         if (productDetailsService.saveProductDetails(productDetails))
             return new ResponseEntity<>("add productDetails success", HttpStatus.OK);
         else return new ResponseEntity<>("add productDetails fail", HttpStatus.BAD_REQUEST);
+    }
+    //---------------------FEATURE-------------------------------------------------
+    //add
+    @RolesAllowed("ADMIN")
+    @PostMapping(value ="/api/v1/admin/feature",params = "productDetails_id")
+    public ResponseEntity<String> addFeature(@RequestBody Feature feature,
+                                             @RequestParam(value = "productDetails_id")int id){
+        ProductDetails productDetails = productDetailsService.findById(id);
+        feature.setProductDetails(productDetails);
+        if (productDetailsService.saveFeature(feature))
+            return new ResponseEntity<>("add feature success",HttpStatus.OK);
+        return new ResponseEntity<>("add feature fail",HttpStatus.BAD_REQUEST);
+    }
+    //update
+    @RolesAllowed("ADMIN")
+    @PutMapping(value ="/api/v1/admin/feature")
+    public ResponseEntity<String> updateFeature(@RequestBody Feature feature){
+        if (productDetailsService.saveFeature(feature))
+            return new ResponseEntity<>("update feature success",HttpStatus.OK);
+        return new ResponseEntity<>("update feature fail",HttpStatus.BAD_REQUEST);
+    }
+    //delete
+    @RolesAllowed("ADMIN")
+    @PutMapping(value ="/api/v1/admin/delete-feature")
+    public ResponseEntity<String> deleteFeature(@RequestBody Feature feature){
+        feature.setStatus(false);
+        if (productDetailsService.saveFeature(feature))
+            return new ResponseEntity<>("delete feature success",HttpStatus.OK);
+        return new ResponseEntity<>("delete feature fail",HttpStatus.BAD_REQUEST);
+    }
+    //---------------------------productImage--------------------------
+    @RolesAllowed("ADMIN")
+    @PostMapping(value ="/api/v1/admin/product-image",params = "productDetails_id")
+    public ResponseEntity<String> addFeature(@RequestBody ProductImage productImage,
+                                             @RequestParam(value = "productDetails_id")int id){
+        ProductDetails productDetails = productDetailsService.findById(id);
+        productImage.setProductDetails(productDetails);
+        if (productDetailsService.saveProductImage(productImage))
+            return new ResponseEntity<>("add product image success",HttpStatus.OK);
+        return new ResponseEntity<>("add product image fail",HttpStatus.BAD_REQUEST);
     }
 }

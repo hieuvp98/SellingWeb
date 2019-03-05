@@ -2,9 +2,11 @@ package com.bksoftware.sellingweb.service_impl;
 
 import com.bksoftware.sellingweb.entities.product.Feature;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
+import com.bksoftware.sellingweb.entities.product.ProductImage;
 import com.bksoftware.sellingweb.repository.FeatureRepository;
 import com.bksoftware.sellingweb.repository.FeedbackRepository;
 import com.bksoftware.sellingweb.repository.ProductDetailsRepository;
+import com.bksoftware.sellingweb.repository.ProductImageRepository;
 import com.bksoftware.sellingweb.service.ProductDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,12 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
 
     private final ProductDetailsRepository productDetailsRepository;
     private final FeatureRepository featureRepository;
-    private final FeedbackRepository feedbackRepository;
+    private final ProductImageRepository productImageRepository;
 
-    public ProductDetailsService_Impl(ProductDetailsRepository productDetailsRepository, FeatureRepository featureRepository, FeedbackRepository feedbackRepository) {
+    public ProductDetailsService_Impl(ProductDetailsRepository productDetailsRepository, FeatureRepository featureRepository, FeedbackRepository feedbackRepository, ProductImageRepository productImageRepository) {
         this.productDetailsRepository = productDetailsRepository;
         this.featureRepository = featureRepository;
-        this.feedbackRepository = feedbackRepository;
+        this.productImageRepository = productImageRepository;
     }
 
     @Override
@@ -35,6 +37,11 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
             LOGGER.log(Level.SEVERE, "save-productDetails-error", ex.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public ProductDetails findById(int id) {
+        return productDetailsRepository.findById(id);
     }
 
     @Override
@@ -56,6 +63,32 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
             return true;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "save-feature-error", ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean saveProductImage(ProductImage productImage) {
+        try {
+            productImage.setStatus(true);
+            productImageRepository.save(productImage);
+            return true;
+        }
+        catch (Exception ex){
+            LOGGER.log(Level.SEVERE,"save-product-image-error : {0}",ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteProductImage(ProductImage productImage) {
+        try {
+            productImage.setStatus(false);
+            productImageRepository.save(productImage);
+            return true;
+        }
+        catch (Exception ex){
+            LOGGER.log(Level.SEVERE,"delete-product-image-error : {0}",ex.getMessage());
             return false;
         }
     }
