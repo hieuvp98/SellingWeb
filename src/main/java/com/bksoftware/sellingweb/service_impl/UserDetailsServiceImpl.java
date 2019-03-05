@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.service_impl;
 
 import com.bksoftware.sellingweb.entities.AppAdmin;
-import com.bksoftware.sellingweb.repository.company.AppAdminRepository;
+import com.bksoftware.sellingweb.repository.AppAdminRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

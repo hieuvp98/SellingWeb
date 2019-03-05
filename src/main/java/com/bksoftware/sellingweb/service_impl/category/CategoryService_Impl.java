@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service_impl;
+package com.bksoftware.sellingweb.service_impl.category;
 
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
@@ -8,7 +8,8 @@ import com.bksoftware.sellingweb.repository.category.BigCategoryRepository;
 import com.bksoftware.sellingweb.repository.category.MediumCategoryRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.repository.category.SmallCategoryRepository;
-import com.bksoftware.sellingweb.service.CategoryService;
+import com.bksoftware.sellingweb.service.category.CategoryService;
+import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

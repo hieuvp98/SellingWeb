@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.repository;
+package com.bksoftware.sellingweb.repository.company;
 
 import com.bksoftware.sellingweb.entities.company.InformationCompany;
 import org.springframework.data.jpa.repository.JpaRepository;

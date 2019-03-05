@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service;
+package com.bksoftware.sellingweb.service.product;
 
 import com.bksoftware.sellingweb.entities.product.Partner;
 import org.springframework.stereotype.Service;

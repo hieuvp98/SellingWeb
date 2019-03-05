@@ -2,9 +2,9 @@ package com.bksoftware.sellingweb.controller.admin;
 
 import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
-import com.bksoftware.sellingweb.service_impl.CategoryService_Impl;
-import com.bksoftware.sellingweb.service_impl.PartnerService_Impl;
-import com.bksoftware.sellingweb.service_impl.ProductService_Impl;
+import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
+import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
+import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

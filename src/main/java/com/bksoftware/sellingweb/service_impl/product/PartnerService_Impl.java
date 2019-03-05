@@ -1,8 +1,8 @@
-package com.bksoftware.sellingweb.service_impl;
+package com.bksoftware.sellingweb.service_impl.product;
 
 import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.repository.product.PartnerRepository;
-import com.bksoftware.sellingweb.service.PartnerService;
+import com.bksoftware.sellingweb.service.product.PartnerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -2,7 +2,7 @@ package com.bksoftware.sellingweb.controller.admin;
 
 import com.bksoftware.sellingweb.entities.AppAdmin;
 import com.bksoftware.sellingweb.entities.UserMail;
-import com.bksoftware.sellingweb.repository.company.AppAdminRepository;
+import com.bksoftware.sellingweb.repository.AppAdminRepository;
 import com.bksoftware.sellingweb.service_impl.SendMailService_Impl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

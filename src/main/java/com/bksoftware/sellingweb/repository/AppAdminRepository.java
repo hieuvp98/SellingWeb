@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.repository.company;
+package com.bksoftware.sellingweb.repository;
 
 import com.bksoftware.sellingweb.entities.AppAdmin;
 import org.springframework.data.repository.CrudRepository;

@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service;
+package com.bksoftware.sellingweb.service.company;
 
 
 import com.bksoftware.sellingweb.entities.company.InformationCompany;

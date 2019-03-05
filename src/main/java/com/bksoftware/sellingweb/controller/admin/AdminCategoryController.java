@@ -3,7 +3,7 @@ package com.bksoftware.sellingweb.controller.admin;
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
-import com.bksoftware.sellingweb.service_impl.CategoryService_Impl;
+import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

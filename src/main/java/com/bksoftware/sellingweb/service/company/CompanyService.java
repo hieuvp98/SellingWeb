@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service;
+package com.bksoftware.sellingweb.service.company;
 
 
 

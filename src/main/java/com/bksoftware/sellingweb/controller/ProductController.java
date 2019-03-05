@@ -1,7 +1,7 @@
 package com.bksoftware.sellingweb.controller;
 
 import com.bksoftware.sellingweb.entities.product.Product;
-import com.bksoftware.sellingweb.service_impl.ProductService_Impl;
+import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

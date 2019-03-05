@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service_impl;
+package com.bksoftware.sellingweb.service_impl.product;
 
 import com.bksoftware.sellingweb.entities.product.Feature;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
@@ -7,7 +7,7 @@ import com.bksoftware.sellingweb.repository.product.FeatureRepository;
 import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductImageRepository;
-import com.bksoftware.sellingweb.service.ProductDetailsService;
+import com.bksoftware.sellingweb.service.product.ProductDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Level;

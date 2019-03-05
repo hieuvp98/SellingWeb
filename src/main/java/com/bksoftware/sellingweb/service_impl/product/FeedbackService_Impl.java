@@ -1,9 +1,9 @@
-package com.bksoftware.sellingweb.service_impl;
+package com.bksoftware.sellingweb.service_impl.product;
 
 
 import com.bksoftware.sellingweb.entities.product.Feedback;
 import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
-import com.bksoftware.sellingweb.service.FeedbackService;
+import com.bksoftware.sellingweb.service.product.FeedbackService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
