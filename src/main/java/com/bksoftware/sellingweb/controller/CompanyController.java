@@ -1,8 +1,8 @@
 
 package com.bksoftware.sellingweb.controller;
 
-import com.bksoftware.sellingweb.entities.Company;
-import com.bksoftware.sellingweb.service_impl.CompanyService_Impl;
+import com.bksoftware.sellingweb.entities.company.Company;
+import com.bksoftware.sellingweb.service_impl.company.CompanyService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,5 @@
 package com.bksoftware.sellingweb.entities.product;
 
-import com.bksoftware.sellingweb.entities.BuyForm;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
