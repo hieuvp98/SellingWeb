@@ -2,7 +2,7 @@ package com.bksoftware.sellingweb.service_impl;
 
 
 import com.bksoftware.sellingweb.entities.UserMail;
-import com.bksoftware.sellingweb.service.SendMailService;
+import com.bksoftware.sellingweb.service.news.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;

@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service;
+package com.bksoftware.sellingweb.service.news;
 
 import com.bksoftware.sellingweb.entities.news.News;
 
@@ -9,4 +9,6 @@ public interface NewsService {
     List<News> findAllNews();
 
     List<News> findAllNewsByViews();
+
+    List<News> findAllNewsByTime();
 }

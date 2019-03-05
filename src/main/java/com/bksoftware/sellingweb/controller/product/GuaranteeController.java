@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.controller;
+package com.bksoftware.sellingweb.controller.product;
 
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package com.bksoftware.sellingweb.service_impl;
+package com.bksoftware.sellingweb.service_impl.news;
 
 import com.bksoftware.sellingweb.entities.news.Topic;
-import com.bksoftware.sellingweb.repository.TopicRepository;
-import com.bksoftware.sellingweb.service.TopicService;
+import com.bksoftware.sellingweb.repository.news.TopicRepository;
+import com.bksoftware.sellingweb.service.news.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

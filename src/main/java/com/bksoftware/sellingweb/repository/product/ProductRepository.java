@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(
-            value = "SELECT p.* FROM productDetails p pd. WHERE MATCH(p.name) AGAINST(:name_product IN BOOLEAN MODE)",
+            value = "SELECT p.* FROM product p  WHERE MATCH(p.name) AGAINST(:name_product IN BOOLEAN MODE)",
             nativeQuery = true)
     Page<Product> findByName(@Param("name_product") String name, Pageable pageable);
 

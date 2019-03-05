@@ -1,7 +1,7 @@
-package com.bksoftware.sellingweb.controller;
+package com.bksoftware.sellingweb.controller.news;
 
 import com.bksoftware.sellingweb.entities.news.Topic;
-import com.bksoftware.sellingweb.service_impl.TopicService_Impl;
+import com.bksoftware.sellingweb.service_impl.news.TopicService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

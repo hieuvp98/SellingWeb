@@ -14,10 +14,10 @@ import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 
-public class SellingwebApplication {
+public class SellingWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SellingwebApplication.class, args);
+        SpringApplication.run(SellingWebApplication.class, args);
     }
 
     @Bean

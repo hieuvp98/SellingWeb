@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.controller;
+package com.bksoftware.sellingweb.controller.feedback;
 
 import com.bksoftware.sellingweb.entities.product.Feedback;
 import com.bksoftware.sellingweb.service_impl.product.FeedbackService_Impl;

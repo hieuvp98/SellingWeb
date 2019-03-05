@@ -1,5 +1,5 @@
 
-package com.bksoftware.sellingweb.controller;
+package com.bksoftware.sellingweb.controller.company;
 
 import com.bksoftware.sellingweb.entities.company.Company;
 import com.bksoftware.sellingweb.service_impl.company.CompanyService_Impl;

@@ -1,11 +1,14 @@
-package com.bksoftware.sellingweb.service_impl;
+package com.bksoftware.sellingweb.service_impl.news;
 
 import com.bksoftware.sellingweb.entities.news.News;
-import com.bksoftware.sellingweb.repository.NewsRepository;
-import com.bksoftware.sellingweb.service.NewsService;
+import com.bksoftware.sellingweb.repository.news.NewsRepository;
+import com.bksoftware.sellingweb.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,4 +42,20 @@ public class NewsService_Impl implements NewsService {
         }
         return null;
     }
+
+    @Override
+    public List<News> findAllNewsByTime() {
+        try {
+            List<News> newsList = newsRepository.findAll();
+            LocalDateTime localTime_n1 = LocalDateTime.now();
+            LocalDateTime localTime_n2 = LocalDateTime.now();
+            newsList.sort((n1, n2) -> (int) ChronoUnit.MINUTES.between(n1.getTime(), localTime_n1)
+                    - (int) ChronoUnit.HOURS.between(n2.getTime(), localTime_n2));
+            return newsList;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-news-by-views-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
 }

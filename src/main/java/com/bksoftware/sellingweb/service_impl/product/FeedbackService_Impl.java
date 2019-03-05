@@ -2,11 +2,23 @@ package com.bksoftware.sellingweb.service_impl.product;
 
 
 import com.bksoftware.sellingweb.entities.product.Feedback;
+import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
+import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
+import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.service.product.FeedbackService;
+import com.bksoftware.sellingweb.service.product.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +54,7 @@ public class FeedbackService_Impl implements FeedbackService {
         return null;
 
     }
+
 
 
 }

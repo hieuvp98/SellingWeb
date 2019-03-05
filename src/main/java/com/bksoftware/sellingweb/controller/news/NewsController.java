@@ -1,8 +1,8 @@
-package com.bksoftware.sellingweb.controller;
+package com.bksoftware.sellingweb.controller.news;
 
 
 import com.bksoftware.sellingweb.entities.news.News;
-import com.bksoftware.sellingweb.service_impl.NewsService_Impl;
+import com.bksoftware.sellingweb.service_impl.news.NewsService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +31,15 @@ public class NewsController {
     @GetMapping("/views")
     public ResponseEntity<List<News>> findAllNewsByViews() {
         List<News> newsList = newsService.findAllNewsByViews();
+        if (newsList != null) {
+            return new ResponseEntity<>(newsList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/time")
+    public ResponseEntity<List<News>> findAllNewsByTime(){
+        List<News> newsList = newsService.findAllNewsByTime();
         if (newsList != null) {
             return new ResponseEntity<>(newsList, HttpStatus.OK);
         }
