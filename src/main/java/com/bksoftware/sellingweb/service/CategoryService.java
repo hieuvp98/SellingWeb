@@ -29,9 +29,9 @@ public interface CategoryService {
 
     boolean saveSmallCategory(SmallCategory smallCategory);
 
-    void deleteBigCategory(BigCategory bigCategory);
+    boolean deleteBigCategory(BigCategory bigCategory);
 
-    void deleteMediumCategory(MediumCategory mediumCategory);
+    boolean deleteMediumCategory(MediumCategory mediumCategory);
 
-    void deleteSmallCategory(SmallCategory smallCategory);
+    boolean deleteSmallCategory(SmallCategory smallCategory);
 }

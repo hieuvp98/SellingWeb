@@ -103,20 +103,38 @@ public class CategoryService_Impl implements CategoryService {
 
 
     @Override
-    public void deleteBigCategory(BigCategory bigCategory) {
-        bigCategory.setStatus(false);
-        bigCategoryRepository.save(bigCategory);
+    public boolean deleteBigCategory(BigCategory bigCategory) {
+        try {
+            bigCategory.setStatus(false);
+            bigCategoryRepository.save(bigCategory);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-error", ex.getMessage());
+            return false;
+        }
     }
 
     @Override
-    public void deleteMediumCategory(MediumCategory mediumCategory) {
-        mediumCategory.setStatus(false);
-        mediumCategoryRepository.save(mediumCategory);
+    public boolean deleteMediumCategory(MediumCategory mediumCategory) {
+        try {
+            mediumCategory.setStatus(false);
+            mediumCategoryRepository.save(mediumCategory);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-error", ex.getMessage());
+            return false;
+        }
     }
 
     @Override
-    public void deleteSmallCategory(SmallCategory smallCategory) {
-        smallCategory.setStatus(false);
-        smallCategoryRepository.save(smallCategory);
+    public boolean deleteSmallCategory(SmallCategory smallCategory) {
+        try {
+            smallCategory.setStatus(false);
+            smallCategoryRepository.save(smallCategory);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-error", ex.getMessage());
+            return false;
+        }
     }
 }

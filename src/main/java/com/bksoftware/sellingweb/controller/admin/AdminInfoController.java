@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.controller;
+package com.bksoftware.sellingweb.controller.admin;
 
 import com.bksoftware.sellingweb.entities.AppAdmin;
 import com.bksoftware.sellingweb.entities.UserMail;
