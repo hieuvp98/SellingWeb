@@ -20,11 +20,6 @@ public class FooterMenu implements Serializable {
     @NotNull
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "footer_menu_details_id", nullable = false)
-    @NotNull
-    private FooterMenuDetails footerMenuDetails;
-
     @NotNull
     private boolean status;
 }

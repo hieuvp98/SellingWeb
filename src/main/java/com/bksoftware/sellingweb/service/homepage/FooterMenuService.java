@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface FooterMenuService {
 
+    FooterMenu findById(int id);
+
     boolean saveFooterMenu(FooterMenu footerMenu);
 
     boolean deleteFooterMenu(FooterMenu footerMenu);

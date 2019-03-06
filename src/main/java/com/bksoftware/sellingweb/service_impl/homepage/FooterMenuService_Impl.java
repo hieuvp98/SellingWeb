@@ -25,6 +25,16 @@ public class FooterMenuService_Impl implements FooterMenuService {
     }
 
     @Override
+    public FooterMenu findById(int id) {
+        try {
+            return footerMenuRepository.findById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-by-id-error: {0}", ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public boolean saveFooterMenu(FooterMenu footerMenu) {
         try {
             footerMenuRepository.save(footerMenu);

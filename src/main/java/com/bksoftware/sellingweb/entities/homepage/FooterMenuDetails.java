@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "footer_menu_details")
+@SecondaryTable(name = "footer_menu")
 public class FooterMenuDetails implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +23,10 @@ public class FooterMenuDetails implements Serializable {
 
     @NotNull
     private String url;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "footer_menu_id")
+    private FooterMenu footerMenu;
 
     @NotNull
     private boolean status;
