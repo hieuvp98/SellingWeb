@@ -4,10 +4,11 @@ import com.bksoftware.sellingweb.entities.news.News;
 import com.bksoftware.sellingweb.repository.news.NewsRepository;
 import com.bksoftware.sellingweb.service.news.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,9 +23,9 @@ public class NewsService_Impl implements NewsService {
     NewsRepository newsRepository;
 
     @Override
-    public List<News> findAllNews() {
+    public Page<News> findAllNews(Pageable pageable) {
         try {
-            return newsRepository.findAll();
+            return newsRepository.findAllNews(pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-news-error : {0}", ex.getMessage());
         }
@@ -54,6 +55,16 @@ public class NewsService_Impl implements NewsService {
             return newsList;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-news-by-views-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<News> findAllNewsByTopic(String nameTopic, Pageable pageable) {
+        try {
+            return newsRepository.findAllNewsByTopic(nameTopic, pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-news-by-topic-error : {0}", ex.getMessage());
         }
         return null;
     }

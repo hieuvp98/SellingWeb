@@ -1,4 +1,4 @@
-package com.bksoftware.sellingweb.service.news;
+package com.bksoftware.sellingweb.service;
 
 import com.bksoftware.sellingweb.entities.UserMail;
 
