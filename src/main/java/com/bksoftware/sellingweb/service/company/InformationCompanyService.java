@@ -8,4 +8,8 @@ import java.util.List;
 public interface InformationCompanyService {
 
     List<InformationCompany> findAllCompanyInformation();
+
+    boolean saveInformationCompany(InformationCompany informationCompany);
+
+    boolean deleteInformationCompany(InformationCompany informationCompany);
 }

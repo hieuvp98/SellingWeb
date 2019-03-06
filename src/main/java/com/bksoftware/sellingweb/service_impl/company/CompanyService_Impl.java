@@ -25,10 +25,41 @@ public class CompanyService_Impl implements CompanyService {
     @Override
     public List<Company> findAllCompanies() {
         try {
-            return  companyRepository.findAll();
+            return companyRepository.findAll();
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-company-error : {0}", ex.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public Company findById(int id) {
+        try {
+            return companyRepository.findById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-by-id-company-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public boolean saveCompany(Company company) {
+        try {
+            companyRepository.save(company);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-company-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCompany(Company company) {
+        try {
+            company.setStatus(false);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-company-error : {0}", ex.getMessage());
+        }
+        return false;
     }
 }

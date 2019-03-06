@@ -24,7 +24,7 @@ public class FooterMenuDetails implements Serializable {
     @NotNull
     private String url;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "footer_menu_id")
     private FooterMenu footerMenu;
 

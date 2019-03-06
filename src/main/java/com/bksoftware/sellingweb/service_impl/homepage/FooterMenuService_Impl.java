@@ -35,6 +35,11 @@ public class FooterMenuService_Impl implements FooterMenuService {
     }
 
     @Override
+    public FooterMenuDetails findFooterMenuDetailsById(int id) {
+        return null;
+    }
+
+    @Override
     public boolean saveFooterMenu(FooterMenu footerMenu) {
         try {
             footerMenuRepository.save(footerMenu);

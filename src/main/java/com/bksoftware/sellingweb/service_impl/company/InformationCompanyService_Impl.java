@@ -14,10 +14,14 @@ import java.util.logging.Logger;
 public class InformationCompanyService_Impl implements InformationCompanyService {
 
 
-    Logger LOGGER = Logger.getLogger(InformationCompanyService_Impl.class.getName());
+    private static Logger LOGGER = Logger.getLogger(InformationCompanyService_Impl.class.getName());
 
-    @Autowired
+    private final
     InformationCompanyRepository informationCompanyRepository;
+
+    public InformationCompanyService_Impl(InformationCompanyRepository informationCompanyRepository) {
+        this.informationCompanyRepository = informationCompanyRepository;
+    }
 
     @Override
     public List<InformationCompany> findAllCompanyInformation() {
@@ -27,6 +31,28 @@ public class InformationCompanyService_Impl implements InformationCompanyService
             LOGGER.log(Level.SEVERE, "find-all-information-company-error : {0}", ex.getMessage());
         }
         return null;
+    }
 
+    @Override
+    public boolean saveInformationCompany(InformationCompany informationCompany) {
+        try {
+            informationCompanyRepository.save(informationCompany);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-information-company-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteInformationCompany(InformationCompany informationCompany) {
+        try {
+            informationCompany.setStatus(false);
+            informationCompanyRepository.save(informationCompany);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-information-company-error : {0}", ex.getMessage());
+        }
+        return false;
     }
 }

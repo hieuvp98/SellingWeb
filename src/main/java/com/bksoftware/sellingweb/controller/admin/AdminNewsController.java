@@ -48,7 +48,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PutMapping("/delete-topic")
-    public ResponseEntity<Object> deleteNews(@RequestBody Topic topic) {
+    public ResponseEntity<Object> deleteTopic(@RequestBody Topic topic) {
         if (topicService.deleteTopic(topic))
             return new ResponseEntity<>("delete success", HttpStatus.OK);
         else
@@ -59,7 +59,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PostMapping("/news")
-    public ResponseEntity<Object> createTopic(
+    public ResponseEntity<Object> createNews(
             @RequestBody News news,
             @RequestParam(name = "topic-id") int topicId
     ) {
@@ -73,7 +73,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PutMapping("/news")
-    public ResponseEntity<Object> updateTopic(@RequestBody News news) {
+    public ResponseEntity<Object> updateNews(@RequestBody News news) {
         if (newsService.saveNews(news))
             return new ResponseEntity<>("update success", HttpStatus.OK);
         else
@@ -82,7 +82,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PutMapping("/delete-news")
-    public ResponseEntity<Object> deleteTopic(@RequestBody News news) {
+    public ResponseEntity<Object> deleteNews(@RequestBody News news) {
         if (newsService.deleteNews(news))
             return new ResponseEntity<>("delete success", HttpStatus.OK);
         else
@@ -93,7 +93,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PostMapping("/image-news")
-    public ResponseEntity<Object> createTopic(
+    public ResponseEntity<Object> createImageNews(
             @RequestBody NewsImage newsImage,
             @RequestParam(name = "news-id") int newsId
     ) {
@@ -107,7 +107,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PutMapping("/image-news")
-    public ResponseEntity<Object> updateTopic(@RequestBody NewsImage newsImage) {
+    public ResponseEntity<Object> updateImageNews(@RequestBody NewsImage newsImage) {
         if (newsImageService.saveNewsImage(newsImage))
             return new ResponseEntity<>("update success", HttpStatus.OK);
         else
@@ -116,7 +116,7 @@ public class AdminNewsController {
 
     @RolesAllowed("ADMIN")
     @PutMapping("/delete-image-news")
-    public ResponseEntity<Object> deleteTopic(@RequestBody NewsImage newsImage) {
+    public ResponseEntity<Object> deleteImagesNews(@RequestBody NewsImage newsImage) {
         if (newsImageService.deleteNewsImage(newsImage))
             return new ResponseEntity<>("delete success", HttpStatus.OK);
         else

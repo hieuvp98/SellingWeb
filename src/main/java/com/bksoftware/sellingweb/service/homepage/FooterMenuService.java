@@ -9,6 +9,8 @@ public interface FooterMenuService {
 
     FooterMenu findById(int id);
 
+    FooterMenuDetails findFooterMenuDetailsById(int id);
+
     boolean saveFooterMenu(FooterMenu footerMenu);
 
     boolean deleteFooterMenu(FooterMenu footerMenu);

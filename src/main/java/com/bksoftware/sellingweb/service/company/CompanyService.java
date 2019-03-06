@@ -11,4 +11,10 @@ public interface CompanyService {
 
     List<Company> findAllCompanies();
 
+    Company findById(int id);
+
+    boolean saveCompany(Company company);
+
+    boolean deleteCompany(Company company);
+
 }
