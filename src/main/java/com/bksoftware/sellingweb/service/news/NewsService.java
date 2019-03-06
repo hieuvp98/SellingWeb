@@ -16,4 +16,10 @@ public interface NewsService {
 
     Page<News> findAllNewsByTopic(String nameTopic, Pageable pageable);
 
+    News findById(int id);
+
+    boolean saveNews(News news);
+
+    boolean deleteNews(News news);
+
 }

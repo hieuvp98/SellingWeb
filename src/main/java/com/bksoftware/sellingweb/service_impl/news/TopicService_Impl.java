@@ -27,4 +27,37 @@ public class TopicService_Impl implements TopicService {
         }
         return null;
     }
+
+    @Override
+    public Topic findById(int id) {
+        try {
+            return topicRepository.findById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-topic-by-id-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public boolean saveTopic(Topic topic) {
+        try {
+            topicRepository.save(topic);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-topic-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteTopic(Topic topic) {
+        try {
+            topic.setStatus(false);
+            topicRepository.save(topic);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-topic-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
 }

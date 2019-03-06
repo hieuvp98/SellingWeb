@@ -24,4 +24,6 @@ public class NewsImage implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "news_id")
     private News news;
+
+    private boolean status;
 }

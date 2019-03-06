@@ -16,4 +16,6 @@ public interface NewsRepository extends JpaRepository<News, Integer> {
 
     @Query("select  s from  News s join s.topic t where  t.name = :nameTopic")
     Page<News> findAllNewsByTopic(@Param("nameTopic") String nameTopic, Pageable pageable);
+
+    News findById(int id);
 }

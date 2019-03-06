@@ -51,7 +51,7 @@ public class NewsService_Impl implements NewsService {
             LocalDateTime localTime_n1 = LocalDateTime.now();
             LocalDateTime localTime_n2 = LocalDateTime.now();
             newsList.sort((n1, n2) -> -(int) ChronoUnit.MINUTES.between(n1.getTime(), localTime_n1)
-                    +(int) ChronoUnit.HOURS.between(n2.getTime(), localTime_n2));
+                    + (int) ChronoUnit.HOURS.between(n2.getTime(), localTime_n2));
             return newsList;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-news-by-views-error : {0}", ex.getMessage());
@@ -67,6 +67,39 @@ public class NewsService_Impl implements NewsService {
             LOGGER.log(Level.SEVERE, "find-all-news-by-topic-error : {0}", ex.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public News findById(int id) {
+        try {
+            return newsRepository.findById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-news-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public boolean saveNews(News news) {
+        try {
+            newsRepository.save(news);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-news-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteNews(News news) {
+        try {
+            news.setStatus(false);
+            newsRepository.save(news);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-news-error : {0}", ex.getMessage());
+        }
+        return false;
     }
 
 }

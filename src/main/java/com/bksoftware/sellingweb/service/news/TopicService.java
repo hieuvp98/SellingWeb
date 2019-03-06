@@ -7,4 +7,10 @@ import java.util.List;
 public interface TopicService {
 
     List<Topic> findAllTopic();
+
+    Topic findById(int id);
+
+    boolean saveTopic(Topic topic);
+
+    boolean deleteTopic(Topic topic);
 }

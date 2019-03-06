@@ -27,4 +27,37 @@ public class NewsImageService_Impl implements NewsImageService {
         }
         return null;
     }
+
+    @Override
+    public NewsImage findById(int id) {
+        try {
+            return newsImageRepository.findById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-news-image-by-id-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public boolean saveNewsImage(NewsImage newsImage) {
+        try {
+            newsImageRepository.save(newsImage);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-news-image-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteNewsImage(NewsImage newsImage) {
+        try {
+            newsImage.setStatus(false);
+            newsImageRepository.save(newsImage);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-news-image-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
 }

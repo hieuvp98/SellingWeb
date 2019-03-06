@@ -7,4 +7,12 @@ import java.util.List;
 public interface NewsImageService {
 
     List<NewsImage> findAllNewsImage();
+
+    NewsImage findById(int id);
+
+    boolean saveNewsImage(NewsImage newsImage);
+
+    boolean deleteNewsImage(NewsImage newsImage);
+
+
 }
