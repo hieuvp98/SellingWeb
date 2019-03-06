@@ -29,6 +29,7 @@ public class NewsController {
         Pageable pageable = PageRequest.of(page - 1, size);
         List<News> newsList = newsService.findAllNews(pageable).getContent();
         if (newsList != null) {
+            newsList = newsService.findAllNewsByTime();
             return new ResponseEntity<>(newsList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -63,6 +64,7 @@ public class NewsController {
         Pageable pageable = PageRequest.of(page - 1, size);
         List<News> newsList = newsService.findAllNewsByTopic(nameTopic, pageable).getContent();
         if (newsList != null) {
+            newsList = newsService.findAllNewsByTime();
             return new ResponseEntity<>(newsList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
