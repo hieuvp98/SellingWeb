@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FooterMenuRepository extends JpaRepository<FooterMenu,Integer> {
+    FooterMenu findById(int id);
 }
