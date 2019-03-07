@@ -45,7 +45,7 @@ public class ProductService_Impl implements ProductService {
         try {
             List<BuyForm> buyForms = buyFormRepository.findAllByPhoneNumber(phone_number);
             List<Product> products = new ArrayList<>();
-            buyForms.forEach(bf -> products.add((Product) bf.getProducts()));
+            buyForms.forEach(bf -> products.addAll(bf.getProducts()));
             products.forEach(p -> System.out.println(p.getName()));
             products.forEach(p -> {
                 LocalDate date_now = LocalDate.now();
