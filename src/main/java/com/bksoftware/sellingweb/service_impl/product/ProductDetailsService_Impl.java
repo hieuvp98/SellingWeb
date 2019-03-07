@@ -41,8 +41,11 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
 
     @Override
     public ProductDetails findById(int id) {
-        return productDetailsRepository.findById(id);
+        ProductDetails productDetails = productDetailsRepository.findById(id);
+        if (productDetails.isStatus() == true) return productDetails;
+        return null;
     }
+
 
     @Override
     public boolean saveFeature(Feature feature) {
@@ -73,9 +76,8 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
             productImage.setStatus(true);
             productImageRepository.save(productImage);
             return true;
-        }
-        catch (Exception ex){
-            LOGGER.log(Level.SEVERE,"save-product-image-error : {0}",ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-product-image-error : {0}", ex.getMessage());
             return false;
         }
     }
@@ -86,9 +88,8 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
             productImage.setStatus(false);
             productImageRepository.save(productImage);
             return true;
-        }
-        catch (Exception ex){
-            LOGGER.log(Level.SEVERE,"delete-product-image-error : {0}",ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-product-image-error : {0}", ex.getMessage());
             return false;
         }
     }

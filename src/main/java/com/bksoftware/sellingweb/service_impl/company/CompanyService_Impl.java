@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService_Impl implements CompanyService {
@@ -25,7 +26,11 @@ public class CompanyService_Impl implements CompanyService {
     @Override
     public List<Company> findAllCompanies() {
         try {
-            return companyRepository.findAll();
+            List<Company> companies = companyRepository.findAll();
+            return companies
+                    .stream()
+                    .filter(p -> p.isStatus() == true)
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-company-error : {0}", ex.getMessage());
         }
@@ -35,7 +40,9 @@ public class CompanyService_Impl implements CompanyService {
     @Override
     public Company findById(int id) {
         try {
-            return companyRepository.findById(id);
+            Company company = companyRepository.findById(id);
+            if (company.isStatus() == true) return company;
+            return null;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-by-id-company-error : {0}", ex.getMessage());
         }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/public/news")
@@ -28,6 +29,9 @@ public class NewsController {
         //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
         Pageable pageable = PageRequest.of(page - 1, size);
         List<News> newsList = newsService.findAllNews(pageable).getContent();
+        newsList.stream()
+                .filter(p -> (p.isStatus() == true))
+                .collect(Collectors.toList());
         if (newsList != null) {
             newsList = newsService.findAllNewsByTime();
             return new ResponseEntity<>(newsList, HttpStatus.OK);
@@ -63,8 +67,12 @@ public class NewsController {
         if (size < 0) size = 0;
         Pageable pageable = PageRequest.of(page - 1, size);
         List<News> newsList = newsService.findAllNewsByTopic(nameTopic, pageable).getContent();
+        newsList.stream()
+                .filter(p -> (p.isStatus() == true))
+                .collect(Collectors.toList());
         if (newsList != null) {
             newsList = newsService.findAllNewsByTime();
+
             return new ResponseEntity<>(newsList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

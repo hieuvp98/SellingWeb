@@ -78,7 +78,10 @@ public class ProductService_Impl implements ProductService {
 
     @Override
     public Product findById(int id) {
-        return productRepository.findById(id);
+
+        Product product = productRepository.findById(id);
+        if(product.isStatus()== true) return  product;
+        return null;
     }
 
     @Override

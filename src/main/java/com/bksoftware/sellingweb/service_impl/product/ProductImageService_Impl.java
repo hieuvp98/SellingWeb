@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductImageService_Impl implements ProductImageService {
@@ -22,7 +23,11 @@ public class ProductImageService_Impl implements ProductImageService {
     @Override
     public List<ProductImage> findAllProductImage() {
         try {
-            return productImageRepository.findAll();
+            List<ProductImage> productImages = productImageRepository.findAll();
+            return productImages
+                    .stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "fin-all-product-image-error : {0}", ex.getMessage());
         }

@@ -1,7 +1,9 @@
 
 package com.bksoftware.sellingweb.controller.company;
 
+import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.company.Company;
+import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
 import com.bksoftware.sellingweb.service_impl.company.CompanyService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class CompanyController {
 
     @Autowired
     CompanyService_Impl companyService;
+
+    @Autowired
+    CategoryService_Impl categoryService;
 
     @GetMapping
     public ResponseEntity<List<Company>> findAllCompanies() {

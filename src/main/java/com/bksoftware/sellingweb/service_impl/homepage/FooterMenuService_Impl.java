@@ -27,7 +27,9 @@ public class FooterMenuService_Impl implements FooterMenuService {
     @Override
     public FooterMenu findById(int id) {
         try {
-            return footerMenuRepository.findById(id);
+            FooterMenu footerMenu = footerMenuRepository.findById(id);
+            if (footerMenu.isStatus() == true) return footerMenu;
+            return null;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-by-id-error: {0}", ex.getMessage());
             return null;

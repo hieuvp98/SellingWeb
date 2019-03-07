@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class InformationCompanyService_Impl implements InformationCompanyService {
@@ -26,7 +27,11 @@ public class InformationCompanyService_Impl implements InformationCompanyService
     @Override
     public List<InformationCompany> findAllCompanyInformation() {
         try {
-            return informationCompanyRepository.findAll();
+            List<InformationCompany> informationCompanies = informationCompanyRepository.findAll();
+            return informationCompanies
+                    .stream()
+                    .filter(p -> p.isStatus() == true)
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-information-company-error : {0}", ex.getMessage());
         }

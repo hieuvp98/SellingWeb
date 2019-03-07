@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class PartnerService_Impl implements PartnerService {
@@ -23,7 +24,11 @@ public class PartnerService_Impl implements PartnerService {
     @Override
     public List<Partner> findAllPartner() {
         try {
-            return partnerRepository.findAll();
+            List<Partner> partners = partnerRepository.findAll();
+            return partners
+                    .stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-partner-error : {0}", ex.getMessage());
         }
@@ -32,7 +37,9 @@ public class PartnerService_Impl implements PartnerService {
 
     @Override
     public Partner findByName(String name) {
-        return partnerRepository.findByName(name);
+        Partner partner = partnerRepository.findByName(name);
+        if (partner.isStatus() == true) return partner;
+        return null;
     }
 
     @Override
@@ -60,8 +67,8 @@ public class PartnerService_Impl implements PartnerService {
 
     @Override
     public Partner findById(int id) {
-        if (partnerRepository.findById(id).isPresent())
-            return partnerRepository.findById(id).get();
+        Partner partner = partnerRepository.findById(id);
+        if (partner.isStatus() == true) return partner;
         return null;
     }
 }

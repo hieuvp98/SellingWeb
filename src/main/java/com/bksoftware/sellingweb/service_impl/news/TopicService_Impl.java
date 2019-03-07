@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicService_Impl implements TopicService {
@@ -21,7 +22,10 @@ public class TopicService_Impl implements TopicService {
     @Override
     public List<Topic> findAllTopic() {
         try {
-            return topicRepository.findAll();
+            List<Topic> topics = topicRepository.findAll();
+            return topics.stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-topic-error : {0}", ex.getMessage());
         }
@@ -31,7 +35,9 @@ public class TopicService_Impl implements TopicService {
     @Override
     public Topic findById(int id) {
         try {
-            return topicRepository.findById(id);
+            Topic topic = topicRepository.findById(id);
+            if (topic.isStatus() == true) return topic;
+            return null;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-topic-by-id-error : {0}", ex.getMessage());
         }

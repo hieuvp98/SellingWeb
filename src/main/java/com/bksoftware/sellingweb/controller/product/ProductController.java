@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -36,7 +37,11 @@ public class ProductController {
         if (size < 0) size = 0;
         //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
         Pageable pageable = PageRequest.of(page - 1, size, sortable);
-        return new ResponseEntity<>(productService.findProductByName(name, pageable).getContent(), HttpStatus.OK);
+        List<Product> productsByName = productService.findProductByName(name, pageable).getContent();
+        productsByName.stream()
+                .filter(p -> (p.isStatus() == true))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(productsByName, HttpStatus.OK);
     }
 
 }
