@@ -13,5 +13,7 @@ public interface BuyFormRepository extends JpaRepository<BuyForm, Integer> {
 
     List<BuyForm> findAllByPhoneNumber(int phone_number);
 
+    BuyForm findById(int id);
+
 
 }

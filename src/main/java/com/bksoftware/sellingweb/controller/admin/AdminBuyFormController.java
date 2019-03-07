@@ -21,12 +21,10 @@ import java.util.stream.Collectors;
 public class AdminBuyFormController {
     private final BuyFormService_Impl buyFormService;
     private final ProductDetailsService_Impl productDetailsService;
-    private final ProductService_Impl productService;
 
     public AdminBuyFormController(BuyFormService_Impl buyFormService, ProductDetailsService_Impl productDetailsService, ProductService_Impl productService) {
         this.buyFormService = buyFormService;
         this.productDetailsService = productDetailsService;
-        this.productService = productService;
     }
 
     @GetMapping("/uncheck-buy-form")
@@ -36,8 +34,9 @@ public class AdminBuyFormController {
         } else return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping(value = "/check-buy-form")
-    public ResponseEntity<String> checkBuyForm(@RequestBody BuyForm buyForm) {
+    @PutMapping(value = "/check-buy-form",params = "buy-form-id")
+    public ResponseEntity<String> checkBuyForm(@RequestParam(name = "buy-form-id")int id) {
+        BuyForm buyForm =  buyFormService.findById(id);
         List<Product> products = buyForm.getProducts();
         List<ProductDetails> listProductDetails = products.stream().map(productDetailsService::findByProduct).collect(Collectors.toList());
         for (ProductDetails productDetails : listProductDetails) {
