@@ -1,9 +1,12 @@
 package com.bksoftware.sellingweb.service_impl.product;
 
+import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.repository.product.BuyFormRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.service.product.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +30,12 @@ public class ProductService_Impl implements ProductService {
     private final
     ProductRepository productRepository;
 
-    private final
-    ProductDetailsRepository productDetailsRepository;
+    @Autowired
+    BuyFormRepository buyFormRepository;
 
     public ProductService_Impl(ProductRepository productRepository, ProductDetailsRepository productDetailsRepository) {
         this.productRepository = productRepository;
-        this.productDetailsRepository = productDetailsRepository;
+
     }
 
 
@@ -39,7 +43,9 @@ public class ProductService_Impl implements ProductService {
 
         Map<String, Long> mapProduct = new HashMap<>();
         try {
-            List<Product> products = productDetailsRepository.findSoldDateToPhone(phone_number);
+            List<BuyForm> buyForms = buyFormRepository.findAllByPhoneNumber(phone_number);
+            List<Product> products = new ArrayList<>();
+            buyForms.forEach(bf -> products.add((Product) bf.getProducts()));
             products.forEach(p -> System.out.println(p.getName()));
             products.forEach(p -> {
                 LocalDate date_now = LocalDate.now();
@@ -84,7 +90,7 @@ public class ProductService_Impl implements ProductService {
     public Product findById(int id) {
 
         Product product = productRepository.findById(id);
-        if(product.isStatus()== true) return  product;
+        if (product.isStatus() == true) return product;
         return null;
     }
 

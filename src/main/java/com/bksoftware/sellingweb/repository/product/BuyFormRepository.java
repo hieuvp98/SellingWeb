@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BuyFormRepository extends JpaRepository<BuyForm,Integer> {
+public interface BuyFormRepository extends JpaRepository<BuyForm, Integer> {
 
     List<BuyForm> findAllByChecked(boolean checked);
+
+    List<BuyForm> findAllByPhoneNumber(int phone_number);
 
 
 }

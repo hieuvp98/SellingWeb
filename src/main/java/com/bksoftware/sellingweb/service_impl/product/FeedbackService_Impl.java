@@ -65,5 +65,28 @@ public class FeedbackService_Impl implements FeedbackService {
 
     }
 
+    @Override
+    public boolean saveFeedback(Feedback feedback) {
+        try {
+            feedbackRepository.save(feedback);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteFeedback(Feedback feedback) {
+        try {
+            feedback.setStatus(false);
+            feedbackRepository.save(feedback);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
+        }
+        return false;
+    }
+
 
 }

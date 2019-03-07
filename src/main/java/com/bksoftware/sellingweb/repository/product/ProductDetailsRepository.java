@@ -15,11 +15,7 @@ import java.util.List;
 @Repository
 public interface ProductDetailsRepository extends JpaRepository<ProductDetails, Integer> {
 
-    @Query(
-            "select p from ProductDetails pd " +
-                    " join pd.product p join p.buyForm bf where bf.phoneNumber = :phone_number"
-    )
-    List<Product> findSoldDateToPhone(@Param("phone_number") int phone_number);
+
 
     ProductDetails findById(int id);
 

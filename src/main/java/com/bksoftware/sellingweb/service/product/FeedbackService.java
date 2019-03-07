@@ -9,4 +9,8 @@ public interface FeedbackService {
     List<Feedback> findAllFeedback();
 
     Integer countFeedbackAndReplies();
+
+    boolean saveFeedback(Feedback feedback);
+
+    boolean deleteFeedback(Feedback feedback);
 }

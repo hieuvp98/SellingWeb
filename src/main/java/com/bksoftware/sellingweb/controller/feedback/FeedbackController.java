@@ -40,6 +40,15 @@ public class FeedbackController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping
+    public ResponseEntity<String> create(@RequestBody Feedback feedback) {
+        feedback.setStatus(true);
+        if (feedbackService.saveFeedback(feedback))
+            return new ResponseEntity<>("add success", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("add fails", HttpStatus.BAD_REQUEST);
+    }
+
 
 //    @GetMapping(value = "/cookie")
 //    public ResponseEntity<Object> findAllFeedbackCookie(HttpServletRequest request) {
