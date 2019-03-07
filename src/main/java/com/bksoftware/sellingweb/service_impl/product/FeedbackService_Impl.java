@@ -6,6 +6,7 @@ import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
+import com.bksoftware.sellingweb.repository.product.ReplyRepository;
 import com.bksoftware.sellingweb.service.product.FeedbackService;
 import com.bksoftware.sellingweb.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class FeedbackService_Impl implements FeedbackService {
@@ -30,6 +32,9 @@ public class FeedbackService_Impl implements FeedbackService {
     private final
     FeedbackRepository feedbackRepository;
 
+    @Autowired
+    ReplyRepository replyRepository;
+
     public FeedbackService_Impl(FeedbackRepository feedbackRepository) {
         this.feedbackRepository = feedbackRepository;
     }
@@ -37,7 +42,11 @@ public class FeedbackService_Impl implements FeedbackService {
     @Override
     public List<Feedback> findAllFeedback() {
         try {
-            return feedbackRepository.findAll();
+            List<Feedback> feedbacks = feedbackRepository.findAll();
+            return feedbacks
+                    .stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-feedback-error : {0}", ex.getMessage());
         }
@@ -47,14 +56,14 @@ public class FeedbackService_Impl implements FeedbackService {
     @Override
     public Integer countFeedbackAndReplies() {
         try {
-            return feedbackRepository.findAll().size() + feedbackRepository.findAll().size();
+            RepLyService_Impl repLyService = new RepLyService_Impl();
+            return findAllFeedback().size() + repLyService.findAllReplies().size();
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
         }
         return null;
 
     }
-
 
 
 }

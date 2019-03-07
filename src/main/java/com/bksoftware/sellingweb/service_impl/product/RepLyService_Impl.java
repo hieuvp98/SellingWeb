@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class RepLyService_Impl implements ReplyService {
@@ -22,7 +23,11 @@ public class RepLyService_Impl implements ReplyService {
     @Override
     public List<Reply> findAllReplies() {
         try {
-            return replyRepository.findAll();
+            List<Reply> replies = replyRepository.findAll();
+            return replies
+                    .stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-reply-error : {0}");
         }

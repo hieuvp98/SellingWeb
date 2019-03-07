@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class NewsImageService_Impl implements NewsImageService {
@@ -21,7 +22,12 @@ public class NewsImageService_Impl implements NewsImageService {
     @Override
     public List<NewsImage> findAllNewsImage() {
         try {
-            return newsImageRepository.findAll();
+            List<NewsImage> newsImages = newsImageRepository.findAll();
+            return newsImages
+                    .stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
+
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-news-image-error : {0}", ex.getMessage());
         }
@@ -31,7 +37,9 @@ public class NewsImageService_Impl implements NewsImageService {
     @Override
     public NewsImage findById(int id) {
         try {
-            return newsImageRepository.findById(id);
+            NewsImage newsImage = newsImageRepository.findById(id);
+            if (newsImage.isStatus() == true) return newsImage;
+            return null;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-news-image-by-id-error : {0}", ex.getMessage());
         }

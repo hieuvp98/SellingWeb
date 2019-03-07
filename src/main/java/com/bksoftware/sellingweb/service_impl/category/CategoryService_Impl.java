@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService_Impl implements CategoryService {
@@ -36,37 +37,94 @@ public class CategoryService_Impl implements CategoryService {
 
     @Override
     public List<BigCategory> findAllBigCategory() {
-        return bigCategoryRepository.findAll();
+        try {
+            List<BigCategory> bigCategories = bigCategoryRepository.findAll();
+            return bigCategories
+                    .stream()
+                    .filter(p -> (p.isStatus() == true))
+                    .collect(Collectors.toList());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-big-category-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public List<MediumCategory> findAllMediumCategoryByBigCategory(BigCategory bigCategory) {
-        return mediumCategoryRepository.findAllByBigCategory(bigCategory);
+        try {
+            List<MediumCategory> mediumCategories = mediumCategoryRepository.findAllByBigCategory(bigCategory);
+            return mediumCategories
+                    .stream()
+                    .filter(p -> p.isStatus() == true)
+                    .collect(Collectors.toList());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-medium-category-by-big-category-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public List<SmallCategory> findAllSmallCategoryByMediumCategory(MediumCategory mediumCategory) {
-        return smallCategoryRepository.findAllByMediumCategory(mediumCategory);
+        try {
+            List<SmallCategory> smallCategories = smallCategoryRepository.findAllByMediumCategory(mediumCategory);
+            return smallCategories
+                    .stream()
+                    .filter(p -> p.isStatus() == true)
+                    .collect(Collectors.toList());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-small-category-by-medium-category-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public List<Product> findAllProductBySmallCategory(SmallCategory smallCategory) {
-        return productRepository.findAllBySmallCategory(smallCategory);
+        try {
+            List<Product> products = productRepository.findAllBySmallCategory(smallCategory);
+            return products
+                    .stream()
+                    .filter(p -> p.isStatus() == true)
+                    .collect(Collectors.toList());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-all-product-by-small-category-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public BigCategory findBigCategoryById(int id) {
-        return bigCategoryRepository.findById(id);
+        try {
+            BigCategory bigCategory = bigCategoryRepository.findById(id);
+            if (bigCategory.isStatus() == true) return bigCategory;
+            return null;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-big-category-by-id-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public MediumCategory findMediumCategoryById(int id) {
-        return mediumCategoryRepository.findById(id);
+        try {
+            MediumCategory mediumCategory = mediumCategoryRepository.findById(id);
+            if (mediumCategory.isStatus() == true) return mediumCategory;
+            return null;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-medium-category-by-id-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public SmallCategory findSmallCategoryById(int id) {
-        return smallCategoryRepository.findById(id);
+        try {
+            SmallCategory smallCategory = smallCategoryRepository.findById(id);
+            if (smallCategory.isStatus() == true) return smallCategory;
+            return null;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-small-category-by-id-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override
@@ -75,9 +133,9 @@ public class CategoryService_Impl implements CategoryService {
             bigCategoryRepository.save(bigCategory);
             return true;
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "save-error", ex.getMessage());
-            return false;
+            LOGGER.log(Level.SEVERE, "save-big-category-error", ex.getMessage());
         }
+        return false;
     }
 
     @Override
@@ -86,9 +144,10 @@ public class CategoryService_Impl implements CategoryService {
             mediumCategoryRepository.save(mediumCategory);
             return true;
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "save-error", ex.getMessage());
-            return false;
+            LOGGER.log(Level.SEVERE, "save-medium-category-error", ex.getMessage());
         }
+        return false;
+
     }
 
     @Override
@@ -97,9 +156,10 @@ public class CategoryService_Impl implements CategoryService {
             smallCategoryRepository.save(smallCategory);
             return true;
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "save-error", ex.getMessage());
-            return false;
+            LOGGER.log(Level.SEVERE, "save-small-category-error", ex.getMessage());
         }
+        return false;
+
     }
 
 
@@ -111,8 +171,8 @@ public class CategoryService_Impl implements CategoryService {
             return true;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "delete-error", ex.getMessage());
-            return false;
         }
+        return false;
     }
 
     @Override

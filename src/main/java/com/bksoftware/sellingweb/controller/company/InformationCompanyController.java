@@ -19,7 +19,7 @@ public class InformationCompanyController {
     InformationCompanyService_Impl informationCompanyService;
 
     @GetMapping
-    public ResponseEntity<List<InformationCompany>> findAllInformationComapny() {
+    public ResponseEntity<List<InformationCompany>> findAllInformationCompany() {
         List<InformationCompany> informationCompanies = informationCompanyService.findAllCompanyInformation();
         if (informationCompanies != null) {
             return new ResponseEntity<>(informationCompanies, HttpStatus.OK);

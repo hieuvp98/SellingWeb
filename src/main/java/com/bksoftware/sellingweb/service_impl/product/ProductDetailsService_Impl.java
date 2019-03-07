@@ -42,8 +42,11 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
 
     @Override
     public ProductDetails findById(int id) {
-        return productDetailsRepository.findById(id);
+        ProductDetails productDetails = productDetailsRepository.findById(id);
+        if (productDetails.isStatus() == true) return productDetails;
+        return null;
     }
+
 
     @Override
     public boolean saveFeature(Feature feature) {
