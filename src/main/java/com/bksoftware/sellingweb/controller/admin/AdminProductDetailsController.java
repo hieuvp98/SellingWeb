@@ -73,8 +73,7 @@ public class AdminProductDetailsController {
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/delete-feature")
     public ResponseEntity<String> deleteFeature(@RequestBody Feature feature) {
-        feature.setStatus(false);
-        if (productDetailsService.saveFeature(feature))
+        if (productDetailsService.deleteFeature(feature))
             return new ResponseEntity<>("delete feature success", HttpStatus.OK);
         return new ResponseEntity<>("delete feature fail", HttpStatus.BAD_REQUEST);
     }

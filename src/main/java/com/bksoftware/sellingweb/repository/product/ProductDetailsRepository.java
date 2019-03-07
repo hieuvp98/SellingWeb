@@ -21,8 +21,7 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
     )
     List<Product> findSoldDateToPhone(@Param("phone_number") int phone_number);
 
-
-
     ProductDetails findById(int id);
 
+    ProductDetails findByProduct(Product product);
 }

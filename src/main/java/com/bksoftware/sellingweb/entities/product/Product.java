@@ -4,16 +4,18 @@ import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
 @Data
 @SecondaryTables({
-        @SecondaryTable(name = "buy_form"),
         @SecondaryTable(name = "partner"),
         @SecondaryTable(name = "product_details"),
         @SecondaryTable(name = "small_category")
@@ -21,7 +23,6 @@ import java.io.Serializable;
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,17 +49,17 @@ public class Product implements Serializable {
     @NonNull
     private SmallCategory smallCategory;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "product")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
     private ProductDetails productDetails;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "buy_form_id")
-    private BuyForm buyForm;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "partner_id", nullable = false)
     @NotNull
     private Partner partner;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "products")
+    private List<BuyForm> buyForms = new ArrayList<>();
 
     private boolean status;
 

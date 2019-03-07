@@ -1,5 +1,6 @@
 package com.bksoftware.sellingweb.repository.product;
 
+import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import org.springframework.data.domain.Page;
@@ -26,4 +27,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllBySmallCategory(SmallCategory smallCategory);
 
     Product findById(int id);
+
 }

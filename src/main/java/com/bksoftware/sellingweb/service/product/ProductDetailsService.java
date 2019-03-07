@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.service.product;
 
 import com.bksoftware.sellingweb.entities.product.Feature;
+import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.entities.product.ProductImage;
 
@@ -18,4 +19,5 @@ public interface ProductDetailsService {
 
     boolean deleteProductImage(ProductImage productImage);
 
+    ProductDetails findByProduct(Product product);
 }

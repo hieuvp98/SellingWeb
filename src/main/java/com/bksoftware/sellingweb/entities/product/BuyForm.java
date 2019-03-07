@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.entities.product;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,15 +37,30 @@ public class BuyForm implements Serializable {
     @NotNull
     private String address;
 
-
     private String note;
 
     @NotNull
     private LocalDate date;
 
-
+    @NotNull
     private boolean checked;
 
     @NotNull
     private boolean status;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "buy_form_has_product",
+            joinColumns = @JoinColumn(name = "buy_form_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @JsonIgnore
+    @NotNull
+    private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.products.remove(product);
+    }
 }

@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.service_impl.product;
 
 import com.bksoftware.sellingweb.entities.product.Feature;
+import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.entities.product.ProductImage;
 import com.bksoftware.sellingweb.repository.product.FeatureRepository;
@@ -73,9 +74,8 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
             productImage.setStatus(true);
             productImageRepository.save(productImage);
             return true;
-        }
-        catch (Exception ex){
-            LOGGER.log(Level.SEVERE,"save-product-image-error : {0}",ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-product-image-error : {0}", ex.getMessage());
             return false;
         }
     }
@@ -86,10 +86,19 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
             productImage.setStatus(false);
             productImageRepository.save(productImage);
             return true;
-        }
-        catch (Exception ex){
-            LOGGER.log(Level.SEVERE,"delete-product-image-error : {0}",ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-product-image-error : {0}", ex.getMessage());
             return false;
+        }
+    }
+
+    @Override
+    public ProductDetails findByProduct(Product product) {
+        try {
+            return productDetailsRepository.findByProduct(product);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-product-details-error : {0}", ex.getMessage());
+            return null;
         }
     }
 

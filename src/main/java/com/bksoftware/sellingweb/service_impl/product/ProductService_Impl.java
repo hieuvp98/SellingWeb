@@ -4,7 +4,6 @@ import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.service.product.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,11 +23,16 @@ public class ProductService_Impl implements ProductService {
     private static final Logger LOGGER = Logger.getLogger(ProductService_Impl.class.getName());
 
 
-    @Autowired
+    private final
     ProductRepository productRepository;
 
-    @Autowired
+    private final
     ProductDetailsRepository productDetailsRepository;
+
+    public ProductService_Impl(ProductRepository productRepository, ProductDetailsRepository productDetailsRepository) {
+        this.productRepository = productRepository;
+        this.productDetailsRepository = productDetailsRepository;
+    }
 
 
     public Map<String, Long> findGuaranteeToPhone(int phone_number) {
