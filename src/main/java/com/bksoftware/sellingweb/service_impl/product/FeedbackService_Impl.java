@@ -45,7 +45,7 @@ public class FeedbackService_Impl implements FeedbackService {
             List<Feedback> feedbacks = feedbackRepository.findAll();
             return feedbacks
                     .stream()
-                    .filter(p -> (p.isStatus() == true))
+                    .filter(Feedback::isStatus)
                     .collect(Collectors.toList());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-feedback-error : {0}", ex.getMessage());
@@ -57,7 +57,10 @@ public class FeedbackService_Impl implements FeedbackService {
     public Integer countFeedbackAndReplies() {
         try {
             RepLyService_Impl repLyService = new RepLyService_Impl();
+            if (findAllFeedback() == null || repLyService.findAllReplies() == null)
+                return 0;
             return findAllFeedback().size() + repLyService.findAllReplies().size();
+
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
         }

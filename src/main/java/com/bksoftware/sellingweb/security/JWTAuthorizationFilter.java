@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.bksoftware.sellingweb.entities.AppAdmin;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -43,10 +46,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .build().verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getSubject();
             if (username != null) {
-                return new UsernamePasswordAuthenticationToken(username, null, new AppAdmin().getGrantedAuthority());
+                return new UsernamePasswordAuthenticationToken(username, null, getGrantedAuthority());
             }
             return null;
         }
         return null;
+    }
+    private Set<GrantedAuthority> getGrantedAuthority() {
+        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+        grantedAuthorities.add((GrantedAuthority) () -> "ADMIN");
+        return grantedAuthorities;
     }
 }
