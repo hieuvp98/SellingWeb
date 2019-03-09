@@ -28,11 +28,13 @@ public class RepLyService_Impl implements ReplyService {
                     .stream()
                     .filter(p -> (p.isStatus() == true))
                     .collect(Collectors.toList());
+
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-reply-error : {0}");
         }
         return null;
     }
+
 
     @Override
     public Reply saveReply(Reply reply) {
@@ -43,4 +45,5 @@ public class RepLyService_Impl implements ReplyService {
         }
         return null;
     }
+
 }
