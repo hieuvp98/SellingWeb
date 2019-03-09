@@ -12,4 +12,5 @@ public interface BuyFormService {
 
     boolean checkBuyForm(BuyForm buyForm);
 
+    BuyForm findById(int id);
 }

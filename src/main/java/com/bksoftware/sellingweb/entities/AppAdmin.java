@@ -30,9 +30,9 @@ public class AppAdmin implements Serializable {
 
     private int phone;
 
-    public Set<GrantedAuthority> getGrantedAuthority() {
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        grantedAuthorities.add((GrantedAuthority) () -> "ADMIN");
-        return grantedAuthorities;
-    }
+//    public Set<GrantedAuthority> getGrantedAuthority() {
+//        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+//        grantedAuthorities.add((GrantedAuthority) () -> "ADMIN");
+//        return grantedAuthorities;
+//    }
 }

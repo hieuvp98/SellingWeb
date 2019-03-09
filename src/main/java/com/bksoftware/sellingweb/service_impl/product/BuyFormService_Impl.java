@@ -41,4 +41,14 @@ public class BuyFormService_Impl implements BuyFormService {
             return false;
         }
     }
+
+    @Override
+    public BuyForm findById(int id) {
+        try {
+            return buyFormRepository.findById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-buyForm-error {0}", ex.getMessage());
+            return null;
+        }
+    }
 }

@@ -32,9 +32,8 @@ public class AdminInfoController {
     //get info
     @RolesAllowed("ADMIN")
     @GetMapping(value = "/admin/info")
-    public ResponseEntity<AppAdmin> getInfo(HttpServletRequest request) {
-        String username = request.getUserPrincipal().getName();
-        AppAdmin appAdmin = appAdminRepository.findByUsername(username);
+    public ResponseEntity<AppAdmin> getInfo() {
+        AppAdmin appAdmin = appAdminRepository.findAll().get(0);
         if (appAdmin == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } else return new ResponseEntity<>(appAdmin, HttpStatus.OK);
@@ -68,7 +67,7 @@ public class AdminInfoController {
     }
 
     //forget password
-    @GetMapping(value = "/public/forget-password", params = "email")
+    @PostMapping(value = "/public/forget-password", params = "email")
     public ResponseEntity<String> forgetPassword(@RequestParam(value = "email") String email) {
         AppAdmin appAdmin = appAdminRepository.findAll().get(0);
         if (email.equals(appAdmin.getEmail())) {
