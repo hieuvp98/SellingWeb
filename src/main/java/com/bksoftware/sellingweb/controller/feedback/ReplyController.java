@@ -2,15 +2,13 @@ package com.bksoftware.sellingweb.controller.feedback;
 
 
 import com.bksoftware.sellingweb.entities.product.Reply;
+import com.bksoftware.sellingweb.service_impl.product.FeedbackService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.RepLyService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,10 +20,13 @@ public class ReplyController {
     @Autowired
     RepLyService_Impl repLyService;
 
-    @GetMapping
-    public ResponseEntity<List<Reply>> findAllReplies() {
+    @Autowired
+    private FeedbackService_Impl feedbackService;
 
-        List<Reply> replies = repLyService.findAllReplies();
+    @GetMapping
+    public ResponseEntity<List<Reply>> findAllReplies(@RequestParam(name = "feedback-id") int id) {
+
+        List<Reply> replies = repLyService.findAllRepliesByFeedBack(feedbackService.findById(id));
 
         if (replies == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -33,7 +34,6 @@ public class ReplyController {
         return new ResponseEntity<>(replies, HttpStatus.OK);
 
     }
-
 
     @PostMapping
     public ResponseEntity<Object> saveReply(@RequestBody Reply reply, HttpServletRequest request) {
