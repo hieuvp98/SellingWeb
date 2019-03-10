@@ -71,4 +71,17 @@ public class PartnerService_Impl implements PartnerService {
         if (partner.isStatus() == true) return partner;
         return null;
     }
+
+    @Override
+    public List<Partner> showById(int id) {
+        try {
+            return partnerRepository.showById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-partner-error", ex.getMessage());
+
+        }
+        return null;
+    }
+
+
 }

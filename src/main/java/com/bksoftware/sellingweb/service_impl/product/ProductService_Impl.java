@@ -117,5 +117,114 @@ public class ProductService_Impl implements ProductService {
         }
     }
 
+    @Override
+    public Page<Product> showProduct(int id, Pageable pageable) {
+
+        try {
+            return productRepository.showProduct(id,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> showProductByMedium(int id, Pageable pageable) {
+
+        try {
+            return productRepository.showProductByMedium(id,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> showProductByBig(int id, Pageable pageable) {
+
+        try {
+            return productRepository.showProductByBig(id,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+
+    @Override
+    public Page<Product> showProductByBigBranch(int id, int branch, Pageable pageable) {
+
+        try {
+            return productRepository.showProductByBigBranch(id,branch,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> showProductByMediumBranch(int id, int branch, Pageable pageable) {
+
+        try {
+            return productRepository.showProductByMediumBranch(id,branch,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> showProductBySmallBranch(int id, int branch, Pageable pageable) {
+
+        try {
+            return productRepository.showProductSmallBranch(id,branch,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-small-branch-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> findProductByPrice(int id, int low,int high,Pageable pageable) {
+
+        try {
+            return productRepository.findProductByPrice(id,low,high,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> findProductByPriceBranch(int id, int low, int high, int branch, Pageable pageable) {
+
+        try {
+            return productRepository.findProductByPriceBranch(id,low,high,branch,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> showProductSale(Pageable pageable) {
+        try {
+            return productRepository.showProductSale(pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-sale-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+
 
 }

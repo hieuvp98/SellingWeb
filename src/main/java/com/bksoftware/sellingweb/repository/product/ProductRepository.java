@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.repository.product;
 
 import com.bksoftware.sellingweb.entities.product.BuyForm;
+import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import org.springframework.data.domain.Page;
@@ -27,5 +28,40 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllBySmallCategory(SmallCategory smallCategory);
 
     Product findById(int id);
+
+
+    @Query("select p from Product p where p.smallCategory.id= :id")
+    Page<Product> showProduct(@Param("id")int id, Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.id= :id and p.partner.id= :branch")
+    Page<Product> showProductSmallBranch(@Param("id")int id,@Param("branch") int branch, Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.mediumCategory.id= :id")
+    Page<Product> showProductByMedium(@Param("id") int id, Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.mediumCategory.id= :id and p.partner.id= :branch")
+    Page<Product> showProductByMediumBranch(@Param("id") int id,@Param("branch") int branch, Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id")
+    Page<Product> showProductByBig(@Param("id") int id, Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id and p.partner.id= :branch")
+    Page<Product> showProductByBigBranch(@Param("id") int id,@Param("branch") int branch, Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id" +
+                " and (p.saleCost> :low and p.saleCost< :high)")
+    Page<Product> findProductByPrice(@Param("id") int id,@Param("low") int low,@Param("high") int high,Pageable pageable);
+
+    @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id  and p.partner.id= :branch" +
+                " and (p.saleCost> :low and p.saleCost< :high)")
+    Page<Product> findProductByPriceBranch(@Param("id") int id,@Param("low") int low,@Param("high") int high,@Param("branch") int branch,Pageable pageable);
+
+    @Query("select p from Product p where p.status=true and p.saleCost>0")
+    Page<Product> showProductSale(Pageable pageable);
+
+    /*@Query("(select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id)")
+    List<Partner> showPartByBigCategory();*/
+
+
 
 }

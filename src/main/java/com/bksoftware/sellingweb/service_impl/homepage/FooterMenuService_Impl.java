@@ -8,6 +8,7 @@ import com.bksoftware.sellingweb.service.homepage.FooterMenuService;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,5 +86,25 @@ public class FooterMenuService_Impl implements FooterMenuService {
             LOGGER.log(Level.SEVERE, "delete-footer-menu-details-error : {0}", ex.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public List<FooterMenu> showFooterBig() {
+        try {
+            return footerMenuRepository.findAll();
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-footer-menu-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<FooterMenuDetails> showFooterDetails(int idFooterBig) {
+        try {
+            return footerMenuDetailsRepository.showDetailsById(idFooterBig);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-footer-menu-details-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 }
