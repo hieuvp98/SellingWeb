@@ -3,6 +3,7 @@ package com.bksoftware.sellingweb.service_impl.product;
 
 import com.bksoftware.sellingweb.entities.product.Feedback;
 import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
@@ -32,17 +34,20 @@ public class FeedbackService_Impl implements FeedbackService {
     private final
     FeedbackRepository feedbackRepository;
 
-    @Autowired
+    private final
     ReplyRepository replyRepository;
+    private final RepLyService_Impl repLyService;
 
-    public FeedbackService_Impl(FeedbackRepository feedbackRepository) {
+    public FeedbackService_Impl(FeedbackRepository feedbackRepository, ReplyRepository replyRepository, RepLyService_Impl repLyService) {
         this.feedbackRepository = feedbackRepository;
+        this.replyRepository = replyRepository;
+        this.repLyService = repLyService;
     }
 
     @Override
-    public List<Feedback> findAllFeedback() {
+    public List<Feedback> findAllFeedbackByProduct(ProductDetails productDetails) {
         try {
-            List<Feedback> feedbacks = feedbackRepository.findAll();
+            List<Feedback> feedbacks = feedbackRepository.findAllByProductDetails(productDetails);
             return feedbacks
                     .stream()
                     .filter(Feedback::isStatus)
@@ -54,27 +59,18 @@ public class FeedbackService_Impl implements FeedbackService {
     }
 
     @Override
-    public Integer countFeedbackAndReplies() {
-        try {
-            RepLyService_Impl repLyService = new RepLyService_Impl();
-            if (findAllFeedback() == null || repLyService.findAllReplies() == null)
-                return 0;
-            return findAllFeedback().size() + repLyService.findAllReplies().size();
-
-        } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
-        }
-        return null;
-
+    public Feedback findById(int id) {
+        return feedbackRepository.findById(id);
     }
 
     @Override
     public boolean saveFeedback(Feedback feedback) {
         try {
+            feedback.setTime(LocalDateTime.now());
             feedbackRepository.save(feedback);
             return true;
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
+            LOGGER.log(Level.SEVERE, "save-feedback-error : {0}", ex.getMessage());
         }
         return false;
     }
@@ -86,7 +82,7 @@ public class FeedbackService_Impl implements FeedbackService {
             feedbackRepository.save(feedback);
             return true;
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "count-feedback-error : {0}", ex.getMessage());
+            LOGGER.log(Level.SEVERE, "delete-feedback-error : {0}", ex.getMessage());
         }
         return false;
     }

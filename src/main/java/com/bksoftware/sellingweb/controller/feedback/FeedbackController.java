@@ -2,25 +2,34 @@ package com.bksoftware.sellingweb.controller.feedback;
 
 import com.bksoftware.sellingweb.entities.product.Feedback;
 import com.bksoftware.sellingweb.service_impl.product.FeedbackService_Impl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bksoftware.sellingweb.service_impl.product.ProductDetailsService_Impl;
+import com.bksoftware.sellingweb.service_impl.product.RepLyService_Impl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("api/v1/public/feedback")
 public class FeedbackController {
 
 
-    @Autowired
+    private final
     FeedbackService_Impl feedbackService;
+    private final ProductDetailsService_Impl productDetailsService;
+    private final RepLyService_Impl repLyService;
+    public FeedbackController(FeedbackService_Impl feedbackService, ProductDetailsService_Impl productDetailsService, RepLyService_Impl repLyService) {
+        this.feedbackService = feedbackService;
+        this.productDetailsService = productDetailsService;
+        this.repLyService = repLyService;
+    }
 
     @GetMapping
-    public ResponseEntity<List<Feedback>> findAllFeedback() {
+    public ResponseEntity<List<Feedback>> findAllFeedbackByProductDetails(@RequestParam("product-details-id")int id) {
 
-        List<Feedback> feedback = feedbackService.findAllFeedback();
+        List<Feedback> feedback = feedbackService.findAllFeedbackByProduct(productDetailsService.findById(id));
 
         if (feedback != null) {
             return new ResponseEntity<>(feedback, HttpStatus.OK);
@@ -28,20 +37,21 @@ public class FeedbackController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
     @GetMapping("/count")
-    public ResponseEntity<Object> countAllFeedback() {
+    public ResponseEntity<Object> countAllFeedbackByProductDetails(@RequestParam("product-details-id")int id) {
+        List<Feedback> feedbacks = feedbackService.findAllFeedbackByProduct(productDetailsService.findById(id));
+        AtomicInteger count = new AtomicInteger(feedbacks.size());
+        feedbacks.forEach( feedback -> repLyService.findAllRepliesByFeedBack(feedback).forEach(reply -> count.getAndIncrement()));
 
-        int count = feedbackService.countFeedbackAndReplies();
-
-        if (count >= 0) {
-            return new ResponseEntity<>(count, HttpStatus.OK);
+        if (count.get() >= 0) {
+            return new ResponseEntity<>(count.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody Feedback feedback) {
+    public ResponseEntity<String> create(@RequestBody Feedback feedback,@RequestParam(name = "product-details-id")int productDetailsId) {
+        feedback.setProductDetails(productDetailsService.findById(productDetailsId));
         feedback.setStatus(true);
         if (feedbackService.saveFeedback(feedback))
             return new ResponseEntity<>("add success", HttpStatus.OK);
