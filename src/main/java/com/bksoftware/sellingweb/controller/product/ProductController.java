@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,11 +95,11 @@ public class ProductController {
         Page<Product> lstProductBig = productService.showProductByBig(id,pageable);
         return new ResponseEntity<>(lstProductBig.getContent(),HttpStatus.OK);
     }
-    @GetMapping(value = "/showPartnerById")
-    public  ResponseEntity<List<Partner>> showPartner(@RequestParam("id") int id){
-        List<Partner> lstPartner =  partnerService_imp.showById(id);
-        return new ResponseEntity<>(lstPartner,HttpStatus.OK);
-    }
+   /* @GetMapping(value = "/showPartnerById")
+    public HashSet<String> showPartner(@RequestParam("id") int id){
+        HashSet<String> lstPartner =  partnerService_imp.showPartByBigCategory(id);
+        return lstPartner;
+    }*/
 
     @GetMapping(value = "/byBigCategoryBranch")
     public  ResponseEntity<List<Product>> showProductByBigBranch(

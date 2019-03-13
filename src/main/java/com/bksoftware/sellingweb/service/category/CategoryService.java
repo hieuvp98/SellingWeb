@@ -2,6 +2,7 @@ package com.bksoftware.sellingweb.service.category;
 
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 
@@ -39,4 +40,5 @@ public interface CategoryService {
     boolean deleteMediumCategory(MediumCategory mediumCategory);
 
     boolean deleteSmallCategory(SmallCategory smallCategory);
+
 }

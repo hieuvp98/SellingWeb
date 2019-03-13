@@ -45,6 +45,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id")
     Page<Product> showProductByBig(@Param("id") int id, Pageable pageable);
 
+    @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id")
+    List<Product> showProductByBigList(@Param("id") int id);
+
     @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id and p.partner.id= :branch")
     Page<Product> showProductByBigBranch(@Param("id") int id,@Param("branch") int branch, Pageable pageable);
 
@@ -59,8 +62,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select p from Product p where p.status=true and p.saleCost>0")
     Page<Product> showProductSale(Pageable pageable);
 
-    /*@Query("(select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id)")
-    List<Partner> showPartByBigCategory();*/
+
 
 
 
