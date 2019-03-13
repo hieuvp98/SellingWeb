@@ -16,3 +16,4 @@ public interface FeedbackService {
 
     boolean deleteFeedback(Feedback feedback);
 }
+

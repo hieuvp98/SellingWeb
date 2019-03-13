@@ -15,6 +15,6 @@ public interface BigCategoryRepository extends JpaRepository<BigCategory, Intege
     BigCategory findById(int id);
 
     @Query("select b from BigCategory b where b.status=true ")
-    public List<BigCategory> showBigCategory();
+     List<BigCategory> showBigCategory();
 
 }

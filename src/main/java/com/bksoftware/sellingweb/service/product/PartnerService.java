@@ -1,5 +1,6 @@
 package com.bksoftware.sellingweb.service.product;
 
+import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.product.Partner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +23,6 @@ public interface PartnerService {
     Partner findById(int id);
 
     List<Partner> showById(int id);
-
-    /*HashSet<String> showPartByBigCategory(int id);*/
 
 
 }
