@@ -1,5 +1,6 @@
 package com.bksoftware.sellingweb.service_impl.product;
 
+import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.product.PartnerRepository;
@@ -89,10 +90,11 @@ public class PartnerService_Impl implements PartnerService {
             return partnerRepository.showById(id);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-partner-error", ex.getMessage());
-
         }
         return null;
     }
+
+
 
     /*@Override
     public HashSet<String> showPartByBigCategory(int id) {

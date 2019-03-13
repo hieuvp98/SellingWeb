@@ -1,8 +1,10 @@
 package com.bksoftware.sellingweb.controller.admin;
 
+import com.bksoftware.sellingweb.entities.UserMail;
 import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
+import com.bksoftware.sellingweb.service_impl.SendMailService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.BuyFormService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductDetailsService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
@@ -22,7 +24,7 @@ public class AdminBuyFormController {
     private final BuyFormService_Impl buyFormService;
     private final ProductDetailsService_Impl productDetailsService;
 
-    public AdminBuyFormController(BuyFormService_Impl buyFormService, ProductDetailsService_Impl productDetailsService, ProductService_Impl productService) {
+    public AdminBuyFormController(BuyFormService_Impl buyFormService, ProductDetailsService_Impl productDetailsService) {
         this.buyFormService = buyFormService;
         this.productDetailsService = productDetailsService;
     }

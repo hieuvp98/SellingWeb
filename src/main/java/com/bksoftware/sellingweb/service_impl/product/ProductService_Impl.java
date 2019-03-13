@@ -1,7 +1,12 @@
 package com.bksoftware.sellingweb.service_impl.product;
 
+import com.bksoftware.sellingweb.entities.category.BigCategory;
+import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.repository.category.MediumCategoryRepository;
+import com.bksoftware.sellingweb.repository.category.SmallCategoryRepository;
 import com.bksoftware.sellingweb.repository.product.BuyFormRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
@@ -32,6 +37,10 @@ public class ProductService_Impl implements ProductService {
 
     @Autowired
     BuyFormRepository buyFormRepository;
+    @Autowired
+    private MediumCategoryRepository mediumCategoryRepository;
+    @Autowired
+    private SmallCategoryRepository smallCategoryRepository;
 
     public ProductService_Impl(ProductRepository productRepository, ProductDetailsRepository productDetailsRepository) {
         this.productRepository = productRepository;
@@ -225,6 +234,17 @@ public class ProductService_Impl implements ProductService {
         return null;
     }
 
+    @Override
+    public List<Product> findAllProductByBigCategory(BigCategory bigCategory) {
+        List<MediumCategory> mediumCategories = mediumCategoryRepository.findAllByBigCategory(bigCategory);
+        List<SmallCategory> smallCategories = new ArrayList<>();
+        mediumCategories.forEach( mediumCategory -> smallCategories.addAll(smallCategoryRepository.findAllByMediumCategory(mediumCategory)));
+        List<Product> products = new ArrayList<>();
+        smallCategories.forEach( smallCategory -> products.addAll(productRepository.findAllBySmallCategory(smallCategory)));
+        if (products.isEmpty())
+            LOGGER.log(Level.SEVERE,"found 0 product");
+        return products;
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.service.product;
 
 
+import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.Product;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,8 @@ public interface ProductService {
     Page<Product> findProductByPriceBranch(int id,int low,int high,int branch,Pageable pageable);
 
     Page<Product> showProductSale( Pageable pageable);
+
+    List<Product> findAllProductByBigCategory(BigCategory bigCategory);
 
 
 }

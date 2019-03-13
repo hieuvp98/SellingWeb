@@ -1,6 +1,7 @@
 package com.bksoftware.sellingweb.entities.product;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Partner implements Serializable {
     @NotNull
     private String name;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "partner")
     private List<Product> lstProduct = new ArrayList<>();
 

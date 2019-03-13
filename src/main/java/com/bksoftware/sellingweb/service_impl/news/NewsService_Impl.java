@@ -81,7 +81,7 @@ public class NewsService_Impl implements NewsService {
     public News findById(int id) {
         try {
             News news = newsRepository.findById(id);
-            if (news.isStatus() == true) return news;
+            if (news.isStatus()) return news;
             return null;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "save-news-error : {0}", ex.getMessage());
@@ -92,6 +92,7 @@ public class NewsService_Impl implements NewsService {
     @Override
     public boolean saveNews(News news) {
         try {
+            news.setTime(LocalDateTime.now());
             newsRepository.save(news);
             return true;
         } catch (Exception ex) {

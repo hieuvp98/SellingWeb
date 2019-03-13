@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 
 @RestController
-@RequestMapping("/api/v1/admin/product-details/")
+@RequestMapping("/api/v1/admin/product-details")
 public class AdminProductDetailsController {
 
     private final ProductDetailsService_Impl productDetailsService;
@@ -82,7 +82,7 @@ public class AdminProductDetailsController {
     //add
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/product-image", params = "product-details-id")
-    public ResponseEntity<String> addFeature(@RequestBody ProductImage productImage,
+    public ResponseEntity<String> addProductImage(@RequestBody ProductImage productImage,
                                              @RequestParam(value = "product-details-id") int id) {
         ProductDetails productDetails = productDetailsService.findById(id);
         productImage.setProductDetails(productDetails);
@@ -95,7 +95,7 @@ public class AdminProductDetailsController {
     //update
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/product-image")
-    public ResponseEntity<String> updateFeature(@RequestBody ProductImage productImage) {
+    public ResponseEntity<String> updateProductImage(@RequestBody ProductImage productImage) {
         if (productDetailsService.saveProductImage(productImage))
             return new ResponseEntity<>("update product image success", HttpStatus.OK);
         return new ResponseEntity<>("update product image fail", HttpStatus.BAD_REQUEST);
@@ -104,7 +104,7 @@ public class AdminProductDetailsController {
     //delete
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/delete-product-image")
-    public ResponseEntity<String> deleteFeature(@RequestBody ProductImage productImage) {
+    public ResponseEntity<String> deleteProductImage(@RequestBody ProductImage productImage) {
         if (productDetailsService.deleteProductImage(productImage))
             return new ResponseEntity<>("delete product image success", HttpStatus.OK);
         return new ResponseEntity<>("delete product image fail", HttpStatus.BAD_REQUEST);
