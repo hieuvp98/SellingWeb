@@ -6,6 +6,8 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,6 +23,9 @@ public class Partner implements Serializable {
 
     @NotNull
     private String name;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "partner")
+    private List<Product> lstProduct = new ArrayList<>();
 
     @Column(name = "img_url")
     private String imgUrl;

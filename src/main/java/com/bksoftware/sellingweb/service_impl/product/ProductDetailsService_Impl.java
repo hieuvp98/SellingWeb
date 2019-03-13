@@ -11,11 +11,12 @@ import com.bksoftware.sellingweb.repository.product.ProductImageRepository;
 import com.bksoftware.sellingweb.service.product.ProductDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class ProductDetailsService_Impl implements ProductDetailsService {
+ public class ProductDetailsService_Impl implements ProductDetailsService {
 
     private final static Logger LOGGER = Logger.getLogger(ProductDetailsService_Impl.class.getName());
 
@@ -44,6 +45,28 @@ public class ProductDetailsService_Impl implements ProductDetailsService {
     public ProductDetails findById(int id) {
         ProductDetails productDetails = productDetailsRepository.findById(id);
         if (productDetails.isStatus() == true) return productDetails;
+        return null;
+    }
+
+    @Override
+    public List<Feature> showFeatureById(int id) {
+        try {
+            return featureRepository.showFeatureById(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-feature-error", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public ProductDetails showProductDetails(int id) {
+
+        try {
+            return productDetailsRepository.showProductDetailsById(id);
+
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show product-details-error", ex.getMessage());
+        }
         return null;
     }
 

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryService_Impl implements CategoryService {
+  public class CategoryService_Impl implements CategoryService {
 
     private final static Logger LOGGER = Logger.getLogger(PartnerService_Impl.class.getName());
 
@@ -33,6 +33,39 @@ public class CategoryService_Impl implements CategoryService {
         this.mediumCategoryRepository = mediumCategoryRepository;
         this.smallCategoryRepository = smallCategoryRepository;
         this.productRepository = productRepository;
+    }
+
+    @Override
+    public List<BigCategory> showBigCategory() {
+        try {
+            return bigCategoryRepository.showBigCategory();
+        } catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "show-all-big-category-error : {0}", ex.getMessage());
+        }
+        return null;
+
+    }
+
+    @Override
+    public List<MediumCategory> showMediumCategory(int id) {
+
+        try {
+            return mediumCategoryRepository.showMediumCaegory(id);
+        } catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "show-all-medium-category-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<SmallCategory> showSmallCategory(int id) {
+
+        try {
+            return smallCategoryRepository.showSmallCategory(id);
+        } catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "show-all-small-category-error : {0}", ex.getMessage());
+        }
+        return null;
     }
 
     @Override

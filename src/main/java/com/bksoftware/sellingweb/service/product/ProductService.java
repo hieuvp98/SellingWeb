@@ -25,5 +25,23 @@ public interface ProductService {
 
     boolean deleteProduct(Product product);
 
+    Page<Product> showProduct(int id, Pageable pageable);
+
+    Page<Product> showProductByMedium(int id, Pageable pageable);
+
+    Page<Product> showProductByBig(int id,Pageable pageable);
+
+    Page<Product> showProductByBigBranch(int id,int branch,Pageable pageable);
+
+    Page<Product> showProductByMediumBranch(int id,int branch,Pageable pageable);
+
+    Page<Product> showProductBySmallBranch(int id,int branch,Pageable pageable);
+
+    Page<Product> findProductByPrice(int id,int low,int high,Pageable pageable);
+
+    Page<Product> findProductByPriceBranch(int id,int low,int high,int branch,Pageable pageable);
+
+    Page<Product> showProductSale( Pageable pageable);
+
 
 }
