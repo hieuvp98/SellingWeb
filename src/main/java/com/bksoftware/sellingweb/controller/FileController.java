@@ -17,7 +17,7 @@ public class FileController {
 
 
     //method for uploading single file
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "/upload-file", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) {
 
         multiPartFile(file);
