@@ -50,6 +50,8 @@ public class Product implements Serializable {
     private SmallCategory smallCategory;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
+    @JsonIgnore
+    @NotNull
     private ProductDetails productDetails;
 
 

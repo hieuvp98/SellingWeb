@@ -95,11 +95,11 @@ public class ProductController {
         Page<Product> lstProductBig = productService.showProductByBig(id,pageable);
         return new ResponseEntity<>(lstProductBig.getContent(),HttpStatus.OK);
     }
-   /* @GetMapping(value = "/showPartnerById")
-    public HashSet<String> showPartner(@RequestParam("id") int id){
-        HashSet<String> lstPartner =  partnerService_imp.showPartByBigCategory(id);
-        return lstPartner;
-    }*/
+   @GetMapping(value = "/showPartnerById")
+    public ResponseEntity<List<Partner>> showPartner(@RequestParam("id") int id){
+       List<Partner> lstPartner =  partnerService_imp.showById(id);
+        return new ResponseEntity<>(lstPartner,HttpStatus.OK);
+    }
 
     @GetMapping(value = "/byBigCategoryBranch")
     public  ResponseEntity<List<Product>> showProductByBigBranch(

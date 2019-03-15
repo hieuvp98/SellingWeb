@@ -15,10 +15,9 @@ public interface PartnerRepository extends JpaRepository<Partner, Integer> {
 
     Partner findById(int id);
 
-    @Query("select p from Partner p where p.id= :id")
+    @Query("select p from Partner p where p.status=true and p.id= :id")
     List<Partner> showById(@Param("id") int id);
 
-    @Query("select p from Product p where p.smallCategory.mediumCategory.bigCategory.id= :id")
-    List<Partner> showPartByBigCategory();
+
 
 }
