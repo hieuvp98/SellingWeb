@@ -1,7 +1,5 @@
 package com.bksoftware.sellingweb.repository.product;
 
-import com.bksoftware.sellingweb.entities.product.BuyForm;
-import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import org.springframework.data.domain.Page;
@@ -25,6 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //Page sẽ chứa kết quả trả về (gồm số phần tử, danh sách các phần tử)
 
 
+
     List<Product> findAllBySmallCategory(SmallCategory smallCategory);
 
     Product findById(int id);
@@ -32,12 +31,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p where p.status=true and p.smallCategory.id= :id")
     Page<Product> showProduct(@Param("id")int id, Pageable pageable);
+    @Query("select p from Product p where p.status=true and p.smallCategory.id= :id")
+    List<Product> findProductBySmall(@Param("id") int id);
 
     @Query("select p from Product p where p.status=true and p.smallCategory.id= :id and p.partner.id= :branch")
     Page<Product> showProductSmallBranch(@Param("id")int id,@Param("branch") int branch, Pageable pageable);
 
     @Query("select p from Product p where p.status=true and p.smallCategory.mediumCategory.id= :id")
     Page<Product> showProductByMedium(@Param("id") int id, Pageable pageable);
+
+    @Query("select p from Product p where p.status=true and p.smallCategory.mediumCategory.id= :id")
+    List<Product> findProductByMedium(@Param("id") int id);
 
     @Query("select p from Product p where p.status=true and p.smallCategory.mediumCategory.id= :id and p.partner.id= :branch")
     Page<Product> showProductByMediumBranch(@Param("id") int id,@Param("branch") int branch, Pageable pageable);
@@ -61,9 +65,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p where p.status=true and p.saleCost>0")
     Page<Product> showProductSale(Pageable pageable);
-
-
-
 
 
 }

@@ -2,7 +2,7 @@ package com.bksoftware.sellingweb.service.product;
 
 
 import com.bksoftware.sellingweb.entities.category.BigCategory;
-import com.bksoftware.sellingweb.entities.product.BuyForm;
+import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public interface ProductService {
@@ -18,7 +19,13 @@ public interface ProductService {
 
     Page<Product> findProductByName(String name, Pageable pageable);
 
+    List<Product> findAllProduct();
+
+    TreeMap<Integer,Partner> test();
+
     Sort sortData(String type);
+
+    public Sort sortDataProduct(String type,String field) ;
 
     Product findById(int id);
 
@@ -27,8 +34,11 @@ public interface ProductService {
     boolean deleteProduct(Product product);
 
     Page<Product> showProduct(int id, Pageable pageable);
+    List<Product> findProductBySmall( int id);
 
     Page<Product> showProductByMedium(int id, Pageable pageable);
+
+    List<Product> findProductByMedium( int id);
 
     Page<Product> showProductByBig(int id,Pageable pageable);
 

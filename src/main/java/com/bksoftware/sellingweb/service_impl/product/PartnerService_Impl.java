@@ -85,9 +85,9 @@ public class PartnerService_Impl implements PartnerService {
     }
 
     @Override
-    public List<Partner> showById(int id) {
+    public List<Partner> show() {
         try {
-            return partnerRepository.showById(id);
+            return partnerRepository.show();
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-partner-error", ex.getMessage());
         }

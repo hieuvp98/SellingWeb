@@ -4,10 +4,12 @@ import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.bksoftware.sellingweb.entities.product.BuyForm;
+import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.category.MediumCategoryRepository;
 import com.bksoftware.sellingweb.repository.category.SmallCategoryRepository;
 import com.bksoftware.sellingweb.repository.product.BuyFormRepository;
+import com.bksoftware.sellingweb.repository.product.PartnerRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.service.product.ProductService;
@@ -19,15 +21,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class ProductService_Impl implements ProductService {
+ public class ProductService_Impl implements ProductService {
 
     private static final Logger LOGGER = Logger.getLogger(ProductService_Impl.class.getName());
 
@@ -37,6 +36,8 @@ public class ProductService_Impl implements ProductService {
 
     @Autowired
     BuyFormRepository buyFormRepository;
+    @Autowired
+    PartnerRepository partnerRepository;
     @Autowired
     private MediumCategoryRepository mediumCategoryRepository;
     @Autowired
@@ -83,6 +84,46 @@ public class ProductService_Impl implements ProductService {
     }
 
     @Override
+    public List<Product> findAllProduct() {
+       List<Product> lstProduct =  productRepository.findAll();
+        return null;
+    }
+
+    @Override
+    public TreeMap<Integer,Partner> test() {
+        int count = 0 ;
+        List<Partner> lstPartner = partnerRepository.findAll();
+        List<Product> lstProducts = productRepository.findAll();
+        TreeMap<Integer,Partner> partnerMap = new TreeMap<>();
+        HashMap<Integer,Partner> near = new HashMap<>();
+        for(Partner lPartner:lstPartner){
+            for(Product l:lstProducts){
+                if(lPartner.getId()==l.getPartner().getId()){
+                    count++;
+                }
+            }
+            if(partnerMap.containsKey(count)){
+                near.put(count,lPartner);
+            }
+            else {
+                partnerMap.put(count, lPartner);
+            }
+            count = 0;
+        }
+        /*List<Map.Entry<Integer,Partner>> lstMap = new ArrayList<Map.Entry<Integer, Partner>>();
+        lstMap.addAll(partnerMap.entrySet());
+        Collections.sort(lstMap, new Comparator<Map.Entry<Integer, Partner>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Partner> o1, Map.Entry<Integer, Partner> o2) {
+                return o2.getKey().compareTo(o1.getKey());
+            }
+        });
+        System.out.println(lstMap);*/
+
+        return  partnerMap;
+    }
+
+    @Override
     public Sort sortData(String type) {
         Sort sortable = null;
         if (type.equals("ASC")) {
@@ -94,13 +135,28 @@ public class ProductService_Impl implements ProductService {
         return sortable;
     }
 
+    public Sort sortDataProduct(String type,String field) {
+        Sort sortable = null;
+        if (type.equals("ASC")) {
+            sortable = Sort.by(field).ascending();
+        }
+        if (type.equals("DESC")) {
+            sortable = Sort.by(field).descending();
+        }
+        return sortable;
+    }
+
 
     @Override
     public Product findById(int id) {
 
-        Product product = productRepository.findById(id);
-        if (product.isStatus() == true) return product;
-        return null;
+        try {
+            Product product = productRepository.findById(id);
+            return product;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-product-by-id-error", ex.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -139,10 +195,32 @@ public class ProductService_Impl implements ProductService {
     }
 
     @Override
+    public List<Product> findProductBySmall(int id) {
+        try {
+            return productRepository.findProductBySmall(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
     public Page<Product> showProductByMedium(int id, Pageable pageable) {
 
         try {
             return productRepository.showProductByMedium(id,pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public List<Product> findProductByMedium(int id) {
+        try {
+            return productRepository.findProductByMedium(id);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 

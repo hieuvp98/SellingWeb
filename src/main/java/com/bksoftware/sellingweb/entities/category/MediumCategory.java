@@ -31,4 +31,5 @@ public class MediumCategory  implements Serializable {
     private BigCategory bigCategory;
 
     private boolean status;
+    private String present;
 }
