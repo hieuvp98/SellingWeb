@@ -23,7 +23,7 @@ public class BuyFormHasProduct implements Serializable {
     @Column(name = "product_id")
     private int productId;
 
-    private int count;
+    private int quantity;
 
     @Column(name = "sold_date")
     private LocalDate soldDate;

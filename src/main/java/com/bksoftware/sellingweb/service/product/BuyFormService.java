@@ -2,6 +2,7 @@ package com.bksoftware.sellingweb.service.product;
 
 import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.BuyFormHasProduct;
+import com.bksoftware.sellingweb.entities.product.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface BuyFormService {
     boolean saveBuyForm(BuyForm buyForm);
 
     List<BuyFormHasProduct> findAllBuyFormHasProductByBuyFormId(int id);
+
+    BuyFormHasProduct findByBuyFormAndProduct(BuyForm buyForm, Product product);
 
     boolean updateBuyFormHasProduct(BuyFormHasProduct buyFormHasProduct);
 }

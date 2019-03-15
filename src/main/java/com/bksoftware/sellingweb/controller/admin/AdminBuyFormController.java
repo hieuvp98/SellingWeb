@@ -52,7 +52,7 @@ public class AdminBuyFormController {
         buyFormHasProducts.forEach(buyFormHasProduct -> {
             BuyFormDetail buyFormDetail = BuyFormDetail.builder()
                     .product(productService.findById(buyFormHasProduct.getProductId()))
-                    .quality(buyFormHasProduct.getCount())
+                    .quantity(buyFormHasProduct.getQuantity())
                     .soldDate(buyFormHasProduct.getSoldDate()).build();
             buyFormDetails.add(buyFormDetail);
         });

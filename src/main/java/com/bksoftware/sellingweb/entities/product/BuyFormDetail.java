@@ -14,7 +14,7 @@ public class BuyFormDetail implements Serializable {
 
     private Product product;
 
-    private int quality;
+    private int quantity;
 
     private LocalDate soldDate;
 

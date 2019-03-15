@@ -2,6 +2,7 @@ package com.bksoftware.sellingweb.service_impl.product;
 
 import com.bksoftware.sellingweb.entities.product.BuyForm;
 import com.bksoftware.sellingweb.entities.product.BuyFormHasProduct;
+import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.product.BuyFormHasProductRepository;
 import com.bksoftware.sellingweb.repository.product.BuyFormRepository;
 import com.bksoftware.sellingweb.service.product.BuyFormService;
@@ -29,7 +30,7 @@ public class BuyFormService_Impl implements BuyFormService {
     @Override
     public List<BuyForm> findAllUnCheckBuyForm() {
         try {
-            return buyFormRepository.findAllByChecked(false);
+            return buyFormRepository.findAllByCheckedAndStatus(false,true);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-uncheck-buyForm-error {0}", ex.getMessage());
         }
@@ -77,6 +78,16 @@ public class BuyFormService_Impl implements BuyFormService {
         catch (Exception ex){
             LOGGER.log(Level.SEVERE, "find-all-buy-form-has-product-error: {0}", ex.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public BuyFormHasProduct findByBuyFormAndProduct(BuyForm buyForm, Product product) {
+        try {
+            return buyFormHasProductRepository.findByBuyFormIdAndProductId(buyForm.getId(),product.getId());
+        }catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "find-buy-form-has-product-error: {0}", ex.getMessage());
+            return null;
         }
     }
 
