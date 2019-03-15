@@ -29,4 +29,6 @@ public class BigCategory implements Serializable {
     @NotNull
     private boolean status;
 
+    private String present;
+
 }

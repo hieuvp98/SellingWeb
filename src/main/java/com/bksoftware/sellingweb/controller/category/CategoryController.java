@@ -37,4 +37,20 @@ public class CategoryController {
         List<SmallCategory> lstSmallCategory = categoryService_imp.showSmallCategory( id);
         return new ResponseEntity<>(lstSmallCategory,HttpStatus.OK);
     }
+    @GetMapping(value = "/findBigCategoryById")
+    public ResponseEntity<BigCategory> findBigCategoryById(@RequestParam("idBig") int id){
+        BigCategory bigCategory = categoryService_imp.findBigCategoryById(id);
+        return new ResponseEntity<>(bigCategory,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/findMediumCategoryById")
+    public ResponseEntity<MediumCategory> findMediumCategoryById(@RequestParam("idMedium") int id){
+        MediumCategory mediumCategory = categoryService_imp.findMediumCategoryById(id);
+        return new ResponseEntity<>(mediumCategory,HttpStatus.OK);
+    }
+    @GetMapping(value = "/findSmallCategoryById")
+    public ResponseEntity<SmallCategory> findSmallCategoryById(@RequestParam("idSmall") int id){
+        SmallCategory smallCategory = categoryService_imp.findSmallCategoryById(id);
+        return new ResponseEntity<>(smallCategory,HttpStatus.OK);
+    }
 }

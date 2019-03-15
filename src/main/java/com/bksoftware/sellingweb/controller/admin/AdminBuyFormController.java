@@ -28,7 +28,7 @@ public class AdminBuyFormController {
     public ResponseEntity<List<BuyForm>> findAllUncheckBuyForm() {
         if (buyFormService.findAllUnCheckBuyForm() != null) {
             return new ResponseEntity<>(buyFormService.findAllUnCheckBuyForm(), HttpStatus.OK);
-        } else return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/check-buy-form", params = "buy-form-id")

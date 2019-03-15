@@ -22,7 +22,7 @@ public interface PartnerService {
 
     Partner findById(int id);
 
-    List<Partner> showById(int id);
+    List<Partner> show();
 
 
 }
