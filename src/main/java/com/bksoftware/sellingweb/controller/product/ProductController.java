@@ -182,11 +182,11 @@ public class ProductController {
         return new ResponseEntity<>(productDetails,HttpStatus.OK);
     }
 
-    @GetMapping("/productTest")
-    public ResponseEntity<TreeMap<Integer,Partner>> testProduct(){
-        TreeMap<Integer,Partner> product = productService.test();
-        return new ResponseEntity<>(product,HttpStatus.OK);
-    }
+//    @GetMapping("/productTest")
+//    public ResponseEntity<TreeMap<Integer,Partner>> testProduct(){
+//        TreeMap<Integer,Partner> product = productService.test();
+//        return new ResponseEntity<>(product,HttpStatus.OK);
+//    }
     @GetMapping("/findProductById")
     public ResponseEntity<Product> findProductById(@RequestParam("id") int id){
         Product product = productService.findById(id);

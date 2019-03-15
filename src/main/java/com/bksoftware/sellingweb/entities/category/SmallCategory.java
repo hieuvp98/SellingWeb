@@ -32,5 +32,6 @@ public class SmallCategory implements Serializable {
 
     @NotNull
     private boolean status;
+
     private String present;
 }

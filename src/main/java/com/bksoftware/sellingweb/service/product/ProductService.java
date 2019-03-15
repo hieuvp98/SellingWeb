@@ -19,13 +19,13 @@ public interface ProductService {
 
     Page<Product> findProductByName(String name, Pageable pageable);
 
-    List<Product> findAllProduct();
+  //  List<Product> findAllProduct();
 
-    TreeMap<Integer,Partner> test();
+  //  TreeMap<Integer,Partner> test();
 
     Sort sortData(String type);
 
-    public Sort sortDataProduct(String type,String field) ;
+     Sort sortDataProduct(String type,String field) ;
 
     Product findById(int id);
 

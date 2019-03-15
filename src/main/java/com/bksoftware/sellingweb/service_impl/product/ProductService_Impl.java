@@ -95,6 +95,18 @@ public class ProductService_Impl implements ProductService {
         return sortable;
     }
 
+    @Override
+    public Sort sortDataProduct(String type, String field) {
+        Sort sortable = null;
+        if (type.equals("ASC")) {
+            sortable = Sort.by(field).ascending();
+        }
+        if (type.equals("DESC")) {
+            sortable = Sort.by(field).descending();
+        }
+        return sortable;
+    }
+
 
     @Override
     public Product findById(int id) {
@@ -140,6 +152,16 @@ public class ProductService_Impl implements ProductService {
     }
 
     @Override
+    public List<Product> findProductBySmall(int id) {
+        try {
+            return productRepository.findProductBySmall(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "error", ex.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public Page<Product> showProductByMedium(int id, Pageable pageable) {
 
         try {
@@ -149,6 +171,16 @@ public class ProductService_Impl implements ProductService {
 
         }
         return null;
+    }
+
+    @Override
+    public List<Product> findProductByMedium(int id) {
+        try {
+            return productRepository.findProductByMedium(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "error", ex.getMessage());
+            return null;
+        }
     }
 
     @Override
