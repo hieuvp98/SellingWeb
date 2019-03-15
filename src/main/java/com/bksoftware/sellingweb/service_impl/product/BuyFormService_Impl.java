@@ -1,10 +1,13 @@
 package com.bksoftware.sellingweb.service_impl.product;
 
 import com.bksoftware.sellingweb.entities.product.BuyForm;
+import com.bksoftware.sellingweb.entities.product.BuyFormHasProduct;
+import com.bksoftware.sellingweb.repository.product.BuyFormHasProductRepository;
 import com.bksoftware.sellingweb.repository.product.BuyFormRepository;
 import com.bksoftware.sellingweb.service.product.BuyFormService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +19,11 @@ public class BuyFormService_Impl implements BuyFormService {
 
     private final BuyFormRepository buyFormRepository;
 
-    public BuyFormService_Impl(BuyFormRepository buyFormRepository) {
+    private final BuyFormHasProductRepository buyFormHasProductRepository;
+
+    public BuyFormService_Impl(BuyFormRepository buyFormRepository, BuyFormHasProductRepository buyFormHasProductRepository) {
         this.buyFormRepository = buyFormRepository;
+        this.buyFormHasProductRepository = buyFormHasProductRepository;
     }
 
     @Override
@@ -49,6 +55,39 @@ public class BuyFormService_Impl implements BuyFormService {
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-buyForm-error {0}", ex.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public boolean saveBuyForm(BuyForm buyForm) {
+        try {
+            buyFormRepository.save(buyForm);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "save-buy-form-error: {0}", ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public List<BuyFormHasProduct> findAllBuyFormHasProductByBuyFormId(int id) {
+        try {
+            return buyFormHasProductRepository.findAllByBuyFormId(id);
+        }
+        catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "find-all-buy-form-has-product-error: {0}", ex.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public boolean updateBuyFormHasProduct(BuyFormHasProduct buyFormHasProduct) {
+        try {
+            buyFormHasProductRepository.save(buyFormHasProduct);
+            return true;
+        }catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "update-buy-form-has-product-error: {0}", ex.getMessage());
+            return false;
         }
     }
 }

@@ -4,9 +4,11 @@ import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.bksoftware.sellingweb.entities.product.BuyForm;
+import com.bksoftware.sellingweb.entities.product.BuyFormHasProduct;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.repository.category.MediumCategoryRepository;
 import com.bksoftware.sellingweb.repository.category.SmallCategoryRepository;
+import com.bksoftware.sellingweb.repository.product.BuyFormHasProductRepository;
 import com.bksoftware.sellingweb.repository.product.BuyFormRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
@@ -32,19 +34,19 @@ public class ProductService_Impl implements ProductService {
     private static final Logger LOGGER = Logger.getLogger(ProductService_Impl.class.getName());
 
 
-    private final
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final BuyFormHasProductRepository buyFormHasProductRepository;
+    private final BuyFormRepository buyFormRepository;
+    private final MediumCategoryRepository mediumCategoryRepository;
+    private final SmallCategoryRepository smallCategoryRepository;
 
-    @Autowired
-    BuyFormRepository buyFormRepository;
-    @Autowired
-    private MediumCategoryRepository mediumCategoryRepository;
-    @Autowired
-    private SmallCategoryRepository smallCategoryRepository;
-
-    public ProductService_Impl(ProductRepository productRepository, ProductDetailsRepository productDetailsRepository) {
+    public ProductService_Impl(ProductRepository productRepository, ProductDetailsRepository productDetailsRepository, BuyFormHasProductRepository buyFormHasProductRepository, BuyFormRepository buyFormRepository, MediumCategoryRepository mediumCategoryRepository, SmallCategoryRepository smallCategoryRepository) {
         this.productRepository = productRepository;
 
+        this.buyFormHasProductRepository = buyFormHasProductRepository;
+        this.buyFormRepository = buyFormRepository;
+        this.mediumCategoryRepository = mediumCategoryRepository;
+        this.smallCategoryRepository = smallCategoryRepository;
     }
 
 
@@ -53,18 +55,17 @@ public class ProductService_Impl implements ProductService {
         Map<String, Long> mapProduct = new HashMap<>();
         try {
             List<BuyForm> buyForms = buyFormRepository.findAllByPhoneNumber(phone_number);
-            List<Product> products = new ArrayList<>();
-            buyForms.forEach(bf -> products.addAll(bf.getProducts()));
-            products.forEach(p -> System.out.println(p.getName()));
-            products.forEach(p -> {
+            List<BuyFormHasProduct> buyFormHasProducts = new ArrayList<>();
+            buyForms.forEach(buyForm -> buyFormHasProducts.addAll(buyFormHasProductRepository.findAllByBuyFormId(buyForm.getId())));
+            buyFormHasProducts.forEach(buyFormHasProduct -> {
                 LocalDate date_now = LocalDate.now();
-                LocalDate date_buy = p.getProductDetails().getSoldDate();
+                LocalDate date_buy = buyFormHasProduct.getSoldDate();
+                Product product = productRepository.findById(buyFormHasProduct.getProductId());
                 long used_time = ChronoUnit.DAYS.between(date_buy, date_now);
-                long guarantee = p.getProductDetails().getGuarantee();
+                long guarantee = product.getProductDetails().getGuarantee();
                 long day_lefts = guarantee - used_time;
-                mapProduct.put(p.getName(), day_lefts);
+                mapProduct.put(product.getName(), day_lefts);
             });
-
             return mapProduct;
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-guarantee-by-phone-error : {0}", ex.getMessage());
@@ -130,7 +131,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> showProduct(int id, Pageable pageable) {
 
         try {
-            return productRepository.showProduct(id,pageable);
+            return productRepository.showProduct(id, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -142,7 +143,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> showProductByMedium(int id, Pageable pageable) {
 
         try {
-            return productRepository.showProductByMedium(id,pageable);
+            return productRepository.showProductByMedium(id, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -154,7 +155,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> showProductByBig(int id, Pageable pageable) {
 
         try {
-            return productRepository.showProductByBig(id,pageable);
+            return productRepository.showProductByBig(id, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -167,7 +168,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> showProductByBigBranch(int id, int branch, Pageable pageable) {
 
         try {
-            return productRepository.showProductByBigBranch(id,branch,pageable);
+            return productRepository.showProductByBigBranch(id, branch, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -179,7 +180,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> showProductByMediumBranch(int id, int branch, Pageable pageable) {
 
         try {
-            return productRepository.showProductByMediumBranch(id,branch,pageable);
+            return productRepository.showProductByMediumBranch(id, branch, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -191,7 +192,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> showProductBySmallBranch(int id, int branch, Pageable pageable) {
 
         try {
-            return productRepository.showProductSmallBranch(id,branch,pageable);
+            return productRepository.showProductSmallBranch(id, branch, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-small-branch-error : {0}", ex.getMessage());
 
@@ -200,10 +201,10 @@ public class ProductService_Impl implements ProductService {
     }
 
     @Override
-    public Page<Product> findProductByPrice(int id, int low,int high,Pageable pageable) {
+    public Page<Product> findProductByPrice(int id, int low, int high, Pageable pageable) {
 
         try {
-            return productRepository.findProductByPrice(id,low,high,pageable);
+            return productRepository.findProductByPrice(id, low, high, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -215,7 +216,7 @@ public class ProductService_Impl implements ProductService {
     public Page<Product> findProductByPriceBranch(int id, int low, int high, int branch, Pageable pageable) {
 
         try {
-            return productRepository.findProductByPriceBranch(id,low,high,branch,pageable);
+            return productRepository.findProductByPriceBranch(id, low, high, branch, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-product-error : {0}", ex.getMessage());
 
@@ -238,11 +239,11 @@ public class ProductService_Impl implements ProductService {
     public List<Product> findAllProductByBigCategory(BigCategory bigCategory) {
         List<MediumCategory> mediumCategories = mediumCategoryRepository.findAllByBigCategory(bigCategory);
         List<SmallCategory> smallCategories = new ArrayList<>();
-        mediumCategories.forEach( mediumCategory -> smallCategories.addAll(smallCategoryRepository.findAllByMediumCategory(mediumCategory)));
+        mediumCategories.forEach(mediumCategory -> smallCategories.addAll(smallCategoryRepository.findAllByMediumCategory(mediumCategory)));
         List<Product> products = new ArrayList<>();
-        smallCategories.forEach( smallCategory -> products.addAll(productRepository.findAllBySmallCategory(smallCategory)));
+        smallCategories.forEach(smallCategory -> products.addAll(productRepository.findAllBySmallCategory(smallCategory)));
         if (products.isEmpty())
-            LOGGER.log(Level.SEVERE,"found 0 product");
+            LOGGER.log(Level.SEVERE, "found 0 product");
         return products;
     }
 

@@ -24,8 +24,8 @@ public class ProductDetails implements Serializable {
     @Column(name = "product_status")
     private boolean productStatus;
 
-    @Column(name = "sold_date")
-    private LocalDate soldDate;
+//    @Column(name = "sold_date")
+//    private LocalDate soldDate;
 
     private int guarantee;
 

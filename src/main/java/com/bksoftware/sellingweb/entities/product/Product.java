@@ -58,6 +58,7 @@ public class Product implements Serializable {
     @NotNull
     private Partner partner;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "products")
     private List<BuyForm> buyForms = new ArrayList<>();
 
