@@ -146,6 +146,11 @@ import java.util.logging.Logger;
         return sortable;
     }
 
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
 
     @Override
     public Product findById(int id) {

@@ -27,6 +27,8 @@ public interface ProductService {
 
     public Sort sortDataProduct(String type,String field) ;
 
+    List<Product> findAll();
+
     Product findById(int id);
 
     boolean saveProduct(Product product);

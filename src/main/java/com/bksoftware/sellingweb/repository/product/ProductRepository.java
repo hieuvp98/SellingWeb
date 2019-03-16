@@ -67,4 +67,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> showProductSale(Pageable pageable);
 
 
+    @Query("select p from Product p where p.status=true")
+    List<Product> findAll();
 }
