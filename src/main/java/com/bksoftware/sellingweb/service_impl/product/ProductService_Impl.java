@@ -107,6 +107,11 @@ public class ProductService_Impl implements ProductService {
         return sortable;
     }
 
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
 
     @Override
     public Product findById(int id) {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -193,6 +194,34 @@ public class ProductController {
         return new ResponseEntity<>(product,HttpStatus.OK);
     }
 
+    @GetMapping("/productNews")
+    public ResponseEntity<List<Product>> productNews(
+            @RequestParam(name = "page", required = false ,defaultValue = "0") Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size)
+    {
+        Sort sortable = productService.sortDataProduct("ASC","productDetails.soldDate");
+        Pageable pageable = PageRequest.of(page, size, sortable);
+        List<Product>  products = productService.findAll();
+        System.out.println(products.size());
+       LocalDate maxDate =products.get(products.size()-1).getProductDetails().getSoldDate();
+        System.out.println(maxDate);
+        LocalDate minDate = maxDate.minusMonths(1);
+        System.out.println(minDate);
+        List<Product> productNew = new ArrayList<>();
+        for (Product p : products){
+            if (p.getProductDetails().getSoldDate().equals(maxDate)){
+                productNew.add(p);
+            }
+            if (p.getProductDetails().getSoldDate().equals(minDate)){
+                productNew.add(p);
+            }
+            if (p.getProductDetails().getSoldDate().isAfter(minDate) && p.getProductDetails().getSoldDate().isBefore(maxDate)){
+                productNew.add(p);
+            }
+        }
+
+        return new ResponseEntity<>(productNew,HttpStatus.OK);
+    }
 }
 
 
