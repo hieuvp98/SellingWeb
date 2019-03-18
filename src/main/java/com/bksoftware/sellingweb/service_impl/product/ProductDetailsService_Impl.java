@@ -11,6 +11,7 @@ import com.bksoftware.sellingweb.repository.product.ProductImageRepository;
 import com.bksoftware.sellingweb.service.product.ProductDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +45,7 @@ import java.util.logging.Logger;
     @Override
     public ProductDetails findById(int id) {
         ProductDetails productDetails = productDetailsRepository.findById(id);
-        if (productDetails.isStatus() == true) return productDetails;
+        if (productDetails.isStatus()) return productDetails;
         return null;
     }
 

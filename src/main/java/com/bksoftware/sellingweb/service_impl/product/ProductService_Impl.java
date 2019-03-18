@@ -84,6 +84,16 @@ public class ProductService_Impl implements ProductService {
     }
 
     @Override
+    public Page<Product> findNewProducts(Pageable pageable) {
+        try {
+            return productRepository.findNewProducts(pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-new-products-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
     public Sort sortData(String type) {
         Sort sortable = null;
         if (type.equals("ASC")) {
@@ -124,6 +134,7 @@ public class ProductService_Impl implements ProductService {
     @Override
     public boolean saveProduct(Product product) {
         try {
+            product.setInitDate(LocalDate.now());
             productRepository.save(product);
             return true;
         } catch (Exception ex) {

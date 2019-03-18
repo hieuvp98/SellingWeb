@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class Product implements Serializable {
 
     @Column(name = "img_url")
     private String imgUrl;
+
+    @Column(name = "init_date")
+    @NotNull
+    private LocalDate initDate;
 
     private int view;
 

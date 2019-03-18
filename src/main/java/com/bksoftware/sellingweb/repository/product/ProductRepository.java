@@ -22,6 +22,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     //Pageable sẽ chứa các thông tin phân trang như số phần tử được lấy, vị trí trang được lấy
     //Page sẽ chứa kết quả trả về (gồm số phần tử, danh sách các phần tử)
 
+    @Query(value = " from Product p order by p.initDate desc ")
+    Page<Product> findNewProducts(Pageable pageable);
 
 
     List<Product> findAllBySmallCategory(SmallCategory smallCategory);
