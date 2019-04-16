@@ -45,7 +45,6 @@ public class Product implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "small_category_id", nullable = false)
-    @JsonIgnore
     @NonNull
     private SmallCategory smallCategory;
 

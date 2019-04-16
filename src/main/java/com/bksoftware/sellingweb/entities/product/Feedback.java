@@ -1,6 +1,5 @@
 package com.bksoftware.sellingweb.entities.product;
 
-import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import lombok.Data;
 
 import javax.persistence.*;

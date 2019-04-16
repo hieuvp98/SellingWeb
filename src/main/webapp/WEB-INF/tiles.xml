@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <!--Login-->
+    <definition name="login" template="/WEB-INF/views/layouts/login.jsp"></definition>
+
+    <!-- Base Define -->
+    <definition name="base.definition"
+                template="/WEB-INF/views/layouts/index.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/views/baseFragments/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/views/baseFragments/menu.jsp"/>
+        <put-attribute name="body" value=""/>
+    </definition>
+
+    <!-- Body Admin  -->
+    <definition name="homeAdmin" extends="base.definition">
+        <put-attribute name="title" value="Home Admin"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/home.jsp"/>
+    </definition>
+
+
+    <!-- Product Page -->
+    <definition name="product" extends="base.definition">
+        <put-attribute name="title" value="product"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/product.jsp"/>
+    </definition>
+
+    <!--================================ FORM_CREATE =========================-->
+    <!-- Product Page -->
+    <definition name="createProduct" extends="base.definition">
+        <put-attribute name="title" value="product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/createProduct.jsp"/>
+    </definition>
+</tiles-definitions>

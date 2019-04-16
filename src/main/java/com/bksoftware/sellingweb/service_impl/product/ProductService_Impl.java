@@ -38,9 +38,16 @@ public class ProductService_Impl implements ProductService {
 
     }
 
+//    public Page<Product> findAllProduct( Pageable pageable) {
+//        try {
+//            return productRepository.findByName("+" + name + "*", pageable);
+//        } catch (Exception ex) {
+//            LOGGER.log(Level.SEVERE, "find-product-by-name-error : {0}", ex.getMessage());
+//        }
+//        return null;
+//    }
 
     public Map<String, Long> findGuaranteeToPhone(int phone_number) {
-
         Map<String, Long> mapProduct = new HashMap<>();
         try {
             List<BuyForm> buyForms = buyFormRepository.findAllByPhoneNumber(phone_number);
