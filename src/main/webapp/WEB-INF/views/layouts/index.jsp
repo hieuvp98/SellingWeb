@@ -3,9 +3,7 @@
 <html lang="en">
 <head>
     <title><tiles:getAsString name="title"/></title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 
     <%--=================================== AJAX =======================================--%>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

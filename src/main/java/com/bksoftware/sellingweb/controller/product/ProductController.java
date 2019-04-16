@@ -35,6 +35,21 @@ public class ProductController {
     @Autowired
     PartnerService_Impl partnerService_imp;
 
+    @GetMapping("/find-all")
+    public ResponseEntity<List<Product>> findAllProduct(
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "20") int size
+    ){
+
+        //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<Product> productsByName = productService.findAllProduct(pageable).getContent();
+        productsByName.stream()
+                .filter(p -> (p.isStatus() == true))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(productsByName, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<Product>> findProductByName(
             @RequestParam("name") String name,
@@ -62,6 +77,7 @@ public class ProductController {
 
     @GetMapping(value = "/bySmallCategory")
     public ResponseEntity<List<Product>> showProduct(
+
             @RequestParam(name = "id") int id,
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,

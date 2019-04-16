@@ -32,5 +32,5 @@ public class MediumCategory  implements Serializable {
 
     private boolean status;
 
-    private String present;
+
 }

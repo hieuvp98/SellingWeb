@@ -21,7 +21,7 @@ public class GuaranteeController {
 
         for (Map.Entry<String, Long> entry : guarantees.entrySet()) {
             if (entry.getValue() < 0) {
-                entry.setValue(0l);
+                entry.setValue(0L);
             }
         }
         return new ResponseEntity<>(guarantees, HttpStatus.OK);

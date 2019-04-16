@@ -20,4 +20,7 @@ public interface ProductDetailsRepository extends JpaRepository<ProductDetails, 
     ProductDetails findById(int id);
 
     ProductDetails findByProduct(Product product);
+
+    @Query("select pd from ProductDetails pd where pd.status=true and pd.product.id= :idProduct")
+    ProductDetails showProductDetailsById(@Param("idProduct")int idProduct);
 }

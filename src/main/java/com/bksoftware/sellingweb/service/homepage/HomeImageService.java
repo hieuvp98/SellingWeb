@@ -9,4 +9,6 @@ public interface HomeImageService {
     boolean saveHomeImage(HomeImage homeImage);
 
     boolean deleteHomeImage(HomeImage homeImage);
+
+    HomeImage getHomeImage();
 }

@@ -52,15 +52,6 @@ public class BuyForm implements Serializable {
     @JoinTable(name = "buy_form_has_product",
             joinColumns = @JoinColumn(name = "buy_form_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    @JsonIgnore
-    @NotNull
     private List<Product> products = new ArrayList<>();
 
-    public void addProduct(Product product) {
-        this.products.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        this.products.remove(product);
-    }
 }

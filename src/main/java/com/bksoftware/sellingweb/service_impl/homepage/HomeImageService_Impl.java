@@ -42,4 +42,18 @@ public class HomeImageService_Impl implements HomeImageService {
             return false;
         }
     }
+
+    @Override
+    public HomeImage getHomeImage() {
+
+        try {
+
+            return homeImageRepository.getHomeImage();
+
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-home-image-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
 }

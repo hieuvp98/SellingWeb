@@ -1,7 +1,8 @@
 $(document).ready(function () {
+    //============ Get All Product ========================
     $.ajax({
         type: "GET",
-        url: "http://localhost:9990/api/v1/public/products/bySmallCategory?id=1",
+        url: "http://localhost:9990/api/v1/public/products/find-all",
         success: function (products) {
             console.log("dm");
             const listSize = Object.keys(products).length;
@@ -50,5 +51,7 @@ $(document).ready(function () {
             console.log("Error: " + e);
         }
     })
+
+    //===================================== Create ========================
 
 })
