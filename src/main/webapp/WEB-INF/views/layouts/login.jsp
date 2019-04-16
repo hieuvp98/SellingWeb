@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="col-7 col-sm-6 col-md-5 col-lg-4 form-login">
-                <div class="title">LOGIN</div>
+                <div class="title">LOGIN HP</div>
                 <div class="from-input">
                     <i class="fas fa-user-circle"></i>
                     <input type="text" class="input-login" placeholder="username">
