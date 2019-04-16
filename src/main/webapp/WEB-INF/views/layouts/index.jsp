@@ -3,22 +3,10 @@
 <html lang="en">
 <head>
     <title><tiles:getAsString name="title"/></title>
-
-
-    <%--=================================== AJAX =======================================--%>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="/resources/js/ajax/products/ajax_products_CURD.js"></script>
-<%--=================================== CSS =======================================--%>
+    <%--=================================== CSS =======================================--%>
     <%@include file="../../library/library_css.jsp" %>
-    <link type="text/css" href="/resources/tool/jquery.datetimepicker.min.css" rel="stylesheet">
-    <%--=================================== BASE CSS =======================================--%>
-    <link type="text/css" href="/resources/css/baseFragments/menu.css" rel="stylesheet">
-    <link type="text/css" href="/resources/css/baseFragments/header.css" rel="stylesheet">
-    <%--=================================== HOME CSS =======================================--%>
-    <link type="text/css" href="/resources/css/bodyFragments/product.css" rel="stylesheet">
-    <link type="text/css" href="/resources/css/bodyFragments/home.css" rel="stylesheet">
-<%--=================================== CREATE CATEGORY ================================--%>
-    <%--============================================================================--%>
+    <%--=================================== AJAX ======================================--%>
+    <%@include file="../../library/library_ajax.jsp" %>
 
 </head>
 
@@ -50,11 +38,6 @@
 
 <!----------------------Script------------------------------------ -->
 <%@include file="../../library/library_js.jsp" %>
-<script src="/resources/tool/jquery.datetimepicker.full.js"></script>
-<script src="/resources/tool/jquery.datetimepicker.full.min.js"></script>
-<script src="/resources/tool/jquery.datetimepicker.min.js"></script>
-<script src="/resources/js/checkDate.js"></script>
-<script src="/resources/js/home.js"></script>
 </body>
 
 </html>

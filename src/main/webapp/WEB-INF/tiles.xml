@@ -25,13 +25,58 @@
     <!-- Product Page -->
     <definition name="product" extends="base.definition">
         <put-attribute name="title" value="product"/>
-        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/product.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/products/product.jsp"/>
     </definition>
+
+    <!-- Details Product Page -->
+    <definition name="detailsProduct" extends="base.definition">
+        <put-attribute name="title" value="details product"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/products/details-product.jsp"/>
+    </definition>
+
+    <!-- Category Page -->
+    <definition name="bigCategory" extends="base.definition">
+        <put-attribute name="title" value="big category"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/category/big_category.jsp"/>
+    </definition>
+    <definition name="mediumCategory" extends="base.definition">
+        <put-attribute name="title" value="medium category"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/category/medium_category.jsp"/>
+    </definition>
+    <definition name="smallCategory" extends="base.definition">
+        <put-attribute name="title" value="small category"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/category/small_category.jsp"/>
+    </definition>
+
 
     <!--================================ FORM_CREATE =========================-->
     <!-- Product Page -->
     <definition name="createProduct" extends="base.definition">
         <put-attribute name="title" value="product"/>
-        <put-attribute name="body" value="/WEB-INF/views/form-create/createProduct.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/products/createProduct.jsp"/>
     </definition>
+
+    <!--Details Product Page -->
+    <definition name="createDetailsProduct" extends="base.definition">
+        <put-attribute name="title" value="product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/products/createDetailsProducts.jsp"/>
+    </definition>
+
+    <!--Big Category Page -->
+    <definition name="createBigCategory" extends="base.definition">
+        <put-attribute name="title" value="product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createBigCategory.jsp"/>
+    </definition>
+    <!--Medium Category Page -->
+    <definition name="createMediumCategory" extends="base.definition">
+        <put-attribute name="title" value="product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createMediumCategory.jsp"/>
+    </definition>
+    <!--Small Category Page -->
+    <definition name="createSmallCategory" extends="base.definition">
+        <put-attribute name="title" value="product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createSmallCategory.jsp"/>
+    </definition>
+
+
 </tiles-definitions>

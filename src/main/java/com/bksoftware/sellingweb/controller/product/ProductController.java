@@ -1,7 +1,6 @@
 package com.bksoftware.sellingweb.controller.product;
 
 import com.bksoftware.sellingweb.entities.product.*;
-import com.bksoftware.sellingweb.service_impl.product.FeedbackService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductDetailsService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -38,7 +36,7 @@ public class ProductController {
     @GetMapping("/find-all")
     public ResponseEntity<List<Product>> findAllProduct(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "20") int size
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ){
 
         //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
@@ -49,6 +47,21 @@ public class ProductController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(productsByName, HttpStatus.OK);
     }
+
+    @GetMapping("/details-products")
+    public ResponseEntity<List<ProductDetails>> findAllDetailsProduct(
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size
+    ){
+        //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<ProductDetails> productDetailsList = productDetailsService_imp.findAll(pageable).getContent();
+        productDetailsList.stream()
+                .filter(p -> (p.isStatus() == true))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(productDetailsList, HttpStatus.OK);
+    }
+
 
     @GetMapping
     public ResponseEntity<List<Product>> findProductByName(

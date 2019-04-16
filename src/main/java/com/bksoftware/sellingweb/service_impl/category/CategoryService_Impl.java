@@ -47,6 +47,28 @@ import java.util.stream.Collectors;
     }
 
     @Override
+    public List<MediumCategory> findAllMediumCategory() {
+
+        try {
+            return mediumCategoryRepository.findByStatus(true);
+        } catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "show-all-medium-category-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<SmallCategory> findAllSmalllCategory() {
+
+        try {
+            return smallCategoryRepository.findByStatus(true);
+        } catch (Exception ex){
+            LOGGER.log(Level.SEVERE, "show-all-medium-category-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
     public List<MediumCategory> showMediumCategory(int id) {
 
         try {

@@ -9,6 +9,8 @@ import com.bksoftware.sellingweb.repository.product.FeedbackRepository;
 import com.bksoftware.sellingweb.repository.product.ProductDetailsRepository;
 import com.bksoftware.sellingweb.repository.product.ProductImageRepository;
 import com.bksoftware.sellingweb.service.product.ProductDetailsService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,6 +31,12 @@ import java.util.logging.Logger;
         this.productDetailsRepository = productDetailsRepository;
         this.featureRepository = featureRepository;
         this.productImageRepository = productImageRepository;
+    }
+
+
+    @Override
+    public Page<ProductDetails> findAll(Pageable pageable) {
+        return productDetailsRepository.findByStatus(true, pageable);
     }
 
     @Override

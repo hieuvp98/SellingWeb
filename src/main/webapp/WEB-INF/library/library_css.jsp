@@ -8,3 +8,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
       integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+<!-- ---------------------------------------CSS PAGE------------------------------------------ -->
+
+<link type="text/css" href="/resources/tool/jquery.datetimepicker.min.css" rel="stylesheet">
+<%--=================================== BASE CSS =======================================--%>
+<link type="text/css" href="/resources/css/baseFragments/menu.css" rel="stylesheet">
+<link type="text/css" href="/resources/css/baseFragments/header.css" rel="stylesheet">
+<%--=================================== HOME CSS =======================================--%>
+<link type="text/css" href="/resources/css/bodyFragments/product.css" rel="stylesheet">
+<link type="text/css" href="/resources/css/bodyFragments/home.css" rel="stylesheet">
+<%--=================================== CREATE CATEGORY ================================--%>

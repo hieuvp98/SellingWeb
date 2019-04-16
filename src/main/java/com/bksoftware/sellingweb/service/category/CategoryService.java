@@ -9,6 +9,12 @@ import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import java.util.List;
 
 public interface CategoryService {
+
+     List<MediumCategory> findAllMediumCategory();
+
+     List<SmallCategory> findAllSmalllCategory( );
+
+
     List<BigCategory> showBigCategory();
 
     List<MediumCategory> showMediumCategory(int id);

@@ -4,18 +4,19 @@ $(document).ready(function () {
         type: "GET",
         url: "http://localhost:9990/api/v1/public/products/find-all",
         success: function (products) {
-            console.log("dm");
+
             const listSize = Object.keys(products).length;
-            console.log("size: " + listSize)
+
             if (products.check == "fail") {
-                alert("Course isEmpty! Name not found!");
+                alert("Product isEmpty! Name not found!");
                 return;
             }
+
             if (listSize > 0) {
 
                 var contentRow = '';
 
-                $("#column").html(
+                $("#column-product").html(
                     "<td> Name </td>" +
                     "<td> Origin Cost</td>" +
                     "<td> Sale Cost </td>" +
@@ -44,7 +45,7 @@ $(document).ready(function () {
                         </tr>
                     `;
                 })
-                $("#row").html(contentRow);
+                $("#row-product").html(contentRow);
             }
         },
         error: function (e) {

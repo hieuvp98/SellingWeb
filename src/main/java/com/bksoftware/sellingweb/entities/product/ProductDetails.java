@@ -1,12 +1,10 @@
 package com.bksoftware.sellingweb.entities.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -32,7 +30,6 @@ public class ProductDetails implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id",nullable = false)
-    @JsonIgnore
     @NotNull
     private Product product;
 

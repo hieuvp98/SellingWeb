@@ -17,4 +17,6 @@ public interface MediumCategoryRepository extends JpaRepository<MediumCategory,I
 
     @Query("select m from MediumCategory m where m.status = true and  m.bigCategory.id= :id")
     List<MediumCategory> showMediumCaegory(@Param("id") int id);
+
+    List<MediumCategory> findByStatus(boolean status);
 }

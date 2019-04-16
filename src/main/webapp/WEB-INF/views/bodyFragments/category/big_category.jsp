@@ -1,5 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <h3 class="title-body" style="text-align: center">
-    Quản Lý Lớp
+    Quản Lý Chuyên Mục Lớn
 </h3>
 <div class="from-find float-right">
     <input type="text" name="search" id="input-search" placeholder="search..."
@@ -7,18 +8,18 @@
     <div class="fas fa-search float-right" id="icon-search"></div>
 </div>
 <button type="button" class="btn btn-success float-left btn-search">
-    <a href="${pageContext.request.contextPath}/admin/create-product" style="text-decoration: none;color: white">
+    <a href="" style="text-decoration: none;color: white">
         <i class="fas fa-plus"></i>
-        Thêm Lớp
+        Create Big Category
     </a>
 </button>
 <!-- TABLE -->
 <div class="table-responsive" style="overflow-x:auto;overflow-y: auto">
     <table class="table text-center">
         <thead>
-        <tr id="column"></tr>
+        <tr id="column-big-category"></tr>
         </thead>
-        <tbody id="row"></tbody>
+        <tbody id="row-big-category"></tbody>
     </table>
 </div>
 <!-- END_TABLE -->

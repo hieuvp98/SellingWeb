@@ -18,4 +18,7 @@ public interface SmallCategoryRepository extends JpaRepository<SmallCategory, In
 
     @Query("select s from SmallCategory s where s.status = true and s.mediumCategory.id= :id")
     public List<SmallCategory> showSmallCategory(@Param("id") int id);
+
+    List<SmallCategory> findByStatus(boolean status);
+
 }

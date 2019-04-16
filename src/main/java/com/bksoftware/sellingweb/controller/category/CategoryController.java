@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/public/category")
 public class CategoryController {
+
     @Autowired
     CategoryService_Impl categoryService_imp;
 
@@ -24,6 +25,20 @@ public class CategoryController {
     public ResponseEntity<List<BigCategory>> showBigCategory(){
         List<BigCategory> lstBigCategory = categoryService_imp.showBigCategory();
         return new ResponseEntity<>( lstBigCategory, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/medium-category")
+    public ResponseEntity<List<MediumCategory>> showMediumCategory(){
+        List<MediumCategory> lstMediumCategory = categoryService_imp.findAllMediumCategory();
+        return new ResponseEntity<>( lstMediumCategory, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/small-category")
+    public ResponseEntity<List<SmallCategory>> showSmallCategory(){
+        List<SmallCategory> lstSmallCategory = categoryService_imp.findAllSmalllCategory();
+        return new ResponseEntity<>( lstSmallCategory, HttpStatus.OK);
     }
 
     @GetMapping(value = "/showMedium")

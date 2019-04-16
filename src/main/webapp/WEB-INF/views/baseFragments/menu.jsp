@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" id="menu-extra2" class="menu-extra-click">
+                        <a href="${pageContext.request.contextPath}/admin/details-product" id="menu-extra2" class="menu-extra-click">
                                     <span>
                                         Details Product
                                     </span>
@@ -40,21 +40,21 @@
                 </a>
                 <ul class="menu-extra not-view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/category" id="menu-extra3">
+                        <a href="${pageContext.request.contextPath}/admin/big-category" id="menu-extra3">
                                     <span>
                                         Big Category
                                     </span>
                         </a>
                     </li>
                     <li>
-                        <a href="" id="menu-extra4" class="menu-extra-click">
+                        <a href="${pageContext.request.contextPath}/admin/medium-category" id="menu-extra4" class="menu-extra-click">
                                     <span>
                                         Medium Category
                                     </span>
                         </a>
                     </li>
                     <li>
-                        <a href="" id="menu-extra5" class="menu-extra-click">
+                        <a href="${pageContext.request.contextPath}/admin/small-category" id="menu-extra5" class="menu-extra-click">
                                     <span>
                                         Small Category
                                     </span>
