@@ -3,10 +3,9 @@
 <html lang="en">
 <head>
     <title><tiles:getAsString name="title"/></title>
-    <%--=================================== CSS =======================================--%>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<%--=================================== CSS =======================================--%>
     <%@include file="../../library/library_css.jsp" %>
-    <%--=================================== AJAX ======================================--%>
-    <%@include file="../../library/library_ajax.jsp" %>
 
 </head>
 

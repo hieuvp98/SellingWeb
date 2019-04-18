@@ -3,6 +3,8 @@ package com.bksoftware.sellingweb.service.homepage;
 import com.bksoftware.sellingweb.entities.homepage.HomeImage;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface HomeImageService {
 
@@ -10,5 +12,5 @@ public interface HomeImageService {
 
     boolean deleteHomeImage(HomeImage homeImage);
 
-    HomeImage getHomeImage();
+    List<HomeImage> getHomeImage();
 }

@@ -27,13 +27,11 @@ public class CategoryController {
         return new ResponseEntity<>( lstBigCategory, HttpStatus.OK);
     }
 
-
     @GetMapping(value = "/medium-category")
     public ResponseEntity<List<MediumCategory>> showMediumCategory(){
         List<MediumCategory> lstMediumCategory = categoryService_imp.findAllMediumCategory();
         return new ResponseEntity<>( lstMediumCategory, HttpStatus.OK);
     }
-
 
     @GetMapping(value = "/small-category")
     public ResponseEntity<List<SmallCategory>> showSmallCategory(){

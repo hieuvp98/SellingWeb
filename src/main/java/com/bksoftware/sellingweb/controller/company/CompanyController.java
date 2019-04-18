@@ -1,7 +1,6 @@
 
 package com.bksoftware.sellingweb.controller.company;
 
-import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.company.Company;
 import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
 import com.bksoftware.sellingweb.service_impl.company.CompanyService_Impl;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -25,7 +25,9 @@ public class CompanyController {
     CategoryService_Impl categoryService;
 
     @GetMapping
-    public ResponseEntity<List<Company>> findAllCompanies() {
+    public ResponseEntity<List<Company>> findAllCompanies(HttpServletResponse response) {
+
+        response.setHeader("Access-Control-Allow-Origin","*");
 
         List<Company> companies = companyService.findAllCompanies();
 

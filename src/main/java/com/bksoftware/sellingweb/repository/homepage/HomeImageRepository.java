@@ -5,10 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface HomeImageRepository extends JpaRepository<HomeImage,Integer> {
 
-    @Query("select hi from HomeImage hi where hi.status=true")
-    HomeImage getHomeImage();
+    List<HomeImage> findByStatus(boolean status);
 }

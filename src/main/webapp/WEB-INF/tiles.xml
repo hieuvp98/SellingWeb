@@ -63,19 +63,15 @@
     </definition>
 
     <!--Big Category Page -->
-    <definition name="createBigCategory" extends="base.definition">
+    <definition name="createCategory" extends="base.definition">
         <put-attribute name="title" value="product"/>
-        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createBigCategory.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createCategory.jsp"/>
     </definition>
-    <!--Medium Category Page -->
-    <definition name="createMediumCategory" extends="base.definition">
+    <!--================================ FORM_ UPDATE =========================-->
+    <!--Big Category Page -->
+    <definition name="updateCategory" extends="base.definition">
         <put-attribute name="title" value="product"/>
-        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createMediumCategory.jsp"/>
-    </definition>
-    <!--Small Category Page -->
-    <definition name="createSmallCategory" extends="base.definition">
-        <put-attribute name="title" value="product"/>
-        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createSmallCategory.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/category/createCategory.jsp"/>
     </definition>
 
 

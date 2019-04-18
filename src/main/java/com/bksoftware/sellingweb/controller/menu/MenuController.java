@@ -35,11 +35,11 @@ public class MenuController {
         return  new ResponseEntity<>(lstMenu, HttpStatus.OK);
     }
 
-    @GetMapping("/homeImage")
-    public ResponseEntity<HomeImage> showHomeImage() {
-        HomeImage homeImage = homeImageService_imp.getHomeImage();
-        return  new ResponseEntity<>(homeImage, HttpStatus.OK);
-    }
+//    @GetMapping("/homeImage")
+//    public ResponseEntity<HomeImage> showHomeImage() {
+//        HomeImage homeImage = homeImageService_imp.getHomeImage();
+//        return  new ResponseEntity<>(homeImage, HttpStatus.OK);
+//    }
 
     @GetMapping("/footerBig")
     public ResponseEntity<List<FooterMenu>> showFooterBig(){

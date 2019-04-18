@@ -24,12 +24,12 @@ public class AdminCategoryController {
     //************************************************************************add
 
 
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     @PostMapping(value = "/big")
-    public ResponseEntity<String> addBigCategory(@RequestBody BigCategory bigCategory) {
+    public ResponseEntity<Object> addBigCategory(@RequestBody BigCategory bigCategory) {
         bigCategory.setStatus(true);
         if (categoryService.saveBigCategory(bigCategory))
-            return new ResponseEntity<>("add success", HttpStatus.OK);
+            return new ResponseEntity<>(bigCategory, HttpStatus.OK);
         else
             return new ResponseEntity<>("add fails", HttpStatus.BAD_REQUEST);
     }
@@ -96,9 +96,11 @@ public class AdminCategoryController {
     //************************************************************delete
 
 
+
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/delete-big")
-    public ResponseEntity<String> deleteBigCategory(@RequestBody BigCategory bigCategory) {
+    public ResponseEntity<String> deleteBigCategory(@RequestParam("id") int idBigCategory) {
+        BigCategory bigCategory = categoryService.findBigCategoryById(idBigCategory);
         if (categoryService.deleteBigCategory(bigCategory))
             return new ResponseEntity<>("delete success", HttpStatus.OK);
         else
@@ -107,7 +109,8 @@ public class AdminCategoryController {
 
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/delete-medium")
-    public ResponseEntity<String> deleteMediumCategory(@RequestBody MediumCategory mediumCategory) {
+    public ResponseEntity<String> deleteMediumCategory(@RequestParam("id") int idMeidumCategory) {
+        MediumCategory mediumCategory= categoryService.findMediumCategoryById(idMeidumCategory);
         if (categoryService.deleteMediumCategory(mediumCategory))
             return new ResponseEntity<>("delete success", HttpStatus.OK);
         else
@@ -116,7 +119,8 @@ public class AdminCategoryController {
 
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/delete-small")
-    public ResponseEntity<String> deleteSmallCategory(@RequestBody SmallCategory smallCategory) {
+    public ResponseEntity<String> deleteSmallCategory(@RequestParam("id") int idSmallCategory) {
+        SmallCategory smallCategory = categoryService.findSmallCategoryById(idSmallCategory);
         if (categoryService.deleteSmallCategory(smallCategory))
             return new ResponseEntity<>("delete success", HttpStatus.OK);
         else

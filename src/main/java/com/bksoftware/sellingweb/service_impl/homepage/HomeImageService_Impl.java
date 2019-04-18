@@ -6,6 +6,7 @@ import com.bksoftware.sellingweb.service.homepage.HomeImageService;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,11 +45,11 @@ public class HomeImageService_Impl implements HomeImageService {
     }
 
     @Override
-    public HomeImage getHomeImage() {
+    public List<HomeImage> getHomeImage() {
 
         try {
 
-            return homeImageRepository.getHomeImage();
+            return homeImageRepository.findByStatus(true);
 
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-home-image-error : {0}", ex.getMessage());

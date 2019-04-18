@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<script src="/resources/js/ajax/category/medium_category/ajax_medium_category.js"></script>
+
 <h3 class="title-body" style="text-align: center">
     Quản Lý Chuyên Mục Trung Bình
 </h3>
@@ -8,7 +10,7 @@
     <div class="fas fa-search float-right" id="icon-search"></div>
 </div>
 <button type="button" class="btn btn-success float-left btn-search">
-    <a href="" style="text-decoration: none;color: white">
+    <a href="${pageContext.request.contextPath}/admin/create-category" style="text-decoration: none;color: white">
         <i class="fas fa-plus"></i>
         Create Medium Category
     </a>

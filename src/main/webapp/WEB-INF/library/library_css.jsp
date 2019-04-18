@@ -1,5 +1,4 @@
-<!-- Bootstrap CSS -->
-<!-- Required meta tags -->
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -17,4 +16,7 @@
 <%--=================================== HOME CSS =======================================--%>
 <link type="text/css" href="/resources/css/bodyFragments/product.css" rel="stylesheet">
 <link type="text/css" href="/resources/css/bodyFragments/home.css" rel="stylesheet">
+
 <%--=================================== CREATE CATEGORY ================================--%>
+<link type="text/css" href="/resources/css/form_create/category/createCategory.css" rel="stylesheet">
+<%--=================================== CREATE PRODUCT ================================--%>
