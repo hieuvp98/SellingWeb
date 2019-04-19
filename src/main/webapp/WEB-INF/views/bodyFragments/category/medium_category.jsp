@@ -11,28 +11,19 @@
 </div>
 <button type="button" class="btn btn-success float-left btn-search">
     <a href="${pageContext.request.contextPath}/admin/create-category" style="text-decoration: none;color: white">
-        <i class="fas fa-plus"></i>
-        Create Medium Category
+        <i class="fas fa-plus"></i>Create
     </a>
 </button>
 <!-- TABLE -->
 <div class="table-responsive" style="overflow-x:auto;overflow-y: auto">
     <table class="table text-center">
         <thead>
-        <tr id="column-medium-category"></tr>
+        <tr id="column-medium-category" style="font-weight: 600"></tr>
         </thead>
         <tbody id="row-medium-category"></tbody>
     </table>
 </div>
 <!-- END_TABLE -->
 <div class="pageable">
-    <ul class="pagination">
-        <li><a href="#" class="prev" id="prev">&laquo</a></li>
-        <li><a href="#" class="active" id="_1">1</a></li>
-        <li><a href="#" id="_2">2</a></li>
-        <li><a href="#" id="_3">3</a></li>
-        <li><a href="#" id="_4">4</a></li>
-        <li><a href="#" id="_5">5</a></li>
-        <li><a href="#" class="next" id="next">&raquo;</a></li>
-    </ul>
+    <ul class="pagination"></ul>
 </div>

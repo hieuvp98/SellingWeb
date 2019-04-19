@@ -11,7 +11,9 @@ import java.util.List;
 
 public interface ProductDetailsService {
 
-    Page<ProductDetails> findAll(Pageable pageable);
+    Page<ProductDetails> findAllProductDetails(Pageable pageable);
+
+    List<ProductDetails> findAll();
 
     boolean saveProductDetails(ProductDetails productDetails);
 
@@ -30,4 +32,6 @@ public interface ProductDetailsService {
     boolean deleteProductImage(ProductImage productImage);
 
     ProductDetails findByProduct(Product product);
+
+    boolean deleteProductDetails(ProductDetails productDetails);
 }

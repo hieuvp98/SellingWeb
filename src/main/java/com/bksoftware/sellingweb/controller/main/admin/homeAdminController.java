@@ -47,4 +47,10 @@ public class homeAdminController {
         return "smallCategory";
     }
 
+    //=========================Category=================================
+    @GetMapping("/partner")
+    public String partnerPage() {
+        return "partner";
+    }
+
 }

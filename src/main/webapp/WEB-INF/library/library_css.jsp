@@ -20,3 +20,4 @@
 <%--=================================== CREATE CATEGORY ================================--%>
 <link type="text/css" href="/resources/css/form_create/category/createCategory.css" rel="stylesheet">
 <%--=================================== CREATE PRODUCT ================================--%>
+<link type="text/css" href="/resources/css/form_create/product/createProduct.css" rel="stylesheet">

@@ -18,16 +18,23 @@
                 </a>
                 <ul class="menu-extra not-view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/product" id="menu-extra1">
+                        <a href="${pageContext.request.contextPath}/admin/product" id="menu-extra1.1">
                                     <span>
                                         Product
                                     </span>
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/details-product" id="menu-extra2" class="menu-extra-click">
+                        <a href="${pageContext.request.contextPath}/admin/details-product" id="menu-extra1.2" class="menu-extra-click">
                                     <span>
                                         Details Product
+                                    </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/admin/partner" id="menu-extra1.3" class="menu-extra-click">
+                                    <span>
+                                       Partner
                                     </span>
                         </a>
                     </li>
@@ -40,21 +47,21 @@
                 </a>
                 <ul class="menu-extra not-view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/big-category" id="menu-extra3">
+                        <a href="${pageContext.request.contextPath}/admin/big-category" id="menu-extra2.1">
                                     <span>
                                         Big Category
                                     </span>
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/medium-category" id="menu-extra4" class="menu-extra-click">
+                        <a href="${pageContext.request.contextPath}/admin/medium-category" id="menu-extra2.2" class="menu-extra-click">
                                     <span>
                                         Medium Category
                                     </span>
                         </a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/admin/small-category" id="menu-extra5" class="menu-extra-click">
+                        <a href="${pageContext.request.contextPath}/admin/small-category" id="menu-extra2.3" class="menu-extra-click">
                                     <span>
                                         Small Category
                                     </span>

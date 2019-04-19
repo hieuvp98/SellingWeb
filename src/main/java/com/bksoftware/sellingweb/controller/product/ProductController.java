@@ -37,29 +37,51 @@ public class ProductController {
     public ResponseEntity<List<Product>> findAllProduct(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
-    ){
+    ) {
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
 
-        //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
         Pageable pageable = PageRequest.of(page - 1, size);
-        List<Product> productsByName = productService.findAllProduct(pageable).getContent();
-        productsByName.stream()
-                .filter(p -> (p.isStatus() == true))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(productsByName, HttpStatus.OK);
+        List<Product> products = productService.findAllProduct(pageable).getContent();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/size")
+    public ResponseEntity<Double> pageNumberProduct() {
+        List<Product> products = productService.findAll();
+        System.out.println(Math.ceil(products.size() / 10) + 1);
+        return new ResponseEntity<>(Math.ceil(products.size() / 10) + 1, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Product>> allProduct() {
+        List<Product> products = productService.findAll();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/details-products")
     public ResponseEntity<List<ProductDetails>> findAllDetailsProduct(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
-    ){
+    ) {
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
         //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
         Pageable pageable = PageRequest.of(page - 1, size);
-        List<ProductDetails> productDetailsList = productDetailsService_imp.findAll(pageable).getContent();
-        productDetailsList.stream()
-                .filter(p -> (p.isStatus() == true))
-                .collect(Collectors.toList());
+        List<ProductDetails> productDetailsList = productDetailsService_imp.findAllProductDetails(pageable).getContent();
         return new ResponseEntity<>(productDetailsList, HttpStatus.OK);
+    }
+
+    @GetMapping("details-products/size")
+    public ResponseEntity<Double> pageNumberDetailsProduct() {
+        List<ProductDetails> productDetails = productDetailsService_imp.findAll();
+        return new ResponseEntity<>(Math.ceil(productDetails.size() / 10) + 1, HttpStatus.OK);
+    }
+
+    @GetMapping("details-products/all")
+    public ResponseEntity<List<ProductDetails>> allDetailsProduct() {
+        List<ProductDetails> productDetails = productDetailsService_imp.findAll();
+        return new ResponseEntity<>(productDetails, HttpStatus.OK);
     }
 
 
@@ -67,9 +89,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> findProductByName(
             @RequestParam("name") String name,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "20") int size,
+            @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort
     ) {
+
+
         Sort sortable = productService.sortData(sort);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -81,6 +105,16 @@ public class ProductController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(productsByName, HttpStatus.OK);
     }
+
+    @GetMapping("/name/size")
+    public ResponseEntity<Double> findProductByNamePage(@RequestParam("name") String name) {
+        List<Product> productsByName = productService.findProductByNamePage(name);
+        productsByName.stream()
+                .filter(p -> (p.isStatus() == true))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(Math.ceil(productsByName.size() / 10) + 1, HttpStatus.OK);
+    }
+
 
     @GetMapping("/featureProductById")
     public ResponseEntity<List<Feature>> showFeatureById(@RequestParam("idProduct") int idProduct) {
@@ -230,16 +264,35 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("/find-details-product-by-id")
+    public ResponseEntity<ProductDetails> findDetailsProductById(@RequestParam("id") int id) {
+        ProductDetails productDetails = productDetailsService_imp.findById(id);
+        return new ResponseEntity<>(productDetails, HttpStatus.OK);
+    }
+
     @GetMapping("/new-products")
-    public ResponseEntity<List<Product>> productNews(
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(name = "size", required = false, defaultValue = "5") Integer size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<List<Product>> newProducts(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = "10") Integer size) {
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> products = productService.findNewProducts(pageable);
         if (products == null)
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<>(products.getContent(), HttpStatus.OK);
+    }
+
+    @GetMapping("/hot-products")
+    public ResponseEntity<List<Product>> hotProduct(
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(name = "size", required = false, defaultValue = "15") Integer size) {
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<Product> products = productService.findHotProducts(pageable).getContent();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }
 

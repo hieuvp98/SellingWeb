@@ -1,10 +1,9 @@
 $(document).ready(function () {
-    findAllBigCategory(1);
-    findAllPageBigNumber();
+    findAllPartnerPage(1);
+    findAllPagPartnerNumber();
 });
-
 //==================================page=============================.unbind('click')
-function pageBigCategory(size) {
+function pagePartner(size) {
     let contentRow = '';
     for (let i = 1; i <= size; i++) {
         contentRow += `<li><a href="#" class="page" name="${i}" ">${i}</a></li> `;
@@ -16,17 +15,16 @@ function pageBigCategory(size) {
     );
 }
 
-function findAllPageBigNumber() {
+function findAllPagPartnerNumber() {
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/category/showBig/size",
+        url: "/api/v1/public/partner/find-all/size",
         success: function (size) {
             console.log(size);
-            pageBigCategory(size);
-
+            pagePartner(size);
             $('.page').click(function () {
                 const page = $(this).attr("name");
-                findAllBigCategory(page);
+                findAllPartnerPage(page);
             });
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -41,43 +39,52 @@ function findAllPageBigNumber() {
 }
 
 
-//============ Get All Big Category ========================
-function findAllBigCategory(page) {
+function findAllPartnerPage(page) {
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/category/showBig?page=" + page,
-        success: function (bigCategories) {
-            const listSize = Object.keys(bigCategories).length;
-            if (bigCategories.check == "fail") {
-                alert("Category isEmpty! Name not found!");
+        url: "/api/v1/public/partner/find-all?page="+page ,
+        success: function (partners) {
+            const listSize = Object.keys(partners).length;
+
+            if (partners.check == "fail") {
+                alert("Product isEmpty! Name not found!");
                 return;
             }
+
             if (listSize > 0) {
 
                 let contentRow = '';
 
-                $("#column-big-category").html(
-                    "<td> Id</td>" +
-                    "<td> Name</td>" +
+                $("#column-partner").html(
+                    "<td> ID</td>" +
+                    "<td> Name </td>" +
+                    "<td> Img Url </td>" +
+                    "<td> Present </td>" +
                     "<td> Action</td>"
                 );
-                var url = window.location.origin;
-                bigCategories.map(function (bigCategory) {
+
+                const url = window.location.origin;
+                partners.map(function (partner) {
                     contentRow += `
                         <tr>
-                        <td> ${bigCategory.id} </td>
-                        <td> ${bigCategory.name} </td>
+                        <td> ${partner.id} </td>
+                        <td> ${partner.name} </td>
+                        <td> ${partner.imgUrl} </td>
+                        <td> ${partner.present} </td>
+                       
                         <td>
-                                 <a href="${url}/admin/update-category/${bigCategory.id}" name="${bigCategory.id}"  class="update-big-category" style="cursor: pointer;color: #4285F4">update</a>&nbsp;
-                                 <span name="${bigCategory.id}" class="delete-big-category" style="cursor: pointer;color: red">delete</span>&nbsp;
-
+                              <a href="${url}/admin/update-partner/${partner.id}" name="${partner.id}"   style="cursor: pointer;color: #4285F4">update</a>&nbsp;
+                              <span name="${partner.id}" class="delete-partner" style="cursor: pointer;color: red">delete</span>&nbsp;
                         </td>
                         </tr>
                     `;
-                });
-                $("#row-big-category").html(contentRow);
-                //============ delete =============
-                deleteBigCategory();
+                })
+
+
+                $("#row-partner").html(contentRow);
+
+                //===== delete =======
+                deletePartner();
             }
         },
         error: function (e) {
@@ -86,21 +93,22 @@ function findAllBigCategory(page) {
     });
 }
 
-//============ Delete Big Category ========================
-function deleteBigCategory() {
-
-    $('.delete-big-category').click(function () {
+//============ Delete PRODUCT ========================
+function deletePartner() {
+    $('.delete-partner').click(function () {
         const id = $(this).attr("name");
+        console.log("id-partner " + id);
         $.ajax({
             type: "PUT",
             contentType: "application/json",
-            url: "/api/v1/admin/category/delete-big?id=" + id,
+            url: "/api/v1/admin/delete-partner?id=" + id,
             timeout: 30000,
             success: function () {
-                alert('SUCCESS');
+                alert('DELETE SUCCESS');
                 return;
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                alert('DELETE FAIL');
                 console.log('jqXHR:');
                 console.log(jqXHR);
                 console.log('textStatus:');
@@ -111,6 +119,3 @@ function deleteBigCategory() {
         });
     });
 }
-
-
-

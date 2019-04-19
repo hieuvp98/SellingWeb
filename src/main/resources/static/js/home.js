@@ -1,5 +1,4 @@
 $(function () {
-
     //responsive
     var statusMenu = true;
     var height = $(window).height();
@@ -118,10 +117,6 @@ $(function () {
             alert("Enter");
         }
     })
-    $("#icon-search").click(function () {
-        alert("Enter");
-    })
-
     //pageable
     $(".pageable ul.pagination li a").click(function (event) {
         let idClick = event.target.id;
@@ -153,8 +148,4 @@ $(function () {
         }
         }
     })
-})
-
-$(function () {
-    
-})
+});

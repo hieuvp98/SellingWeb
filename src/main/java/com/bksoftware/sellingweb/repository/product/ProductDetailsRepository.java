@@ -15,6 +15,9 @@ import java.util.List;
 @Repository
 public interface ProductDetailsRepository extends JpaRepository<ProductDetails, Integer> {
 
+    @Query("select p from ProductDetails p where p.status=true")
+    List<ProductDetails> findAll();
+
     Page<ProductDetails> findByStatus(boolean status, Pageable pageable);
 
     ProductDetails findById(int id);

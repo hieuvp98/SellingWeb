@@ -1,34 +1,40 @@
 $(document).ready(function () {
-    clickBtnChangeSubmit();
+    clickBtnMediumChangeSubmit();
 });
 
 //============ Create Big Category ========================
-function createCategory() {
+function createMediumCategory() {
+    $("#btn-create-medium-category").prop("disabled", true);
+
+    let idBigCategory = '';
+    $('#big-category-value').click(function () {
+        idBigCategory = $(this).val();
+    });
     $('#btn-create-medium-category').click(function () {
         const nameMediumCategory = $("#name-medium-category").val();
         console.log(nameMediumCategory);
-        let idBigCategory = '';
-        $('#big-category-value').click(function () {
-            idBigCategory = $('this').val();
-            console.log(idBigCategory);
-        });
         const bigCategory = {
             "name": nameMediumCategory,
         };
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "http://localhost:9990/api/v1/admin/category/medium?big-id=" + idBigCategory,
+            url: "/api/v1/admin/category/medium?big-id=" + idBigCategory,
             data: JSON.stringify(bigCategory),
             cache: false,
             timeout: 300000,
-            dataType: 'json',
             success: function (data) {
                 alert("CREATE SUCCESS : " + data.name);
                 $("#btn-create-medium-category").prop("disabled", true);
             },
-            error: function (err) {
-                alert("CREATE ERROR : " + err.toString() );
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("CREATE ERROR ");
+                console.log('jqXHR:');
+                console.log(jqXHR);
+                console.log('textStatus:');
+                console.log(textStatus);
+                console.log('errorThrown:');
+                console.log(errorThrown);
             }
         })
     });
@@ -39,13 +45,14 @@ function createCategory() {
 function findMediumCategoryById(id) {
     $.ajax({
         type: "GET",
-        dataType: "json",
-        url: "http://localhost:9990/api/v1/public/category/findMediumCategoryById?idMedium=" + id,
+        contentType: "application/json",
+        url: "/api/v1/public/category/findMediumCategoryById?idMedium=" + id,
         timeout: 30000,
         success: function (result) {
-            updateBigCategory(result);
+            updateMediumCategory(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
+
             console.log('jqXHR:');
             console.log(jqXHR);
             console.log('textStatus:');
@@ -56,27 +63,26 @@ function findMediumCategoryById(id) {
     });
 }
 
-// ============ UPDATE Big Category ========================
-function updateBigCategory(data) {
+// ============ UPDATE Medium Category ========================
+function updateMediumCategory(data) {
 
     $('#name-medium-category').val(data.name);
-
+    $("#big-category-value").prop("disabled", true);
     $('#btn-create-medium-category').click(function () {
         data.name = $('#name-medium-category').val();
-        const idBigCategory = $('#big-category-value').val();
         console.log(data);
         $.ajax({
             type: "PUT",
             contentType: "application/json",
-            dataType: "json",
-            url: "http://localhost:9990/api/v1/admin/category/big",
+            url: "/api/v1/admin/category/medium",
             data: JSON.stringify(data),
             timeout: 30000,
-            success: function () {
-                alert('SUCCESS');
+            success: function (result) {
+                alert('UPDATE SUCCESS'+result.name);
                 return;
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                alert("UPDATE ERROR ");
                 console.log('jqXHR:');
                 console.log(jqXHR);
                 console.log('textStatus:');
@@ -88,10 +94,13 @@ function updateBigCategory(data) {
     });
 }
 
-function clickBtnChangeSubmit() {
+function clickBtnMediumChangeSubmit() {
     const urlCreateCategory = window.location.pathname;
     console.log(urlCreateCategory);
     const str = urlCreateCategory.split('/');
     const id = str[str.length - 1];
-    (id - 1) !== NaN ? findMediumCategoryById(id) : createCategory();
+    if ((id - 1) >= 0) {
+        findMediumCategoryById(id)
+    } else createMediumCategory();
+
 }

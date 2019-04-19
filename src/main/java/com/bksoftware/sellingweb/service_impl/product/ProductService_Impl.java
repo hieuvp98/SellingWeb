@@ -21,10 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,9 +46,9 @@ public class ProductService_Impl implements ProductService {
         this.smallCategoryRepository = smallCategoryRepository;
     }
 
-    public Page<Product> findAllProduct( Pageable pageable) {
+    public Page<Product> findAllProduct(Pageable pageable) {
         try {
-            return productRepository.findAllProduct(pageable);
+            return productRepository.findByStatus(true, pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-all-product-error : {0}", ex.getMessage());
         }
@@ -91,12 +88,32 @@ public class ProductService_Impl implements ProductService {
         return null;
     }
 
+
+    public List<Product> findProductByNamePage(String name) {
+        try {
+            return productRepository.findByNamePage("+" + name + "*");
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-product-by-name-page-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public Page<Product> findNewProducts(Pageable pageable) {
         try {
             return productRepository.findNewProducts(pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-new-products-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public Page<Product> findHotProducts(Pageable pageable) {
+        try {
+           return productRepository.findHotProducts(pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-hot-products-error : {0}", ex.getMessage());
         }
         return null;
     }
@@ -133,20 +150,18 @@ public class ProductService_Impl implements ProductService {
 
     @Override
     public Product findById(int id) {
-
         Product product = productRepository.findById(id);
-        if (product.isStatus() == true) return product;
+        if (product.isStatus()) return product;
         return null;
     }
 
     @Override
     public boolean saveProduct(Product product) {
         try {
-            product.setInitDate(LocalDate.now());
             productRepository.save(product);
             return true;
         } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "save-product-error", ex.getMessage());
+            LOGGER.log(Level.SEVERE, "save-product-error: {0}", ex.getMessage());
             return false;
         }
     }
@@ -155,6 +170,7 @@ public class ProductService_Impl implements ProductService {
     public boolean deleteProduct(Product product) {
         try {
             product.setStatus(false);
+            System.out.println("status: " + product.isStatus());
             productRepository.save(product);
             return true;
         } catch (Exception ex) {

@@ -19,11 +19,19 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             nativeQuery = true)
     Page<Product> findByName(@Param("name_product") String name, Pageable pageable);
 
+    @Query(
+            value = "SELECT p.* FROM product p  WHERE MATCH(p.name) AGAINST(:name_product IN BOOLEAN MODE)",
+            nativeQuery = true)
+    List<Product> findByNamePage(@Param("name_product") String name);
+
     //Pageable sẽ chứa các thông tin phân trang như số phần tử được lấy, vị trí trang được lấy
     //Page sẽ chứa kết quả trả về (gồm số phần tử, danh sách các phần tử)
 
     @Query(value = " from Product p order by p.initDate desc ")
     Page<Product> findNewProducts(Pageable pageable);
+
+    @Query(value = " from Product p order by (p.originCost-p.saleCost) asc ")
+    Page<Product> findHotProducts(Pageable pageable);
 
 
     List<Product> findAllBySmallCategory(SmallCategory smallCategory);
@@ -31,9 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findById(int id);
 
 
-
-    @Query("select p from Product p ")
-    Page<Product> findAllProduct( Pageable pageable);
+    Page<Product> findByStatus( boolean status ,Pageable pageable);
 
     @Query("select p from Product p where p.status=true and p.smallCategory.id= :id")
     Page<Product> showProduct(@Param("id")int id, Pageable pageable);

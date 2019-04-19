@@ -1,12 +1,13 @@
 $(document).ready(function () {
     findAllNameBigCategory();
     findAllNameMediumCategory();
+    findAllNameSmallCategory();
 });
 
 function findAllNameBigCategory() {
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/category/showBig",
+        url: "/api/v1/public/category/showBig/all",
         success: function (bigCategories) {
             const listSize = Object.keys(bigCategories).length;
             if (bigCategories.check == "fail") {
@@ -33,7 +34,7 @@ function findAllNameBigCategory() {
 function findAllNameMediumCategory() {
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/category/medium-category",
+        url: "/api/v1/public/category/medium-category/all",
         success: function (mediumCategories) {
             const listSize = Object.keys(mediumCategories).length;
             if (mediumCategories.check == "fail") {
@@ -55,3 +56,29 @@ function findAllNameMediumCategory() {
         }
     });
 }
+function findAllNameSmallCategory() {
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/public/category/small-category/all",
+        success: function (smallCategories) {
+            const listSize = Object.keys(smallCategories).length;
+            if (smallCategories.check == "fail") {
+                alert("Small Category isEmpty! Name not found!");
+                return;
+            }
+            if (listSize >= 0) {
+                let contentRow = '';
+                smallCategories.map(function (smallCategory) {
+                    contentRow += `
+                       <option value="${smallCategory.id}">${smallCategory.name}</option>
+                    `;
+                });
+                $("#small-category-value").html(contentRow);
+            }
+        },
+        error: function (e) {
+            console.log("Error: " + e);
+        }
+    });
+}
+

@@ -48,6 +48,12 @@
         <put-attribute name="body" value="/WEB-INF/views/bodyFragments/category/small_category.jsp"/>
     </definition>
 
+    <!-- Partner Page -->
+    <definition name="partner" extends="base.definition">
+        <put-attribute name="title" value="partner"/>
+        <put-attribute name="body" value="/WEB-INF/views/bodyFragments/products/partner.jsp"/>
+    </definition>
+
 
     <!--================================ FORM_CREATE =========================-->
     <!-- Product Page -->
@@ -58,20 +64,45 @@
 
     <!--Details Product Page -->
     <definition name="createDetailsProduct" extends="base.definition">
-        <put-attribute name="title" value="product"/>
+        <put-attribute name="title" value="create details product"/>
         <put-attribute name="body" value="/WEB-INF/views/form-create/products/createDetailsProducts.jsp"/>
     </definition>
 
     <!--Big Category Page -->
     <definition name="createCategory" extends="base.definition">
-        <put-attribute name="title" value="product"/>
+        <put-attribute name="title" value="create category"/>
         <put-attribute name="body" value="/WEB-INF/views/form-create/category/createCategory.jsp"/>
     </definition>
+
+    <!-- partner Page -->
+    <definition name="createPartner" extends="base.definition">
+        <put-attribute name="title" value="create partner"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/products/createPartner.jsp"/>
+    </definition>
+
     <!--================================ FORM_ UPDATE =========================-->
-    <!--Big Category Page -->
+    <!--Update Category Page -->
     <definition name="updateCategory" extends="base.definition">
-        <put-attribute name="title" value="product"/>
+        <put-attribute name="title" value="update category"/>
         <put-attribute name="body" value="/WEB-INF/views/form-create/category/createCategory.jsp"/>
+    </definition>
+
+    <!--Update Product Page -->
+    <definition name="updateProduct" extends="base.definition">
+        <put-attribute name="title" value="update product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/products/createProduct.jsp"/>
+    </definition>
+
+    <!--Update Details Product Page -->
+    <definition name="updateDetailsProduct" extends="base.definition">
+        <put-attribute name="title" value="update details product"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/products/createDetailsProducts.jsp"/>
+    </definition>
+
+    <!-- Update partner Page -->
+    <definition name="updatePartner" extends="base.definition">
+        <put-attribute name="title" value="update partner"/>
+        <put-attribute name="body" value="/WEB-INF/views/form-create/products/createPartner.jsp"/>
     </definition>
 
 

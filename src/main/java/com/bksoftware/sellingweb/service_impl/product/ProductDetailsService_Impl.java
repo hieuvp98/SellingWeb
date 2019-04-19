@@ -33,9 +33,14 @@ import java.util.logging.Logger;
         this.productImageRepository = productImageRepository;
     }
 
+    @Override
+    public List<ProductDetails> findAll() {
+        return productDetailsRepository.findAll();
+    }
+
 
     @Override
-    public Page<ProductDetails> findAll(Pageable pageable) {
+    public Page<ProductDetails> findAllProductDetails(Pageable pageable) {
         return productDetailsRepository.findByStatus(true, pageable);
     }
 
@@ -49,6 +54,19 @@ import java.util.logging.Logger;
             return false;
         }
     }
+
+    @Override
+    public boolean deleteProductDetails(ProductDetails productDetails) {
+        try {
+            productDetails.setStatus(false);
+            productDetailsRepository.save(productDetails);
+            return true;
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "delete-productDetails-error", ex.getMessage());
+            return false;
+        }
+    }
+
 
     @Override
     public ProductDetails findById(int id) {

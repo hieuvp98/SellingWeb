@@ -10,6 +10,8 @@ import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.repository.category.SmallCategoryRepository;
 import com.bksoftware.sellingweb.service.category.CategoryService;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,21 +39,30 @@ import java.util.stream.Collectors;
 
 
     @Override
-    public List<BigCategory> showBigCategory() {
+    public Page<BigCategory> showBigCategory(Pageable pageable) {
         try {
-            return bigCategoryRepository.showBigCategory();
+            return bigCategoryRepository.showBigCategory(pageable);
         } catch (Exception ex){
             LOGGER.log(Level.SEVERE, "show-all-big-category-error : {0}", ex.getMessage());
         }
         return null;
-
     }
 
     @Override
-    public List<MediumCategory> findAllMediumCategory() {
+    public List<MediumCategory> findAllMediumCategoryPage() {
+        return mediumCategoryRepository.findAllMediumCategory();
+    }
+
+    @Override
+    public List<SmallCategory> findAllSmallCategoryPage() {
+        return smallCategoryRepository.findAllSmallCategory();
+    }
+
+    @Override
+    public Page<MediumCategory> findAllMediumCategory(Pageable pageable) {
 
         try {
-            return mediumCategoryRepository.findByStatus(true);
+            return mediumCategoryRepository.findByStatus(true,pageable);
         } catch (Exception ex){
             LOGGER.log(Level.SEVERE, "show-all-medium-category-error : {0}", ex.getMessage());
         }
@@ -59,12 +70,12 @@ import java.util.stream.Collectors;
     }
 
     @Override
-    public List<SmallCategory> findAllSmalllCategory() {
+    public Page<SmallCategory> findAllSmallCategory(Pageable pageable) {
 
         try {
-            return smallCategoryRepository.findByStatus(true);
+            return smallCategoryRepository.findByStatus(true,pageable);
         } catch (Exception ex){
-            LOGGER.log(Level.SEVERE, "show-all-medium-category-error : {0}", ex.getMessage());
+            LOGGER.log(Level.SEVERE, "show-all-small-category-error : {0}", ex.getMessage());
         }
         return null;
     }
@@ -73,7 +84,7 @@ import java.util.stream.Collectors;
     public List<MediumCategory> showMediumCategory(int id) {
 
         try {
-            return mediumCategoryRepository.showMediumCaegory(id);
+            return mediumCategoryRepository.showMediumCategory(id);
         } catch (Exception ex){
             LOGGER.log(Level.SEVERE, "show-all-medium-category-error : {0}", ex.getMessage());
         }
@@ -92,7 +103,7 @@ import java.util.stream.Collectors;
     }
 
     @Override
-    public List<BigCategory> findAllBigCategory() {
+    public List<BigCategory> findAllBigCategoryPage() {
         try {
             List<BigCategory> bigCategories = bigCategoryRepository.findAll();
             return bigCategories

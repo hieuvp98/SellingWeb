@@ -21,15 +21,35 @@ public class createPageController {
     }
 
 
-    //=========================Category=================================
+    //=========================PRODUCT=================================
 
     @GetMapping("/create-product")
     public String createProductPage() {
         return "createProduct";
     }
 
+    @GetMapping("/update-product/{id}")
+    public String updateProductPage(@PathVariable int id) {
+        return "updateProduct";
+    }
+
     @GetMapping("/create-details-product")
     public String createDetailsProductPage() {
         return "createDetailsProduct";
+    }
+
+    @GetMapping("/update-details-product/{id}")
+    public String updateDetailsProductPage(@PathVariable int id) {
+        return "updateDetailsProduct";
+    }
+
+    @GetMapping("/create-partner")
+    public String createPartnerPage() {
+        return "createPartner";
+    }
+
+    @GetMapping("/update-partner/{id}")
+    public String updatePartnerPage(@PathVariable int id) {
+        return "updatePartner";
     }
 }

@@ -2,6 +2,9 @@ package com.bksoftware.sellingweb.repository.category;
 
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
+import com.bksoftware.sellingweb.entities.category.SmallCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +19,11 @@ public interface MediumCategoryRepository extends JpaRepository<MediumCategory,I
     MediumCategory findById(int id);
 
     @Query("select m from MediumCategory m where m.status = true and  m.bigCategory.id= :id")
-    List<MediumCategory> showMediumCaegory(@Param("id") int id);
+    List<MediumCategory> showMediumCategory(@Param("id") int id);
 
-    List<MediumCategory> findByStatus(boolean status);
+    Page<MediumCategory> findByStatus(boolean status, Pageable pageable);
+
+
+    @Query("select m from MediumCategory m where m.status=true")
+    List<MediumCategory> findAllMediumCategory();
 }

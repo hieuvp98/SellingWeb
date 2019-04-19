@@ -15,6 +15,8 @@ import java.util.TreeMap;
 
 public interface ProductService {
 
+    Page<Product> findHotProducts(Pageable pageable);
+
     Page<Product> findAllProduct(Pageable pageable);
 
     Map<String, Long> findGuaranteeToPhone(int phone_number);

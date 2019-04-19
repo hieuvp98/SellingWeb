@@ -27,24 +27,35 @@ public class AdminProductDetailsController {
     //add
     @RolesAllowed("ADMIN")
     @PostMapping(params = "product-id")
-    public ResponseEntity<String> addProductDetails(@RequestBody ProductDetails productDetails,
+    public ResponseEntity<Object> addProductDetails(@RequestBody ProductDetails productDetails,
                                                     @RequestParam(value = "product-id") int id) {
         productDetails.setProductStatus(true);
         productDetails.setStatus(true);
         productDetails.setProduct(productService.findById(id));
         if (productDetailsService.saveProductDetails(productDetails))
-            return new ResponseEntity<>("add productDetails success", HttpStatus.OK);
+            return new ResponseEntity<>(productDetails, HttpStatus.OK);
         else return new ResponseEntity<>("add productDetails fail", HttpStatus.BAD_REQUEST);
     }
 
     //update
     @RolesAllowed("ADMIN")
     @PutMapping
-    public ResponseEntity<String> updateProductDetails(@RequestBody ProductDetails productDetails) {
+    public ResponseEntity<Object> updateProductDetails(@RequestBody ProductDetails productDetails) {
         if (productDetailsService.saveProductDetails(productDetails))
-            return new ResponseEntity<>("update productDetails success", HttpStatus.OK);
+            return new ResponseEntity<>(productDetails, HttpStatus.OK);
         else return new ResponseEntity<>("update productDetails fail", HttpStatus.BAD_REQUEST);
     }
+
+    //delete
+    @RolesAllowed("ADMIN")
+    @PutMapping(value = "/delete-details-product")
+    public ResponseEntity<String> deleteDetailsProduct(@RequestParam("id") int id) {
+        ProductDetails productDetails = productDetailsService.findById(id);
+        if (productDetailsService.saveProductDetails(productDetails))
+            return new ResponseEntity<>("delete feature success", HttpStatus.OK);
+        return new ResponseEntity<>("delete feature fail", HttpStatus.BAD_REQUEST);
+    }
+
 
     //---------------------FEATURE-------------------------------------------------
     //add

@@ -36,13 +36,13 @@ public class AdminCategoryController {
 
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/medium", params = "big-id")
-    public ResponseEntity<String> addMediumCategory(@RequestBody MediumCategory mediumCategory,
+    public ResponseEntity<Object> addMediumCategory(@RequestBody MediumCategory mediumCategory,
                                                     @RequestParam(value = "big-id") int id) {
         BigCategory bigCategory = categoryService.findBigCategoryById(id);
         mediumCategory.setBigCategory(bigCategory);
         mediumCategory.setStatus(true);
         if (categoryService.saveMediumCategory(mediumCategory))
-            return new ResponseEntity<>("add success", HttpStatus.OK);
+            return new ResponseEntity<>(mediumCategory, HttpStatus.OK);
         else
             return new ResponseEntity<>("add fail", HttpStatus.BAD_REQUEST);
 
@@ -50,13 +50,13 @@ public class AdminCategoryController {
 
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/small", params = "medium-id")
-    public ResponseEntity<String> addMediumCategory(@RequestBody SmallCategory smallCategory,
+    public ResponseEntity<Object> addMediumCategory(@RequestBody SmallCategory smallCategory,
                                                     @RequestParam(value = "medium-id") int id) {
         MediumCategory mediumCategory = categoryService.findMediumCategoryById(id);
         smallCategory.setMediumCategory(mediumCategory);
         smallCategory.setStatus(true);
         if (categoryService.saveSmallCategory(smallCategory))
-            return new ResponseEntity<>("add success", HttpStatus.OK);
+            return new ResponseEntity<>(smallCategory, HttpStatus.OK);
         else
             return new ResponseEntity<>("add fail", HttpStatus.BAD_REQUEST);
     }
@@ -76,18 +76,18 @@ public class AdminCategoryController {
 
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/medium")
-    public ResponseEntity<String> updateMediumCategory(@RequestBody MediumCategory mediumCategory) {
+    public ResponseEntity<Object> updateMediumCategory(@RequestBody MediumCategory mediumCategory) {
         if (categoryService.saveMediumCategory(mediumCategory))
-            return new ResponseEntity<>("update success", HttpStatus.OK);
+            return new ResponseEntity<>(mediumCategory, HttpStatus.OK);
         else
             return new ResponseEntity<>("update fails", HttpStatus.BAD_REQUEST);
     }
 
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/small")
-    public ResponseEntity<String> updateSmallCategory(@RequestBody SmallCategory smallCategory) {
+    public ResponseEntity<Object> updateSmallCategory(@RequestBody SmallCategory smallCategory) {
         if (categoryService.saveSmallCategory(smallCategory))
-            return new ResponseEntity<>("update success", HttpStatus.OK);
+            return new ResponseEntity<>(smallCategory, HttpStatus.OK);
         else
             return new ResponseEntity<>("update fails", HttpStatus.BAD_REQUEST);
     }

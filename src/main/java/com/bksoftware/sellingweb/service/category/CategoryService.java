@@ -5,23 +5,27 @@ import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface CategoryService {
+    List<MediumCategory> findAllMediumCategoryPage();
 
-     List<MediumCategory> findAllMediumCategory();
+    List<SmallCategory> findAllSmallCategoryPage();
 
-     List<SmallCategory> findAllSmalllCategory( );
+    Page<MediumCategory> findAllMediumCategory(Pageable pageable);
 
+    Page<SmallCategory> findAllSmallCategory(Pageable pageable);
 
-    List<BigCategory> showBigCategory();
+    Page<BigCategory> showBigCategory(Pageable pageable);
 
     List<MediumCategory> showMediumCategory(int id);
 
     List<SmallCategory> showSmallCategory(int id);
 
-    List<BigCategory> findAllBigCategory();
+    List<BigCategory> findAllBigCategoryPage();
 
     List<MediumCategory> findAllMediumCategoryByBigCategory(BigCategory bigCategory);
 

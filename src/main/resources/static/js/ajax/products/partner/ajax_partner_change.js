@@ -1,60 +1,58 @@
 $(document).ready(function () {
-    clickBtnSmallChangeSubmit();
+    clickBtnPartnerChangeSubmit();
 });
 
-//============ Create Big Category ========================
-function createSmallCategory() {
-    let idMediumCategory = '';
-    $('#medium-category-value').click(function () {
-        idMediumCategory = $(this).val();
-    });
+//============ CREATE PARTNER ========================
 
-    $("#btn-create-small-category").prop("disabled", true);
-    $('#btn-create-small-category').click(function () {
+function createProduct() {
 
+    $("#btn-create-partner").prop("disabled", true);
 
+    $('#btn-create-partner').click(function () {
 
-        const nameSmallCategory = $("#name-small-category").val();
-
-        console.log(nameSmallCategory + " - "+idMediumCategory);
-        const smallCategory = {
-            "name": nameSmallCategory,
+        const nameProduct = $('#name-partner-value').val();
+        const originCost = $('#present-partner-value').val();
+        const partner = {
+            "name": nameProduct,
+            "present": originCost,
+            "imgUrl": "abc",
         };
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/api/v1/admin/category/small?medium-id=" + idMediumCategory,
-            data: JSON.stringify(smallCategory),
+            url: "/api/v1/admin/partner",
+            data: JSON.stringify(partner),
             cache: false,
             timeout: 300000,
-            contentType: "application/json",
             success: function (data) {
                 alert("CREATE SUCCESS : " + data.name);
-                $("#btn-create-small-category").prop("disabled", true);
+                $('#btn-create-partner').prop("disabled", true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert("CREATE ERROR :" );
+                alert("CREATE ERROR ");
                 console.log('jqXHR:');
                 console.log(jqXHR);
                 console.log('textStatus:');
                 console.log(textStatus);
                 console.log('errorThrown:');
                 console.log(errorThrown);
+                $('#btn-create-partner').prop("disabled", true);
             }
         })
     });
 }
 
-//============ Find Big Category By Id ===================
+// ============ FIND PARTNER BY ID ===================
 
-function findSmallCategoryById(id) {
+function findPartnerById(id) {
+
     $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/api/v1/public/category/findSmallCategoryById?idSmall=" + id,
+        url: "/api/v1/public/partner/find-by-id?id=" + id,
         timeout: 30000,
         success: function (result) {
-            updateSmallCategory(result);
+            updatePartner(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log('jqXHR:');
@@ -67,43 +65,49 @@ function findSmallCategoryById(id) {
     });
 }
 
-// ============ UPDATE Medium Category ========================
-function updateSmallCategory(data) {
+//============ UPDATE PARTNER ========================
+function updatePartner(data) {
 
-    $('#name-small-category').val(data.name);
-    $("#medium-category-value").prop("disabled", true);
-    $('#btn-create-small-category').click(function () {
-        data.name = $('#name-small-category').val();
+    $('#name-partner-value').val(data.name);
+    $('#present-partner-value').val(data.present);
+
+    $('#btn-create-partner').click(function () {
+        data.name = $('#name-partner-value').val();
+        data.present = $('#present-partner-value').val();
+        data.imgUrl = "abc";
         console.log(data);
         $.ajax({
             type: "PUT",
             contentType: "application/json",
-            url: "/api/v1/admin/category/small",
+            url: "/api/v1/admin/partner",
             data: JSON.stringify(data),
             timeout: 30000,
-            success: function (result) {
-                alert('UPDATE SUCCESS : '+result.name);
-                return;
+            success: function () {
+                alert('UPDATE SUCCESS');
+                $('#btn-create-partner').prop("disabled", true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert('UPDATE FAIL');
+                alert("UPDATE ERROR ");
                 console.log('jqXHR:');
                 console.log(jqXHR);
                 console.log('textStatus:');
                 console.log(textStatus);
                 console.log('errorThrown:');
                 console.log(errorThrown);
+                $('#btn-create-partner').prop("disabled", true);
+
             }
         });
     });
 }
 
-function clickBtnSmallChangeSubmit() {
+function clickBtnPartnerChangeSubmit() {
     const urlCreateCategory = window.location.pathname;
-    console.log(urlCreateCategory);
     const str = urlCreateCategory.split('/');
     const id = str[str.length - 1];
     if ((id - 1) >= 0) {
-        findSmallCategoryById(id)
-    } else createSmallCategory();
+        findPartnerById(id)
+    } else createProduct();
+
 }
+

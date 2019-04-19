@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public interface PartnerService {
 
-    List<Partner> findAllPartner();
+    List<Partner> findAllPartnerPage();
 
     Partner findByName(String name);
 
@@ -22,7 +22,7 @@ public interface PartnerService {
 
     Partner findById(int id);
 
-    List<Partner> show();
+    Page<Partner> findAllPartner(Pageable pageable);
 
 
 }

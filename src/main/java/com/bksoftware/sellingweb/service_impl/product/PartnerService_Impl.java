@@ -7,6 +7,7 @@ import com.bksoftware.sellingweb.repository.product.PartnerRepository;
 import com.bksoftware.sellingweb.repository.product.ProductRepository;
 import com.bksoftware.sellingweb.service.product.PartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -33,19 +34,7 @@ public class PartnerService_Impl implements PartnerService {
         this.partnerRepository = partnerRepository;
     }
 
-    @Override
-    public List<Partner> findAllPartner() {
-        try {
-            List<Partner> partners = partnerRepository.findAll();
-            return partners
-                    .stream()
-                    .filter(p -> (p.isStatus() == true))
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, "find-all-partner-error : {0}", ex.getMessage());
-        }
-        return null;
-    }
+
 
     @Override
     public Partner findByName(String name) {
@@ -85,15 +74,24 @@ public class PartnerService_Impl implements PartnerService {
     }
 
     @Override
-    public List<Partner> show() {
+    public Page<Partner> findAllPartner(Pageable pageable) {
         try {
-            return partnerRepository.show();
+            return partnerRepository.findAllPartner(pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "show-partner-error", ex.getMessage());
         }
         return null;
     }
 
+    @Override
+    public List<Partner> findAllPartnerPage() {
+        try {
+            return partnerRepository.findByStatus(true);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-partner-page-error", ex.getMessage());
+        }
+        return null;
+    }
 
 
     /*@Override

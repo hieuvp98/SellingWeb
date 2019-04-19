@@ -40,6 +40,7 @@ public class Product implements Serializable {
     private int saleCost;
 
     @Column(name = "img_url")
+    @NotNull
     private String imgUrl;
 
     @Column(name = "init_date")
@@ -55,7 +56,6 @@ public class Product implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "product")
     @JsonIgnore
-    @NotNull
     private ProductDetails productDetails;
 
 

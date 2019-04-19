@@ -1,13 +1,52 @@
 $(document).ready(function () {
-    findAllBigCategory();
+    findAllMediumCategory(1);
+    findAllPageMediumNumber();
 
 });
 
-function findAllBigCategory() {
+//==================================page=============================.unbind('click')
+function pageMediumCategory(size) {
+    let contentRow = '';
+    for (let i = 1; i <= size; i++) {
+        contentRow += `<li><a href="#" class="page" name="${i}" ">${i}</a></li> `;
+    }
+    $(".pagination").html(
+        `<li><a href="#" class="prev" id="prev">&laquo</a></li>`
+        + contentRow +
+        `<li><a href="#" class="next" id="next">&raquo;</a></li>`
+    );
+}
+
+function findAllPageMediumNumber() {
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/public/category/medium-category/size",
+        success: function (size) {
+
+            pageMediumCategory(size);
+
+            $('.page').click(function () {
+                const page = $(this).attr("name");
+                findAllMediumCategory(page);
+            });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+
+            console.log('jqXHR:');
+            console.log(jqXHR);
+            console.log('textStatus:');
+            console.log(textStatus);
+            console.log('errorThrown:');
+            console.log(errorThrown);
+        }
+    });
+}
+
+function findAllMediumCategory(page) {
     //============ Get All Medium Category ========================
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/category/medium-category",
+        url: "/api/v1/public/category/medium-category?page=" + page,
         success: function (mediumCategories) {
             const listSize = Object.keys(mediumCategories).length;
             if (mediumCategories.check == "fail") {
@@ -56,7 +95,7 @@ function deleteMediumCategory() {
         const id = $(this).attr("name");
         $.ajax({
             type: "PUT",
-            dataType: "json",
+            contentType: "application/json",
             url: "/api/v1/admin/category/delete-medium?id=" + id,
             timeout: 30000,
             success: function () {

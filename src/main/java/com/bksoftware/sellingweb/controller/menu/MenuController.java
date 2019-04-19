@@ -30,7 +30,7 @@ public class MenuController {
     private FooterMenuService_Impl footerMenuService_imp;
 
     @GetMapping("/headerMenu")
-    public ResponseEntity<List<HeaderMenu>> showheaderMenu() {
+    public ResponseEntity<List<HeaderMenu>> showHeaderMenu() {
         List<HeaderMenu> lstMenu = headerMenu_Imp.findAllHeaderMenu();
         return  new ResponseEntity<>(lstMenu, HttpStatus.OK);
     }

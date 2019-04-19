@@ -1,36 +1,42 @@
 $(document).ready(function () {
-    createCategory();
-    clickBtnChangeSubmit();
+    clickBtnBigChangeSubmit();
 });
 
 //============ Create Big Category ========================
-function createCategory(){
+function createBigCategory() {
+
+    $("#btn-create-big-category").prop("disabled", true);
     $('#btn-create-big-category').click(function () {
         const nameBigCategory = $("#name-big-category").val();
+        console.log(nameBigCategory);
         const bigCategory = {
             "name": nameBigCategory
         };
-
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "api/v1/admin/category/big",
+            url: "/api/v1/admin/category/big",
             data: JSON.stringify(bigCategory),
             cache: false,
-            timeout:300000,
-            dataType: 'json',
+            timeout: 300000,
             success: function (data) {
                 alert("SUCCESS : " + data.name);
                 $("#btn-create-big-category").prop("disabled", true);
             },
-            error: function (err) {
-                alert("ERROR : " + err.toString() + " is UNIQUE");
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("CREATE ERROR " );
+                console.log('jqXHR:');
+                console.log(jqXHR);
+                console.log('textStatus:');
+                console.log(textStatus);
+                console.log('errorThrown:');
+                console.log(errorThrown);
             }
         })
     });
-};
+}
 
-//============ Find Big Category By Id ===================
+// ============ Find Big Category By Id ===================
 
 function findBigCategoryById(id) {
     $.ajax({
@@ -61,31 +67,36 @@ function updateBigCategory(data) {
         $.ajax({
             type: "PUT",
             contentType: "application/json",
-            dataType: "json",
             url: "/api/v1/admin/category/big",
-            data : JSON.stringify(data),
+            data: JSON.stringify(data),
             timeout: 30000,
             success: function () {
                 alert('SUCCESS');
-                return;
+                $("#btn-create-big-category").prop("disabled", true);
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
+                alert("UPDATE ERROR " );
                 console.log('jqXHR:');
                 console.log(jqXHR);
                 console.log('textStatus:');
                 console.log(textStatus);
                 console.log('errorThrown:');
                 console.log(errorThrown);
+                $("#btn-create-big-category").prop("disabled", true);
+
             }
         });
     });
 }
 
-function clickBtnChangeSubmit(){
+function clickBtnBigChangeSubmit() {
     const urlCreateCategory = window.location.pathname;
     console.log(urlCreateCategory);
     const str = urlCreateCategory.split('/');
     const id = str[str.length - 1];
-    (id-1) !== NaN ? findBigCategoryById(id) : createCategory();
+    if ((id - 1) >= 0) {
+        findBigCategoryById(id)
+    } else createBigCategory();
 
 }
