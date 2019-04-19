@@ -1,10 +1,13 @@
 package com.bksoftware.sellingweb.controller.admin;
 
+import com.bksoftware.sellingweb.entities.Record;
 import com.bksoftware.sellingweb.entities.product.Feature;
 import com.bksoftware.sellingweb.entities.product.ProductDetails;
 import com.bksoftware.sellingweb.entities.product.ProductImage;
+import com.bksoftware.sellingweb.service_impl.RecordService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductDetailsService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,18 +26,26 @@ public class AdminProductDetailsController {
         this.productService = productService;
     }
 
+    @Autowired
+    private RecordService_Impl recordService;
+
     //---------------------PRODUCT DETAILS----------------------------------------
     //add
     @RolesAllowed("ADMIN")
     @PostMapping(params = "product-id")
     public ResponseEntity<Object> addProductDetails(@RequestBody ProductDetails productDetails,
                                                     @RequestParam(value = "product-id") int id) {
+
+        Record record = recordService.findByName("details-product");
+
         productDetails.setProductStatus(true);
         productDetails.setStatus(true);
         productDetails.setProduct(productService.findById(id));
-        if (productDetailsService.saveProductDetails(productDetails))
+        if (productDetailsService.saveProductDetails(productDetails)) {
+            record.setNumber(record.getNumber() + 1);
+            recordService.saveRecord(record);
             return new ResponseEntity<>(productDetails, HttpStatus.OK);
-        else return new ResponseEntity<>("add productDetails fail", HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>("add productDetails fail", HttpStatus.BAD_REQUEST);
     }
 
     //update
@@ -51,8 +62,14 @@ public class AdminProductDetailsController {
     @PutMapping(value = "/delete-details-product")
     public ResponseEntity<String> deleteDetailsProduct(@RequestParam("id") int id) {
         ProductDetails productDetails = productDetailsService.findById(id);
-        if (productDetailsService.saveProductDetails(productDetails))
+        Record record = recordService.findByName("details-product");
+
+        if (productDetailsService.saveProductDetails(productDetails)) {
+
+            record.setNumber(record.getNumber() -1);
+            recordService.saveRecord(record);
             return new ResponseEntity<>("delete feature success", HttpStatus.OK);
+        }
         return new ResponseEntity<>("delete feature fail", HttpStatus.BAD_REQUEST);
     }
 
@@ -94,7 +111,7 @@ public class AdminProductDetailsController {
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/product-image", params = "product-details-id")
     public ResponseEntity<String> addProductImage(@RequestBody ProductImage productImage,
-                                             @RequestParam(value = "product-details-id") int id) {
+                                                  @RequestParam(value = "product-details-id") int id) {
         ProductDetails productDetails = productDetailsService.findById(id);
         productImage.setProductDetails(productDetails);
         productImage.setStatus(true);

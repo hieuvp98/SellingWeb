@@ -1,6 +1,8 @@
 package com.bksoftware.sellingweb.controller.product;
 
+import com.bksoftware.sellingweb.entities.Record;
 import com.bksoftware.sellingweb.entities.product.*;
+import com.bksoftware.sellingweb.service_impl.RecordService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductDetailsService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
@@ -33,6 +35,11 @@ public class ProductController {
     @Autowired
     PartnerService_Impl partnerService_imp;
 
+    @Autowired
+    RecordService_Impl recordService;
+
+    private static String productNameSearch = "";
+
     @GetMapping("/find-all")
     public ResponseEntity<List<Product>> findAllProduct(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
@@ -48,14 +55,17 @@ public class ProductController {
 
     @GetMapping("/size")
     public ResponseEntity<Double> pageNumberProduct() {
-        List<Product> products = productService.findAll();
-        System.out.println(Math.ceil(products.size() / 10) + 1);
-        return new ResponseEntity<>(Math.ceil(products.size() / 10) + 1, HttpStatus.OK);
+        long pageNumber = recordService.findByName("product").getNumber();
+        System.out.println(Math.ceil(pageNumber / 10) + 1);
+        return new ResponseEntity<>(Math.ceil(pageNumber / 10) + 1, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Product>> allProduct() {
         List<Product> products = productService.findAll();
+        Record record = recordService.findByName("product");
+        record.setNumber(products.size());
+        recordService.saveRecord(record);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -74,13 +84,16 @@ public class ProductController {
 
     @GetMapping("details-products/size")
     public ResponseEntity<Double> pageNumberDetailsProduct() {
-        List<ProductDetails> productDetails = productDetailsService_imp.findAll();
-        return new ResponseEntity<>(Math.ceil(productDetails.size() / 10) + 1, HttpStatus.OK);
+        long pageNumber = recordService.findByName("details-product").getNumber();
+        return new ResponseEntity<>(Math.ceil(pageNumber / 10) + 1, HttpStatus.OK);
     }
 
     @GetMapping("details-products/all")
     public ResponseEntity<List<ProductDetails>> allDetailsProduct() {
         List<ProductDetails> productDetails = productDetailsService_imp.findAll();
+        Record record = recordService.findByName("details-product");
+        record.setNumber(productDetails.size());
+        recordService.saveRecord(record);
         return new ResponseEntity<>(productDetails, HttpStatus.OK);
     }
 
@@ -93,7 +106,7 @@ public class ProductController {
             @RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort
     ) {
 
-
+        productNameSearch = name;
         Sort sortable = productService.sortData(sort);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -103,12 +116,14 @@ public class ProductController {
         productsByName.stream()
                 .filter(p -> (p.isStatus() == true))
                 .collect(Collectors.toList());
+
         return new ResponseEntity<>(productsByName, HttpStatus.OK);
     }
 
+
     @GetMapping("/name/size")
-    public ResponseEntity<Double> findProductByNamePage(@RequestParam("name") String name) {
-        List<Product> productsByName = productService.findProductByNamePage(name);
+    public ResponseEntity<Double> findProductByNamePage() {
+        List<Product> productsByName = productService.findProductByNamePage(productNameSearch);
         productsByName.stream()
                 .filter(p -> (p.isStatus() == true))
                 .collect(Collectors.toList());
@@ -126,25 +141,29 @@ public class ProductController {
     public ResponseEntity<List<Product>> showProduct(
 
             @RequestParam(name = "id") int id,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
         Sort sortable = productService.sortDataProduct(type, field);
-        Pageable pageable = PageRequest.of(page, size, sortable);
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page-1, size, sortable);
         Page<Product> lstProduct = productService.showProduct(id, pageable);
         return new ResponseEntity<>(lstProduct.getContent(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byMediumCategory")
     public ResponseEntity<List<Product>> showProductMedium(
-            @RequestParam(name = "idMediumCategory") int id,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "id") int id,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
         Sort sortable = productService.sortDataProduct(type, field);
-        Pageable pageable = PageRequest.of(page, size, sortable);
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page-1, size, sortable);
         Page<Product> lstProductMedium = productService.showProductByMedium(id, pageable);
         return new ResponseEntity<>(lstProductMedium.getContent(), HttpStatus.OK);
     }
@@ -152,55 +171,61 @@ public class ProductController {
     @GetMapping(value = "/byBigCategory")
     public ResponseEntity<List<Product>> showProductByBig(
             @RequestParam(name = "id") int id,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
         Sort sortable = productService.sortDataProduct(type, field);
-        Pageable pageable = PageRequest.of(page, size, sortable);
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page-1, size, sortable);
         Page<Product> lstProductBig = productService.showProductByBig(id, pageable);
         return new ResponseEntity<>(lstProductBig.getContent(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byBigCategoryBranch")
     public ResponseEntity<List<Product>> showProductByBigBranch(
-            @RequestParam(name = "idBigCategory") int id,
+            @RequestParam(name = "id") int id,
             @RequestParam(name = "branch") int branch,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
         Sort sortable = productService.sortDataProduct(type, field);
-        Pageable pageable = PageRequest.of(page, size, sortable);
-        Page<Product> lstProductBig = productService.showProductByBigBranch(id, branch, pageable);
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page-1, size, sortable);        Page<Product> lstProductBig = productService.showProductByBigBranch(id, branch, pageable);
         return new ResponseEntity<>(lstProductBig.getContent(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/bySmallCategoryBranch")
     public ResponseEntity<List<Product>> showProductBySmallBranch(
-            @RequestParam(name = "idSmallCategory") int id,
+            @RequestParam(name = "id") int id,
             @RequestParam(name = "branch") int branch,
-            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
         Sort sortable = productService.sortDataProduct(type, field);
-        Pageable pageable = PageRequest.of(page, size, sortable);
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page-1, size, sortable);
         Page<Product> lstProductSmall = productService.showProductBySmallBranch(id, branch, pageable);
         return new ResponseEntity<>(lstProductSmall.getContent(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/byMediumCategoryBranch")
     public ResponseEntity<List<Product>> showProductByMediumBranch(
-            @RequestParam(name = "idMediumCategory") int id,
+            @RequestParam(name = "id") int id,
             @RequestParam(name = "branch") int branch,
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
         Sort sortable = productService.sortDataProduct(type, field);
-        Pageable pageable = PageRequest.of(page, size, sortable);
-        Page<Product> lstProductMedium = productService.showProductByMediumBranch(id, branch, pageable);
+        if (page < 1) page = 1;
+        if (size < 0) size = 0;
+        Pageable pageable = PageRequest.of(page-1, size, sortable);        Page<Product> lstProductMedium = productService.showProductByMediumBranch(id, branch, pageable);
         return new ResponseEntity<>(lstProductMedium.getContent(), HttpStatus.OK);
     }
 

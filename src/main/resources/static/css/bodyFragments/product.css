@@ -58,7 +58,12 @@
 
 .body-main .table-responsive tr {}
 
-.body-main .table-responsive tr td {}
+.body-main .table-responsive tr td {
+
+
+}
+
+
 
 /* PAGEABLE */
 .body-main .pageable {

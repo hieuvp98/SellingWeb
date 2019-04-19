@@ -1,10 +1,13 @@
 package com.bksoftware.sellingweb.controller.admin;
 
+import com.bksoftware.sellingweb.entities.Record;
 import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.service_impl.RecordService_Impl;
 import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +31,21 @@ public class AdminProductController {
         this.partnerService = partnerService;
     }
 
+    @Autowired
+    private RecordService_Impl recordService;
+
     // ---------------------- PARTNER---------------------------------------------------
     //add
     @RolesAllowed("ADMIN")
     @PostMapping(value = "/partner")
     public ResponseEntity<Object> addPartner(@RequestBody Partner partner) {
+        Record record = recordService.findByName("partner");
         partner.setStatus(true);
-        if (partnerService.savePartner(partner))
+        if (partnerService.savePartner(partner)) {
+            record.setNumber(record.getNumber() + 1);
+            recordService.saveRecord(record);
             return new ResponseEntity<>(partner, HttpStatus.OK);
-        else
+        } else
             return new ResponseEntity<>("add fail", HttpStatus.BAD_REQUEST);
     }
 
@@ -54,10 +63,13 @@ public class AdminProductController {
     @RolesAllowed("ADMIN")
     @PutMapping(value = "/delete-partner")
     public ResponseEntity<String> deletePartner(@RequestParam("id") int id) {
+        Record record = recordService.findByName("partner");
         Partner partner = partnerService.findById(id);
-        if (partnerService.deletePartner(partner))
+        if (partnerService.deletePartner(partner)) {
+            record.setNumber(record.getNumber() - 1);
+            recordService.saveRecord(record);
             return new ResponseEntity<>("delete success", HttpStatus.OK);
-        else
+        } else
             return new ResponseEntity<>("delete fail", HttpStatus.BAD_REQUEST);
     }
 
@@ -69,14 +81,16 @@ public class AdminProductController {
     public ResponseEntity<Object> addProduct(@RequestBody Product product,
                                              @RequestParam(name = "small-category-id") int smallCategoryId,
                                              @RequestParam(name = "partner-id") int partnerId) {
+        Record record = recordService.findByName("product");
         product.setStatus(true);
         product.setView(0);
         product.setInitDate(LocalDate.now());
         product.setSmallCategory(categoryService.findSmallCategoryById(smallCategoryId));
         product.setPartner(partnerService.findById(partnerId));
-        if (productService.saveProduct(product))
+        if (productService.saveProduct(product)) {
+            record.setNumber(record.getNumber() + 1);
             return new ResponseEntity<>(product, HttpStatus.OK);
-        else return new ResponseEntity<>("add product fail", HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>("add product fail", HttpStatus.BAD_REQUEST);
     }
 
     //update
@@ -93,10 +107,11 @@ public class AdminProductController {
     @PutMapping(value = "/delete-product")
     public ResponseEntity<String> deleteProduct(@RequestParam("id") int idProduct) {
         Product product = productService.findById(idProduct);
-        System.out.println("ID - " + product.getId());
-        if (productService.deleteProduct(product))
+        Record record = recordService.findByName("product");
+        if (productService.deleteProduct(product)) {
+            record.setNumber(record.getNumber() - 1);
             return new ResponseEntity<>("delete product success", HttpStatus.OK);
-        else return new ResponseEntity<>("delete product fail", HttpStatus.BAD_REQUEST);
+        } else return new ResponseEntity<>("delete product fail", HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -1,14 +1,13 @@
 $(document).ready(function () {
-    findAllProductBySize(1);
     findAllPageProductNumber();
     searchProductByName(1);
 });
+
 
 //==================================page=============================.unbind('click')
 
 function pageProduct(size) {
     let contentRow = '';
-    console.log("dm");
     for (let i = 1; i <= size; i++) {
         contentRow += `<li><a href="#" class="page" name="${i}" ">${i}</a></li> `;
     }
@@ -24,6 +23,8 @@ function findAllPageProductNumber() {
         type: "GET",
         url: "/api/v1/public/products/size",
         success: function (size) {
+
+            findAllProductBySize(1);
             pageProduct(size);
 
             $('.page').click(function () {
@@ -44,12 +45,11 @@ function findAllPageProductNumber() {
 }
 
 
-function findAllPageProductByNameNumber(nameProduct) {
+function findAllPageProductByNameNumber() {
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/products/name/size?name=" + nameProduct,
+        url: "/api/v1/public/products/name/size",
         success: function (size) {
-            console.log(size);
             pageProduct(size);
             $('.page').click(function () {
                 const page = $(this).attr("name");
@@ -125,6 +125,10 @@ function displayOnTable(products) {
                     `;
         });
         $("#row-product").html(contentRow);
+        $(".body-main .table-responsive tr td").css({
+            "max-width" : "180px",
+            "overflow" : "-webkit-paged-y"
+        });
         //===== delete =======
         deleteProduct();
     }
@@ -158,20 +162,19 @@ function deleteProduct() {
     });
 }
 
-let nameProduct = "";
 
 //=========================== SEARCH BY NAME ===================================
 function searchProductByName(page) {
 
+
     $('#icon-search').click(function () {
-        nameProduct = $('#input-search').val();
-        console.log(name);
+     const nameProduct = $('#input-search').val();
         $.ajax({
             type: "GET",
             url: "/api/v1/public/products?name=" + nameProduct + "&page=" + page,
             success: function (products) {
+                findAllPageProductByNameNumber();
                 displayOnTable(products);
-                findAllPageProductByNameNumber(nameProduct);
             },
             error: function (e) {
                 console.log("Error: " + e);

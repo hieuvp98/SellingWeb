@@ -35,17 +35,11 @@
         <div class="double-input" >
             <div class="myInput">
                 <p>Mục lớn:</p>
-                <select class="form-control" name="big-category" id="big-category-value">
-                    <option value="apple">Apple</option>
-                    <option value="samsung">Samsung</option>
-                </select>
+                <select class="form-control" name="big-category" id="big-category-value"></select>
             </div>
             <div class="myInput">
                 <p>Mục thứ hai:</p>
-                <select class="form-control" name="medium-category" id="medium-category-value">
-                    <option value="apple">Apple</option>
-                    <option value="samsung">Samsung</option>
-                </select>
+                <select class="form-control" name="medium-category" id="medium-category-value"></select>
             </div>
         </div>
 
@@ -57,7 +51,7 @@
             </div>
             <div class="myInput">
                 <p>Ảnh đại diện:</p>
-                <input type="file" class="form-control-file" name="image" id="image">
+                <input type="file" class="form-control-file" name="image" id="image-product-value">
             </div>
         </div>
         <div class="submit">

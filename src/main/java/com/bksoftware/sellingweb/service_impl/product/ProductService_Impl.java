@@ -81,7 +81,8 @@ public class ProductService_Impl implements ProductService {
     @Override
     public Page<Product> findProductByName(String name, Pageable pageable) {
         try {
-            return productRepository.findByName("+" + name + "*", pageable);
+            return productRepository.findByName( "+" +name+ "*" , pageable);
+
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-product-by-name-error : {0}", ex.getMessage());
         }

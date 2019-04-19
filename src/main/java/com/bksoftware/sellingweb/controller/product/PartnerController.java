@@ -1,7 +1,9 @@
 package com.bksoftware.sellingweb.controller.product;
 
+import com.bksoftware.sellingweb.entities.Record;
 import com.bksoftware.sellingweb.entities.product.Partner;
 import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.service_impl.RecordService_Impl;
 import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.PartnerService_Impl;
 import com.bksoftware.sellingweb.service_impl.product.ProductService_Impl;
@@ -30,6 +32,9 @@ public class PartnerController {
     private CategoryService_Impl categoryService;
     @Autowired
     private ProductService_Impl productService;
+
+    @Autowired
+    private RecordService_Impl recordService;
 
     @GetMapping(value = "/find-by-big-category")
     public ResponseEntity<HashSet<Partner>> findByBigCategory(@RequestParam(name = "big-category-id") int id) {
@@ -62,14 +67,17 @@ public class PartnerController {
 
     @GetMapping(value = "/all")
     public ResponseEntity<List<Partner>> allPartner() {
+        Record record = recordService.findByName("partner");
         List<Partner> lstPartner = partnerService.findAllPartnerPage();
+        record.setNumber(lstPartner.size());
+        recordService.saveRecord(record);
         return new ResponseEntity<>(lstPartner, HttpStatus.OK);
     }
 
     @GetMapping(value = "/find-all/size")
     public ResponseEntity<Double> findPagePartner() {
-        List<Partner> lstPartner = partnerService.findAllPartnerPage();
-        return new ResponseEntity<>(Math.ceil(lstPartner.size() / 10) + 1, HttpStatus.OK);
+        Record record = recordService.findByName("partner");
+        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
     }
 
     @GetMapping(value = "/find-by-medium-category")

@@ -35,7 +35,7 @@ function createDetailsProduct() {
             cache: false,
             timeout: 300000,
             success: function (data) {
-                alert("CREATE SUCCESS : " + data.name);
+                alert("CREATE SUCCESS : " + data.product.name);
                 $("#btn-create-details-product").prop("disabled", true);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -126,7 +126,7 @@ function clickBtnDetailsProductChangeSubmit() {
 function findAllProductNameByDetails() {
     $.ajax({
         type: "GET",
-        url: "/api/v1/public/products/details-products",
+        url: "/api/v1/public/products/details-products/all",
         success: function (detailsProducts) {
             findAllProductValue(detailsProducts);
         },
@@ -152,21 +152,18 @@ function findAllProductValue(detailsProducts) {
                     contentRow += `
                        <option id="option${product.id}" value="${product.id}">${product.name}</option>
                     `;
-
                 });
-
                 $("#product-value").html(
-                    ` <option selected="selected" disabled="disabled">Product Name</option>`+
+                    ` <option selected="selected" disabled="disabled">Product Name</option>` +
                     contentRow);
-                products.map(function (product) {
-                    detailsProducts.map(function (detailsProduct) {
+                detailsProducts.map(function (detailsProduct) {
+                    products.map(function (product) {
                         if (product.id === detailsProduct.product.id) {
                             const id = `#option${product.id}`;
-                            $(id).attr("disabled", "disabled");
+                            $(id).css("display", "none");
                         }
                     })
                 })
-
             }
         },
         error: function (e) {

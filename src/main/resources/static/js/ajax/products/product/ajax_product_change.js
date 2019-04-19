@@ -25,11 +25,12 @@ function createProduct() {
         const nameProduct = $("#name-product").val();
         const originCost = $('#origin-cost').val();
         const saleCost = $('#sale-cost').val();
+        const imgUrl = $('#image-product-value').val();
         const product = {
             "name": nameProduct,
             "originCost": originCost,
             "saleCost": saleCost,
-            "imgUrl": "abc",
+            "imgUrl": imgUrl,
         };
         $.ajax({
             type: "POST",
@@ -89,11 +90,13 @@ function updateProduct(data) {
     $('#name-product').val(data.name);
     $('#origin-cost').val(data.originCost);
     $('#sale-cost').val(data.saleCost);
+
     $('#btn-create-product').click(function () {
         data.name = $('#name-product').val();
         data.originCost = $('#origin-cost').val();
         data.saleCost = $('#sale-cost').val();
-        console.log(data);
+        data.imgUrl = $('#image-product-value').val();
+
         $.ajax({
             type: "PUT",
             contentType: "application/json",
@@ -113,7 +116,6 @@ function updateProduct(data) {
                 console.log('errorThrown:');
                 console.log(errorThrown);
                 $('#btn-create-product').prop("disabled", true);
-
             }
         });
     });

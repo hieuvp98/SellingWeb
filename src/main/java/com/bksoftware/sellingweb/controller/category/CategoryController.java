@@ -1,9 +1,11 @@
 package com.bksoftware.sellingweb.controller.category;
 
+import com.bksoftware.sellingweb.entities.Record;
 import com.bksoftware.sellingweb.entities.category.BigCategory;
 import com.bksoftware.sellingweb.entities.category.MediumCategory;
 import com.bksoftware.sellingweb.entities.category.SmallCategory;
 import com.bksoftware.sellingweb.entities.product.Product;
+import com.bksoftware.sellingweb.service_impl.RecordService_Impl;
 import com.bksoftware.sellingweb.service_impl.category.CategoryService_Impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,9 @@ public class CategoryController {
     @Autowired
     CategoryService_Impl categoryService_imp;
 
+    @Autowired
+    private RecordService_Impl recordService;
+
     @GetMapping(value = "/showBig")
     public ResponseEntity<List<BigCategory>> showBigCategory(
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
@@ -39,13 +44,16 @@ public class CategoryController {
 
     @GetMapping(value = "/showBig/size")
     public ResponseEntity<Double> pageNumberBigCategory() {
-        List<BigCategory> bigCategories = categoryService_imp.findAllBigCategoryPage();
-        return new ResponseEntity<>(Math.ceil(bigCategories.size() / 10) + 1, HttpStatus.OK);
+        Record record = recordService.findByName("big-category");
+        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
     }
 
     @GetMapping(value = "/showBig/all")
     public ResponseEntity<List<BigCategory>> allBigCategory() {
+        Record record = recordService.findByName("big-category");
         List<BigCategory> bigCategories = categoryService_imp.findAllBigCategoryPage();
+        record.setNumber(bigCategories.size());
+        recordService.saveRecord(record);
         return new ResponseEntity<>(bigCategories, HttpStatus.OK);
     }
 
@@ -64,13 +72,16 @@ public class CategoryController {
 
     @GetMapping(value = "/medium-category/size")
     public ResponseEntity<Double> pageNumberMediumCategory() {
-        List<MediumCategory> lstMediumCategory = categoryService_imp.findAllMediumCategoryPage();
-        return new ResponseEntity<>(Math.ceil(lstMediumCategory.size() / 10) + 1, HttpStatus.OK);
+        Record record = recordService.findByName("medium-category");
+        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
     }
 
     @GetMapping(value = "/medium-category/all")
     public ResponseEntity<List<MediumCategory>> allMediumCategory() {
+        Record record = recordService.findByName("medium-category");
         List<MediumCategory> lstMediumCategory = categoryService_imp.findAllMediumCategoryPage();
+        record.setNumber(lstMediumCategory.size());
+        recordService.saveRecord(record);
         return new ResponseEntity<>(lstMediumCategory, HttpStatus.OK);
     }
 
@@ -89,14 +100,17 @@ public class CategoryController {
 
     @GetMapping(value = "/small-category/size")
     public ResponseEntity<Double> pagesNumberSmallCategory() {
-        List<SmallCategory> lstSmallCategory = categoryService_imp.findAllSmallCategoryPage();
-        return new ResponseEntity<>(Math.ceil(lstSmallCategory.size() / 10) + 1, HttpStatus.OK);
+        Record record = recordService.findByName("small-category");
+        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/small-category/all")
     public ResponseEntity<List<SmallCategory>> allSmallCategory() {
+        Record record = recordService.findByName("small-category");
         List<SmallCategory> lstSmallCategory = categoryService_imp.findAllSmallCategoryPage();
+        record.setNumber(lstSmallCategory.size());
+        recordService.saveRecord(record);
         return new ResponseEntity<>(lstSmallCategory, HttpStatus.OK);
     }
 

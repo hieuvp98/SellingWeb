@@ -3,8 +3,7 @@
 <div class="container">
     <div class="form-product">
         <button type="button" class="btn btn-primary">
-            <a href="${pageContext.request.contextPath}/admin/partner" style="text-decoration: none;color: white">Quay
-                lại</a>
+            <a href="${pageContext.request.contextPath}/admin/partner" style="text-decoration: none;color: white">Quay lại</a>
         </button>
         <div class="title">
             <h2 class=" font-weight-bold">Thêm Đối Tác </h2>
@@ -23,7 +22,7 @@
         <div class="double-input">
             <div class="myInput">
                 <p>Ảnh đại diện:</p>
-                <input type="file" class="form-control-file" name="image" id="image">
+                <input type="file" class="form-control-file" name="image" id="image-partner-value">
             </div>
         </div>
 

@@ -12,10 +12,11 @@ function createProduct() {
 
         const nameProduct = $('#name-partner-value').val();
         const originCost = $('#present-partner-value').val();
+        const imgUrl = $('#image-partner-value').val();
         const partner = {
             "name": nameProduct,
             "present": originCost,
-            "imgUrl": "abc",
+            "imgUrl": imgUrl,
         };
         $.ajax({
             type: "POST",
@@ -71,10 +72,11 @@ function updatePartner(data) {
     $('#name-partner-value').val(data.name);
     $('#present-partner-value').val(data.present);
 
+
     $('#btn-create-partner').click(function () {
         data.name = $('#name-partner-value').val();
         data.present = $('#present-partner-value').val();
-        data.imgUrl = "abc";
+        data.imgUrl = $('#image-partner-value').val();
         console.log(data);
         $.ajax({
             type: "PUT",

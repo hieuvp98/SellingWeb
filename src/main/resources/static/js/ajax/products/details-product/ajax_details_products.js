@@ -39,6 +39,7 @@ function findAllPageDetailsProductNumber() {
         }
     });
 }
+
 //============ FIND ALL DETAILS PRODUCT ========================
 function findAllDetailsProduct(page) {
 
@@ -82,9 +83,12 @@ function findAllDetailsProduct(page) {
                         </td>
                         </tr>
                     `;
-                })
+                });
                 $("#row-details-product").html(contentRow);
-
+                $(".body-main .table-responsive tr td").css({
+                    "max-width": "200px",
+                    "overflow": "-webkit-paged-y"
+                });
                 //===== delete =======
                 deleteDetailsProduct();
             }
