@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -31,9 +32,11 @@ public class CategoryController {
 
     @GetMapping(value = "/showBig")
     public ResponseEntity<List<BigCategory>> showBigCategory(
+            HttpServletResponse response,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if (page < 1) page = 1;
         if (size < 0) size = 0;
 
@@ -45,7 +48,9 @@ public class CategoryController {
     @GetMapping(value = "/showBig/size")
     public ResponseEntity<Double> pageNumberBigCategory() {
         Record record = recordService.findByName("big-category");
-        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
+        double result = Math.ceil(record.getNumber() / 10) + 1;
+        if ((record.getNumber() / 10) % 2 == 0) result -= 1;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(value = "/showBig/all")
@@ -73,7 +78,11 @@ public class CategoryController {
     @GetMapping(value = "/medium-category/size")
     public ResponseEntity<Double> pageNumberMediumCategory() {
         Record record = recordService.findByName("medium-category");
-        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
+
+        double result = Math.ceil(record.getNumber() / 10) + 1;
+        if ((record.getNumber() / 10) % 2 == 0) result -= 1;
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 
     @GetMapping(value = "/medium-category/all")
@@ -101,7 +110,9 @@ public class CategoryController {
     @GetMapping(value = "/small-category/size")
     public ResponseEntity<Double> pagesNumberSmallCategory() {
         Record record = recordService.findByName("small-category");
-        return new ResponseEntity<>(Math.ceil(record.getNumber() / 10) + 1, HttpStatus.OK);
+        double result = Math.ceil(record.getNumber() / 10) + 1;
+        if ((record.getNumber() / 10) % 2 == 0) result -= 1;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 

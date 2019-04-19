@@ -45,9 +45,11 @@ public class ProductController {
 
     @GetMapping("/find-all")
     public ResponseEntity<List<Product>> findAllProduct(
+            HttpServletResponse response,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if (page < 1) page = 1;
         if (size < 0) size = 0;
 
@@ -74,9 +76,11 @@ public class ProductController {
 
     @GetMapping("/details-products")
     public ResponseEntity<List<ProductDetails>> findAllDetailsProduct(
+            HttpServletResponse response,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size
     ) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if (page < 1) page = 1;
         if (size < 0) size = 0;
         //Pageable là 1 interface, để tạo nó ta sử dụng PageRequest
@@ -103,11 +107,13 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> findProductByName(
+            HttpServletResponse response,
             @RequestParam("name") String name,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort
     ) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
 
         productNameSearch = name;
         Sort sortable = productService.sortData(sort);
@@ -126,11 +132,13 @@ public class ProductController {
 
     @GetMapping("/details-product")
     public ResponseEntity<List<ProductDetails>> findDetailsProductByProductName(
+            HttpServletResponse response,
             @RequestParam("name") String name,
             @RequestParam(name = "page", required = false, defaultValue = "1") int page,
             @RequestParam(name = "size", required = false, defaultValue = "10") int size,
             @RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort
     ) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         detailsProductNameSearch = name;
         Sort sortable = productService.sortData(sort);
         if (page < 1) page = 1;
@@ -173,12 +181,13 @@ public class ProductController {
 
     @GetMapping(value = "/bySmallCategory")
     public ResponseEntity<List<Product>> showProduct(
-
+            HttpServletResponse response,
             @RequestParam(name = "id") int id,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "18") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Sort sortable = productService.sortDataProduct(type, field);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -192,6 +201,8 @@ public class ProductController {
     public ResponseEntity<Double> showProductBySmallCategoryPage(
             HttpServletResponse response,
             @RequestParam(name = "id") int id) {
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
         List<Product> lstProduct = productService.showProductBySmallCategoryPage(id);
         double result = Math.ceil(lstProduct.size() / 18) + 1;
         if ((lstProduct.size() / 18) % 2 == 0) result -= 1;
@@ -200,11 +211,13 @@ public class ProductController {
 
     @GetMapping(value = "/byMediumCategory")
     public ResponseEntity<List<Product>> showProductMedium(
+            HttpServletResponse response,
             @RequestParam(name = "id") int id,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "18") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Sort sortable = productService.sortDataProduct(type, field);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -219,6 +232,7 @@ public class ProductController {
             HttpServletResponse response,
             @RequestParam(name = "id") int id) {
 
+        response.setHeader("Access-Control-Allow-Origin", "*");
         List<Product> lstProduct = productService.showProductByMediumCategoryPage(id);
         double result = Math.ceil(lstProduct.size() / 18) + 1;
         if ((lstProduct.size() / 18) % 2 == 0) result -= 1;
@@ -227,11 +241,13 @@ public class ProductController {
 
     @GetMapping(value = "/byBigCategory")
     public ResponseEntity<List<Product>> showProductByBig(
+            HttpServletResponse response,
             @RequestParam(name = "id") int id,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "18") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Sort sortable = productService.sortDataProduct(type, field);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -244,7 +260,7 @@ public class ProductController {
     public ResponseEntity<Double> showProductByBig(
             HttpServletResponse response,
             @RequestParam(name = "id") int id) {
-
+        response.setHeader("Access-Control-Allow-Origin", "*");
         List<Product> lstProduct = productService.showProductByBigCategoryPage(id);
         double result = Math.ceil(lstProduct.size() / 18) + 1;
         if ((lstProduct.size() / 18) % 2 == 0) result -= 1;
@@ -253,12 +269,14 @@ public class ProductController {
 
     @GetMapping(value = "/byBigCategoryBranch")
     public ResponseEntity<List<Product>> showProductByBigBranch(
+            HttpServletResponse response,
             @RequestParam(name = "id") int id,
             @RequestParam(name = "branch") int branch,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Sort sortable = productService.sortDataProduct(type, field);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -269,12 +287,14 @@ public class ProductController {
 
     @GetMapping(value = "/bySmallCategoryBranch")
     public ResponseEntity<List<Product>> showProductBySmallBranch(
+            HttpServletResponse response,
             @RequestParam(name = "id") int id,
             @RequestParam(name = "branch") int branch,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Sort sortable = productService.sortDataProduct(type, field);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -285,12 +305,14 @@ public class ProductController {
 
     @GetMapping(value = "/byMediumCategoryBranch")
     public ResponseEntity<List<Product>> showProductByMediumBranch(
+            HttpServletResponse response,
             @RequestParam(name = "id") int id,
             @RequestParam(name = "branch") int branch,
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "5") Integer size,
             @RequestParam(name = "type", required = false, defaultValue = "ASC") String type,
             @RequestParam(name = "field", required = false, defaultValue = "name") String field) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Sort sortable = productService.sortDataProduct(type, field);
         if (page < 1) page = 1;
         if (size < 0) size = 0;
@@ -367,8 +389,10 @@ public class ProductController {
 
     @GetMapping("/new-products")
     public ResponseEntity<List<Product>> newProducts(
+            HttpServletResponse response,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "10") Integer size) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if (page < 1) page = 1;
         if (size < 0) size = 0;
         Pageable pageable = PageRequest.of(page - 1, size);
@@ -381,8 +405,10 @@ public class ProductController {
 
     @GetMapping("/hot-products")
     public ResponseEntity<List<Product>> hotProduct(
+            HttpServletResponse response,
             @RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "15") Integer size) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         if (page < 1) page = 1;
         if (size < 0) size = 0;
         Pageable pageable = PageRequest.of(page - 1, size);

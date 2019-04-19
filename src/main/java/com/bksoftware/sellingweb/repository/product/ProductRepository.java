@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = " from Product p order by p.initDate desc ")
     Page<Product> findNewProducts(Pageable pageable);
 
-    @Query(value = " from Product p order by (p.originCost-p.saleCost) asc ")
+    @Query(value = " from Product p order by (p.saleCost) asc ")
     Page<Product> findHotProducts(Pageable pageable);
 
 
