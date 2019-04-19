@@ -33,6 +33,26 @@ import java.util.logging.Logger;
         this.productImageRepository = productImageRepository;
     }
 
+
+    public Page<ProductDetails> findDetailsProductByName(String name, Pageable pageable) {
+        try {
+            return productDetailsRepository.findByName( name, pageable);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-details-product-by-name-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+    public List<ProductDetails> findDetailsProductByNamePage(String name) {
+        try {
+            return productDetailsRepository.findByNamePage( name );
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "find-details-product-by-name-page-error : {0}", ex.getMessage());
+        }
+        return null;
+    }
+
+
     @Override
     public List<ProductDetails> findAll() {
         return productDetailsRepository.findAll();

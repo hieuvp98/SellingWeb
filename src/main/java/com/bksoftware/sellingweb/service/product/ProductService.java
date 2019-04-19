@@ -15,6 +15,11 @@ import java.util.TreeMap;
 
 public interface ProductService {
 
+    List<Product> showProductByBigCategoryPage(int id) ;
+    List<Product> showProductByMediumCategoryPage(int id) ;
+    List<Product> showProductBySmallCategoryPage(int id) ;
+
+
     Page<Product> findHotProducts(Pageable pageable);
 
     Page<Product> findAllProduct(Pageable pageable);
@@ -39,7 +44,7 @@ public interface ProductService {
 
     boolean deleteProduct(Product product);
 
-    Page<Product> showProduct(int id, Pageable pageable);
+    Page<Product> showProductByBigCategory(int id, Pageable pageable);
 
     List<Product> findProductBySmall(int id);
 

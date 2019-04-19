@@ -44,7 +44,6 @@ function findAllPageProductNumber() {
     });
 }
 
-
 function findAllPageProductByNameNumber() {
     $.ajax({
         type: "GET",
@@ -126,8 +125,8 @@ function displayOnTable(products) {
         });
         $("#row-product").html(contentRow);
         $(".body-main .table-responsive tr td").css({
-            "max-width" : "180px",
-            "overflow" : "-webkit-paged-y"
+            "max-width": "180px",
+            "overflow": "-webkit-paged-y"
         });
         //===== delete =======
         deleteProduct();
@@ -162,24 +161,26 @@ function deleteProduct() {
     });
 }
 
-
 //=========================== SEARCH BY NAME ===================================
 function searchProductByName(page) {
-
-
-    $('#icon-search').click(function () {
-     const nameProduct = $('#input-search').val();
-        $.ajax({
-            type: "GET",
-            url: "/api/v1/public/products?name=" + nameProduct + "&page=" + page,
-            success: function (products) {
-                findAllPageProductByNameNumber();
-                displayOnTable(products);
-            },
-            error: function (e) {
-                console.log("Error: " + e);
-            }
-        })
-    })
+    $("#input-search").keypress(function (event) {
+        const keycode = event.keycode ? event.keycode : event.which;
+        if (keycode == 13) {
+            const nameProduct = $('#input-search').val();
+            $.ajax({
+                type: "GET",
+                url: "/api/v1/public/products?name=" + nameProduct + "&page=" + page,
+                success: function (products) {
+                    findAllPageProductByNameNumber();
+                    displayOnTable(products);
+                },
+                error: function (e) {
+                    console.log("Error: " + e);
+                }
+            })
+        }
+    });
 }
+
+
 

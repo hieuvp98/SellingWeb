@@ -14,14 +14,10 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query(
-            value = "SELECT p.* FROM product p  WHERE MATCH(p.name) AGAINST(:name_product IN BOOLEAN MODE)",
-            nativeQuery = true)
-    Page<Product> findByName(@Param("name_product")String name, Pageable pageable);
+    @Query("SELECT p FROM Product p WHERE p.name LIKE CONCAT('%',:name_product,'%')")
+    Page<Product> findByName(@Param("name_product") String name, Pageable pageable);
 
-    @Query(
-            value = "SELECT p.* FROM product p  WHERE MATCH(p.name) AGAINST(:name_product IN BOOLEAN MODE)",
-            nativeQuery = true)
+    @Query("SELECT p FROM Product p WHERE p.name LIKE CONCAT('%',:name_product,'%')")
     List<Product> findByNamePage(@Param("name_product") String name);
 
 
@@ -41,6 +37,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("select p from Product p where p.status=true and p.smallCategory.id= :id")
     Page<Product> showProduct(@Param("id") int id, Pageable pageable);
+
+    @Query("select p from Product p where p.status=true and p.smallCategory.id= :id")
+    List<Product> showProduct(@Param("id") int id);
 
     @Query("select p from Product p where p.status=true and p.smallCategory.id= :id")
     List<Product> findProductBySmall(@Param("id") int id);

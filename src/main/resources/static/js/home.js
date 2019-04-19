@@ -110,13 +110,6 @@ $(function () {
         }
     });
 
-    //search
-    $("#input-search").keypress(function (event) {
-        var keycode = event.keycode ? event.keycode : event.which;
-        if (keycode == 13) {
-            alert("Enter");
-        }
-    })
     //pageable
     $(".pageable ul.pagination li a").click(function (event) {
         let idClick = event.target.id;

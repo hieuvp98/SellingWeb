@@ -15,6 +15,14 @@ import java.util.List;
 @Repository
 public interface ProductDetailsRepository extends JpaRepository<ProductDetails, Integer> {
 
+
+    @Query("SELECT p FROM ProductDetails p WHERE p.product.name LIKE CONCAT('%',:name_product,'%')")
+    Page<ProductDetails> findByName(@Param("name_product") String name, Pageable pageable);
+
+    @Query("SELECT p FROM ProductDetails p WHERE p.product.name LIKE CONCAT('%',:name_product,'%')")
+    List<ProductDetails> findByNamePage(@Param("name_product") String name);
+
+
     @Query("select p from ProductDetails p where p.status=true")
     List<ProductDetails> findAll();
 

@@ -81,7 +81,7 @@ public class ProductService_Impl implements ProductService {
     @Override
     public Page<Product> findProductByName(String name, Pageable pageable) {
         try {
-            return productRepository.findByName( "+" +name+ "*" , pageable);
+            return productRepository.findByName(name, pageable);
 
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-product-by-name-error : {0}", ex.getMessage());
@@ -89,10 +89,9 @@ public class ProductService_Impl implements ProductService {
         return null;
     }
 
-
     public List<Product> findProductByNamePage(String name) {
         try {
-            return productRepository.findByNamePage("+" + name + "*");
+            return productRepository.findByNamePage(name);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-product-by-name-page-error : {0}", ex.getMessage());
         }
@@ -112,7 +111,7 @@ public class ProductService_Impl implements ProductService {
     @Override
     public Page<Product> findHotProducts(Pageable pageable) {
         try {
-           return productRepository.findHotProducts(pageable);
+            return productRepository.findHotProducts(pageable);
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, "find-hot-products-error : {0}", ex.getMessage());
         }
@@ -181,7 +180,7 @@ public class ProductService_Impl implements ProductService {
     }
 
     @Override
-    public Page<Product> showProduct(int id, Pageable pageable) {
+    public Page<Product> showProductByBigCategory(int id, Pageable pageable) {
 
         try {
             return productRepository.showProduct(id, pageable);
@@ -190,6 +189,28 @@ public class ProductService_Impl implements ProductService {
 
         }
         return null;
+    }
+
+    @Override
+    public List<Product> showProductByBigCategoryPage(int id) {
+
+        try {
+            return productRepository.showProduct(id);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "show-product-By-Big-page-error : {0}", ex.getMessage());
+
+        }
+        return null;
+    }
+
+    @Override
+    public List<Product> showProductByMediumCategoryPage(int id) {
+        return productRepository.findProductByMedium(id);
+    }
+
+    @Override
+    public List<Product> showProductBySmallCategoryPage(int id) {
+        return productRepository.findProductBySmall(id);
     }
 
     @Override
