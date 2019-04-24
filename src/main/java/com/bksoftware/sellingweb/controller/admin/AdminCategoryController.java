@@ -29,7 +29,7 @@ public class AdminCategoryController {
 
     //************************************************************************add
 
-    //    @RolesAllowed("ADMIN")
+    //@RolesAllowed("ADMIN")
     @PostMapping(value = "/big")
     public ResponseEntity<Object> addBigCategory(@RequestBody BigCategory bigCategory) {
         Record record = recordService.findByName("big-category");
