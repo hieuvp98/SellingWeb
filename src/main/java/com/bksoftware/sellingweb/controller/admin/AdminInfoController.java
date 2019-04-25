@@ -57,8 +57,7 @@ public class AdminInfoController {
     @RolesAllowed("ADMIN")
     @GetMapping(value = "/admin/info")
     public ResponseEntity<AppAdmin> getInfo(HttpServletRequest request) {
-        String username = request.getUserPrincipal().getName();
-        AppAdmin appAdmin = appAdminRepository.findByUsername(username);
+        AppAdmin appAdmin = appAdminRepository.findAll().get(0);
         if (appAdmin == null) {
             return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
         } else return new ResponseEntity<>(appAdmin, HttpStatus.OK);

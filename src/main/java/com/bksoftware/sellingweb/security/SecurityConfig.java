@@ -25,11 +25,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public RestAuthenticationEntryPoint restAuthenticationEntryPoint(){
+    public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
         return new RestAuthenticationEntryPoint();
     }
+
     @Bean
-    public CustomAccessDeniedHandler customAccessDeniedHandler(){
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 
@@ -39,18 +40,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.antMatcher("/api/**/admin/**")
                 .authorizeRequests()
                 .anyRequest().authenticated()
-//                .antMatchers("/api/**/public/**").permitAll()
-//                //.antMatchers("/api/**/admin/**")
-//                .antMatchers("/admin/**").permitAll()
-//                .antMatchers("/resources/**").permitAll()
                 .and()
                 .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
                 .and()
-               // .addFilter( new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler())
+                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+        http.antMatcher("/api/**/public/**")
+                .authorizeRequests()
+                .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
+                .and()
+                .addFilter(new APIFilter(authenticationManager()));
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
@@ -59,9 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
+    CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**",new CorsConfiguration().applyPermitDefaultValues());
+        source.registerCorsConfiguration("/api/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
 }
