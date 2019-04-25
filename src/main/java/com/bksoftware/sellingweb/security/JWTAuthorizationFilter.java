@@ -42,9 +42,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     // read token
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(SecurityConstants.HEADER_STRING);
-        String passwordAPI = request.getHeader("passwordAPI");
-        if (passwordAPI == null) return null;
-        if (token != null && passwordAPI.equals(SecurityConstants.PASSWORD_API)) {
+//        String passwordAPI = request.getHeader("passwordAPI");
+//        if (passwordAPI == null) return null;
+        if (token != null ) {
             String username = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
                     .build().verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getSubject();
