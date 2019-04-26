@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,27 +39,45 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.antMatcher("/api/**/admin/**")
-                .authorizeRequests()
-                .anyRequest().authenticated()
+//        http.antMatcher("/api/**/admin/**")
+//                .authorizeRequests()
+//                .anyRequest().authenticated()
+//                .and()
+//                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
+//                .and()
+//                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
+//                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+
+        http.authorizeRequests()
+                .antMatchers("/admin/**").authenticated()
                 .and()
-                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
+                .exceptionHandling().accessDeniedPage("/accessDenied");
+
+        http.authorizeRequests()
                 .and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-        http.antMatcher("/api/**/public/**")
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
-                .and()
-                .addFilter(new APIFilter(authenticationManager()));
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .formLogin()
+                .loginPage("/admin/login").permitAll().loginProcessingUrl("/admin/login/pass")
+                .failureUrl("/admin/login?error").defaultSuccessUrl("/admin/home",true);
+        http.authorizeRequests().and().logout().logoutUrl("/admin/login/logout").logoutSuccessUrl("/admin/login");
+
+//                .formLogin().defaultSuccessUrl("/admin/home");
+//                .antMatchers("/resources/**").hasIpAddress("127.0.0.1")
+//                .and()
+//                .httpBasic().authenticationEntryPoint(restAuthenticationEntryPoint())
+//                .and()
+//                .addFilter(new APIFilter(authenticationManager()));
+        //     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
+        return memory;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean

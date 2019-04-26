@@ -5,17 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/admin")
 public class homeAdminController {
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String pageLogin() {
-        return "login";
-    }
-
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String homePage() {
+    public String homePage(HttpServletRequest request) {
         return "homeAdmin";
     }
 

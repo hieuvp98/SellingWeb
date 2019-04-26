@@ -41,15 +41,8 @@ public class AdminInfoController {
     @PostMapping("/public/login")
     public ResponseEntity<String> login(@RequestBody LoginForm loginForm, HttpServletResponse response){
         AppAdmin appAdmin = appAdminRepository.findByUsernameAndPassword(loginForm.getUsername(),loginForm.getPassword());
-        if (appAdmin == null) return new ResponseEntity<>("login fail",HttpStatus.BAD_REQUEST);
-        else {
-            String token =SecurityConstants.TOKEN_PREFIX + JWT.create()
-                    .withSubject(loginForm.getUsername())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-                    .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
-            response.setHeader("token",token);
-            return new ResponseEntity<>("login success",HttpStatus.OK);
-        }
+        if (appAdmin == null) return new ResponseEntity<>("false",HttpStatus.BAD_REQUEST);
+        else return new ResponseEntity<>("true",HttpStatus.OK);
     }
 
     // -------------------------------------ADMIN info------------------------------------
@@ -70,7 +63,7 @@ public class AdminInfoController {
                                                  @RequestParam(value = "new") String newPassword, HttpServletRequest request) {
         AppAdmin appAdmin = appAdminRepository.findAll().get(0);
         if (oldPassword.equals(appAdmin.getPassword())) {
-            appAdmin.setPassword(newPassword);
+            appAdmin.setPassword(bCryptPasswordEncoder.encode(newPassword));
             appAdminRepository.save(appAdmin);
             return new ResponseEntity<>("change success", HttpStatus.ACCEPTED);
         }

@@ -16,7 +16,7 @@
                 <a href="">Help</a>
             </li>
             <li class="user-menu-iteam">
-                <a href="${pageContext.request.contextPath}/admin/login">Logout</a>
+                <a href="/admin/login/logout">Logout</a>
             </li>
         </ul> <!-- END_USER_MENU -->
     </div> <!-- END_INFOR_AMDIN -->

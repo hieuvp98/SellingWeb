@@ -9,6 +9,7 @@
 
     <%--===================================CSS =======================================--%>
     <%@include file="../../library/library_css.jsp" %>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link type="text/css" href="/resources/css/login.css " rel="stylesheet">
 
 </head>
@@ -22,18 +23,20 @@
         <div class="row">
             <div class="col-7 col-sm-6 col-md-5 col-lg-4 form-login">
                 <div class="title">LOGIN HP</div>
-                <div class="from-input">
-                    <i class="fas fa-user-circle"></i>
-                    <input type="text" class="input-login" placeholder="username">
-                </div><!--END_FROM_INPUT-->
-                <div class="from-input">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" class="input-login" placeholder="password">
-                </div><!--END_FROM_INPUT-->
-                <a href="" class="forgot">Forgot Password?</a>
-                <div class="btn-login">
-                    <button class="btn">LOGIN</button>
-                </div>
+                <form action="/admin/login/pass" method="post">
+                    <div class="from-input">
+                        <i class="fas fa-user-circle"></i>
+                        <input type="text" class="input-login" name="username" placeholder="username">
+                    </div><!--END_FROM_INPUT-->
+                    <div class="from-input">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="input-login" name="password" placeholder="password">
+                    </div><!--END_FROM_INPUT-->
+                    <a href="" class="forgot">Forgot Password?</a>
+                    <div class="btn-login">
+                        <button name="submit" type="submit" class="btn">LOGIN</button>
+                    </div>
+                </form>
             </div> <!--END_FROM_INPUT-->
         </div>
     </div> <!--END_CONTAINER-->
